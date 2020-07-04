@@ -146,7 +146,11 @@
 	</action>
 	
 	<layer name="etiqueta_notincluded" keep="true" type="image" alpha="0" enabled="false" visible="true" align="center" scale="0.3" url="etiqueta.png"
-	onclick="tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);">
+	onclick="tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);" devices="desktop">
+	</layer>
+	
+	<layer name="etiqueta_notincluded" keep="true" type="image" alpha="0" enabled="false" visible="true" align="center" scale="0.15" url="etiqueta.png"
+	onclick="tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);" devices="handheld">
 	
 	</layer>
 	<!-- TESTING NAVIGATOR MOVE CLICKDOWN -->
@@ -601,7 +605,10 @@
 		</hotspot>
 		
 		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
-		onclick="tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false)" />
+		onclick="tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false)" devices="desktop"/>
+		
+		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.1" url="vista_bogota.jpg"
+		onclick="tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false)" devices="handheld"/>
 		
 		<hotspot name="window_hitbox" style="golden_highlight" 
 		onclick="tween(layer[window_vista].alpha,1);set(layer[window_vista].enabled,true);">
