@@ -188,25 +188,25 @@
 	allowed="scene_12" angle_tolerance="20"/>
 	
 	
-	<combobox name="kitchen_combo1" design="vtour" align="lefttop" x="5%" y="2%" onchange="selectItemByName(0);" enabled="false" 
+	<combobox name="kitchen_combo1" design="vtour" align="lefttop" x="2%" y="2%" onchange="selectItemByName(0);" enabled="false" 
 	alpha="0">
-		<item name="item0" caption="ACABADO COCINA - MESON" />
+		<item name="item0" caption="ACABADO - MESON" />
 		<item name="item1" caption="Gris"       onclick="change_meson(gris);" />
 		<item name="item2" caption="Blanco"       onclick="change_meson(blanco);;" />
 		<item name="item3" caption="Negro"        onclick="change_meson(negro);" />
 	</combobox>
 	
-	<combobox name="kitchen_combo2" design="vtour" align="lefttop" x="20%" y="2%" onchange="selectItemByName(0);" enabled="false" 
+	<combobox name="kitchen_combo2" design="vtour" align="lefttop" x="11%" y="2%" onchange="selectItemByName(0);" enabled="false" 
 	alpha="0" devices="desktop">
-		<item name="item0" caption="ACABADO COCINA - MADERA" />
+		<item name="item0" caption="ACABADO - MADERA" />
 		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
 		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
 		<item name="item3" caption="Oscura"        onclick="change_madera(oscura);" />
 	</combobox>
 	
-	<combobox name="kitchen_combo2" design="vtour" align="righttop" x="20%" y="12%" onchange="selectItemByName(0);" enabled="false" 
+	<combobox name="kitchen_combo2" design="vtour" align="righttop" x="10%" y="2%" onchange="selectItemByName(0);" enabled="false" 
 	alpha="0" devices="handheld">
-		<item name="item0" caption="ACABADO COCINA - MADERA" />
+		<item name="item0" caption="ACABADO - MADERA" />
 		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
 		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
 		<item name="item3" caption="Oscura"        onclick="change_madera(oscura);" />
