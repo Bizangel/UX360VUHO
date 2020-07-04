@@ -1,0 +1,168 @@
+<krpano>
+<!--
+
+-->
+
+	<scene name="scene_4_madera_neutra_meson_gris" title="Cocina Acabado A" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/05_cocina_matriales_a.tiles/thumb.jpg" lat="" lng="" heading="" style="kitchen_combo">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/05_cocina_matriales_a.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/05_cocina_matriales_a.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/05_cocina_matriales_a.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_4_madera_neutra_meson_blanco" title="Cocina Acabado B" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/materialb.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/materialb.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/materialb.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/materialb.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_4_madera_neutra_meson_negro" title="Cocina Acabado C" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/07_cocina_matriales_c.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/07_cocina_matriales_c.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/07_cocina_matriales_c.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/07_cocina_matriales_c.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_4_madera_clara_meson_gris" title="Cocina Acabado D" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/materiallld.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/materiallld.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/materiallld.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/materiallld.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_4_madera_clara_meson_blanco" title="Cocina Acabado E" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/09_cocina_matriales_e.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/09_cocina_matriales_e.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/09_cocina_matriales_e.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/09_cocina_matriales_e.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_4_madera_clara_meson_negro" title="Cocina Acabado F" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/materiallf.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/materiallf.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/materiallf.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/materiallf.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_4_madera_oscura_meson_gris" title="11_cocina_matriales_g" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/11_cocina_matriales_g.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/11_cocina_matriales_g.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/11_cocina_matriales_g.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/11_cocina_matriales_g.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_4_madera_oscura_meson_blanco" title="12_cocina_matriales_h" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12_cocina_matriales_h.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/12_cocina_matriales_h.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/12_cocina_matriales_h.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/12_cocina_matriales_h.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+
+	<scene name="scene_4_madera_oscura_meson_negro" title="13_cocina_matriales_i" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/13_cocina_matriales_i.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/13_cocina_matriales_i.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/13_cocina_matriales_i.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/13_cocina_matriales_i.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+</krpano>

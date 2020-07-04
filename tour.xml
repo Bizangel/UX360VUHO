@@ -1,0 +1,776 @@
+﻿<krpano version="1.20.6" title="UX360 VUHÓ">
+	
+	
+	<include url="skin/vtourskin.xml" />
+	
+	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
+	<skin_settings maps="false"
+	               maps_type="google"
+	               maps_bing_api_key=""
+	               maps_google_api_key=""
+	               maps_zoombuttons="false"
+	               maps_loadonfirstuse="true"
+	               gyro="true"
+	               gyro_keeplookingdirection="true"
+	               webvr="true"
+	               webvr_keeplookingdirection="true"
+	               webvr_prev_next_hotspots="true"
+	               autotour="false"
+	               littleplanetintro="false"
+	               followmousecontrol="false"
+	               title="true"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="false"
+	               thumbs_text="false"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="false"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="false"
+	               tooltips_buttons="false"
+	               tooltips_thumbs="false"
+	               tooltips_hotspots="false"
+	               tooltips_mapspots="false"
+	               deeplinking="false"
+	               loadscene_flags="MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5)"
+	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+	               loadingtext="loading..."
+	               layout_width="100%"
+	               layout_maxwidth="814"
+	               controlbar_width="-24"
+	               controlbar_height="40"
+	               controlbar_offset="20"
+	               controlbar_offset_closed="-40"
+	               controlbar_overlap.no-fractionalscaling="10"
+	               controlbar_overlap.fractionalscaling="0"
+	               design_skin_images="vtourskin.png"
+	               design_bgcolor="0x2D3E50"
+	               design_bgalpha="0.8"
+	               design_bgborder="0"
+	               design_bgroundedge="1"
+	               design_bgshadow="0 4 10 0x000000 0.3"
+	               design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+	               design_thumbborder_padding="2"
+	               design_thumbborder_bgroundedge="0"
+	               design_text_css="color:#FFFFFF; font-family:Arial;"
+	               design_text_shadow="1"
+	               />
+
+	<!--
+	    For an alternative skin design either change the <skin_settings> values 
+	    from above or optionally include one of the predefined designs from below.
+	-->
+	<!-- <include url="skin/vtourskin_design_flat_light.xml"  /> -->
+	<!-- <include url="skin/vtourskin_design_glass.xml"       /> -->
+	<!-- <include url="skin/vtourskin_design_ultra_light.xml" /> -->
+	<!-- <include url="skin/vtourskin_design_117.xml"         /> -->
+	<!-- <include url="skin/vtourskin_design_117round.xml"    /> -->
+	<!-- <include url="skin/vtourskin_design_black.xml"       /> -->
+	<style name="text"
+	       type="text"
+	       background="false"
+	       css="color:#FFFFFF;"
+	       enabled="false"
+	       />
+		   
+	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="5%" align="rightbottom" scale="0.1" 
+	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);"/>
+	
+	<layer name="InfoBox" enabled="false" type="container" keep="true" align="center" width="250" height="250" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" 
+	onclick="tween(layer[InfoBox].bgalpha,0);tween(layer[InfoBox_txt1].alpha,0);set(layer[InfoBox].enabled,false);"
+	>
+		<layer name="InfoBox_txt1" style="text" html="data:infotext" align="center" alpha="0"/>
+	</layer>
+	
+	<data name="infotext">
+		Bienvenido! [br/]
+		Aquí podras encontrar Información[br/]
+		Tal como datos legales,constructora,etc.
+		
+		[br/][br/][br/][br/][br/][br/][br/][br/][br/]
+		Haz click aquí para cerrar este recuadro[br/]
+	</data>
+	
+	
+	<!-- Testing depthmap -->
+	
+	<!--
+	<include url="plugins/depthmap_navigation.xml" />
+	-->
+	
+	<include url="plugins/combobox.xml" />
+	<action name="setInitialPosition" autorun="onstart" >
+
+        for(set(i,0), i LT style.count, inc(i),
+            indexoftxt(is_everpano3D_style, get(style[get(i)].name), 'scene_');
+            if(is_everpano3D_style == 0 AND style[get(i)].linkedscene == xml.scene,
+                copy(view.tx, style[get(i)].ox);
+                copy(view.ty, style[get(i)].oy);
+                copy(view.tz, style[get(i)].oz);
+            );
+        );
+        
+    </action>
+	
+	
+
+
+	
+	<include url="plugins/tour_edithelper.xml" if="0" />
+	
+	<style name="golden_highlight" fillcolor="0x820505" bordercolor="0xe0d12b" fillalpha="0" borderalpha="0"
+		onover="borderalphatween1()"
+		onout="borderalphatween0()"
+		onclick="skin_hotspotstyle_click();"
+		/>
+	<action name="borderalphatween1" scope="local">
+		tween(hotspot[get(caller.name)].borderalpha,1);
+	</action>
+	
+	<action name="borderalphatween0" scope="local">
+		tween(hotspot[get(caller.name)].borderalpha,0);
+	</action>
+	
+	
+	<!-- Show Etiqueta -->
+	<action name="showetiqueta" scope="local">
+		
+		set(layer[etiqueta_notincluded].enabled,true);
+		tween(layer[etiqueta_notincluded].alpha,1);
+	</action>
+	
+	<layer name="etiqueta_notincluded" keep="true" type="image" alpha="0" enabled="false" visible="true" align="center" scale="0.3" url="etiqueta.png"
+	onclick="tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);">
+	
+	</layer>
+	<!-- TESTING NAVIGATOR MOVE CLICKDOWN -->
+	
+	
+	<!-- 
+	<include url="plugins/depthmap_helpertool.xml" /> 
+	-->
+	
+	<!-- Styles for Depthmap Locations -->
+	
+	<style name="scene_1"  ox="0"    oy="0"   oz="0"   linkedscene="scene_1_entrada2" autohotspot="true" 
+	allowed="scene_2|scene_3|scene_4"/>
+	<style name="scene_2"  ox="-199"    oy="0" oz="-278" linkedscene="scene_4_cuarto_tv2" autohotspot="true" 
+	allowed="scene_1|scene_3|scene_4" />
+	<style name="scene_3"  ox="221" oy="0"   oz="-277" linkedscene="scene_3_sala_comedor2" autohotspot="true" 
+	allowed="scene_1|scene_2|scene_4|scene_5"/>
+	<style name="scene_4"  ox="203" oy="0"   oz="118" linkedscene="scene_2_cocina2" autohotspot="true" 
+	allowed="scene_1|scene_2|scene_3"/>
+	<style name="scene_5"  ox="418" oy="0"   oz="-55" linkedscene="scene_5_estudio2" autohotspot="true" 
+	allowed="scene_11|scene_3"/>
+	<style name="scene_6" ox="657" oy="0" oz="99" linkedscene="scene_6_ba__o_pasillo2" autohotspot="true" 
+	allowed="scene_11" vangle_tolerance="50" angle_tolerance="60"/>
+	<style name="scene_7" ox="658" oy="0" oz="-326" linkedscene="scene_7_cuarto_secundario_22" autohotspot="true" 
+	allowed="scene_12"/>
+	<style name="scene_8" ox="942" oy="0" oz="-315" linkedscene="scene_8_cuarto_secundario_12" autohotspot="true" 
+	allowed="scene_12"/>
+	<style name="scene_9" ox="1077" oy="0" oz="98" linkedscene="scene_10_ba__o_habitacion_principal2" autohotspot="true" 
+	allowed="scene_10|scene_12"/>
+	<style name="scene_10" ox="832" oy="0" oz="258" linkedscene="scene_9_habitacion_principal2" autohotspot="true" 
+	allowed="scene_9"/>
+	
+	<style name="scene_11" ox="657" oy="0" oz="-50" linkedscene="scene_pasillo1" autohotspot="true" 
+	allowed="scene_6|scene_12|scene_5|scene_7" vangle_tolerance="50"/>
+	<style name="scene_12" ox="783" oy="0" oz="-32" linkedscene="scene_pasillo2" autohotspot="true" 
+	allowed="scene_11|scene_7|scene_8|scene_9" vangle_tolerance="50"/>
+	
+	<style name="scene_13" ox="942" oy="0" oz="-315" linkedscene="scene_closet1" autohotspot="true" 
+	allowed="scene_12" angle_tolerance="20"/>
+	
+	
+	<combobox name="kitchen_combo1" design="vtour" align="lefttop" x="5%" y="2%" onchange="selectItemByName(0);" enabled="false" 
+	alpha="0">
+		<item name="item0" caption="ACABADO COCINA - MESON" />
+		<item name="item1" caption="Gris"       onclick="change_meson(gris);" />
+		<item name="item2" caption="Blanco"       onclick="change_meson(blanco);;" />
+		<item name="item3" caption="Negro"        onclick="change_meson(negro);" />
+	</combobox>
+	
+	<combobox name="kitchen_combo2" design="vtour" align="lefttop" x="20%" y="2%" onchange="selectItemByName(0);" enabled="false" 
+	alpha="0">
+		<item name="item0" caption="ACABADO COCINA - MADERA" />
+		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
+		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
+		<item name="item3" caption="Oscura"        onclick="change_madera(oscura);" />
+	</combobox>
+	
+	<!-- Enables kitchen combo, and breaks it everytime you got outside of kitchen -->
+	<style name="kitchen_combo" onstart="enable_kitchen_combo()"/>
+		
+	<action name="change_meson" scope="local" args="mesoncolor">
+		
+		copy(curr_name,xml.scene);
+		if(get(curr_name) == 'scene_2_cocina2',
+			loadscene(calc('scene_4_madera_neutra_meson_' + mesoncolor),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+			,
+			indexoftxt(i,get(curr_name),'meson');
+			add(i,6);
+			loadscene(calc(slice(curr_name,0,i) + mesoncolor),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+		);
+	</action>
+	
+	<action name="change_madera" scope="local" args="maderacolor">
+		copy(curr_name,xml.scene);
+		if(get(curr_name) == 'scene_2_cocina2',
+			loadscene(calc('scene_4_madera_' + maderacolor +  '_meson_gris'),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+			,
+			indexoftxt(i,get(curr_name),'_meson');
+			loadscene(calc('scene_4_madera_' + maderacolor + slice(curr_name,i,curr_name.length)),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+		);
+	</action>
+	
+	<action name="enable_kitchen_combo" scope="local">
+		set(layer[kitchen_combo1].enabled,true);
+		set(layer[kitchen_combo1].alpha,1);
+		set(layer[kitchen_combo2].enabled,true);
+		set(layer[kitchen_combo2].alpha,1);
+	</action>
+	
+	<action name="disable_kitchen_combo" scope="local">
+		set(layer[kitchen_combo1].enabled,false);
+		set(layer[kitchen_combo1].alpha,0);
+		set(layer[kitchen_combo2].enabled,false);
+		set(layer[kitchen_combo2].alpha,0);
+	</action>
+	
+	
+	<style name="depthmap_info" type="text" css="color:#FFFFFF;text-align:center;" bg="false" txtshadow="0 1 4 0x000000 1.0" enabled="false" />
+	
+	<layer name="depthmap_walkinfo" keep="true" style="depthmap_info" align="center" y="+25%" html="Arrastra para mover la vista y haz click para moverte alrededor" devices="desktop" />
+	
+	<layer name="depthmap_walkinfo" keep="true" style="depthmap_info" align="center" y="+25%" html="Arrastra para mover la vista y toca para moverte" devices="handheld" />
+	
+	<action name="print">
+		showlog();
+		trace(" ",%1);
+	</action>
+	
+	<!-- Overload Tour Loading so it keeps coordinates and has nice animation 
+	ALSO UPDATED FLAG SO IT BLENDS AND KEEPS VIEW-->
+	<action name="skin_loadscene" scope="local" args="newscenenameorindex, blendmode">
+		if(webvr.isenabled AND scene.count GT 1,
+			set(hotspot[skin_webvr_prev_scene].visible, false);
+			set(hotspot[skin_webvr_next_scene].visible, false);
+		);
+		disable_kitchen_combo();
+		
+		calc(layer[skin_thumbborder].parent, 'skin_thumb_' + scene[get(newscenenameorindex)].index);
+		layer[skin_thumbs].scrolltocenter(get(scene[get(newscenenameorindex)].thumbx), get(scene[get(newscenenameorindex)].thumby));
+		loadscene(get(scene[get(newscenenameorindex)].name), null, get(skin_settings.loadscene_flags), get(blendmode));
+		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+		
+	</action>
+	
+	<action name="generate_floorspots" autorun="onstart" scope="local">
+		set(floorheight, 160.0);
+		for(set(i,0), i LT style.count, inc(i),
+			if (style[get(i)].autohotspot == true,
+				copy(st, style[get(i)]);
+				addhotspot(calc('hotspot_' + (i+1)), hs);
+				hs.loadstyle(floorspot);
+				copy(hs.tx, st.ox);
+				copy(hs.tz, st.oz);
+				calc(hs.ty, floorheight + 1.0*st.oy - 1.0);
+				copy(hs.linkedscene, st.linkedscene);
+			);
+		);
+	</action>
+	
+	<style name="floorspot" keep="true" type="text"
+		css="font-size:20px;text-align:center;" vcenter="true"
+		width="200" height="200" scale="0.15"
+		bgroundedge="100" bgborder="2 0x000000 1" bgshadow="0 0 5 0xFFFFFF 1.0"
+		oversampling="2" mipmapping="true" zorder="1"
+		distorted="true" depth="0" depthbuffer="true"
+		torigin="world" rotationorder="xyz" rx="-90"
+		xalpha="0"
+		alpha="0.3"
+		onover.addevent="tween(scale,0.16); tween(alpha,0.6);"
+		onout.addevent="tween(scale,0.15); tween(alpha,0.3);"
+		onclick="floorspot_onclick();"
+		enabled="false"
+		visible="false"
+		/>
+	
+	<action name="floorspot_onclick" scope="local">
+		
+		if(xml.scene != caller.linkedscene,
+			loadscene(get(caller.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+		);
+		
+		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+		disable_kitchen_combo();
+	</action>
+	
+	<events onclick="check_navigation();"/>
+	
+	
+	
+	<action name="check_navigation">
+		
+		screentosphere(mouse.x, mouse.y, mouse_hlookat, mouse_vlookat);
+		mod(mouse_hlookat,360);
+		if(mouse_hlookat LT 0,
+			add(mouse_hlookat,360));
+		
+		copy(v, global.view);
+			for(set(i,0), i LT style.count, inc(i),
+				indexoftxt(is_movable_hotspot, get(style[get(i)].name), 'scene_');
+				
+				if(is_movable_hotspot == 0,
+					copy(hs, style[get(i)]);
+					copy(x,hs.ox);
+					copy(y,hs.oy);
+					copy(z,hs.oz);
+					
+					sub(xlength,x,v.tx);
+					sub(zlength,z,v.tz);
+					
+					Math.atan2(hg,xlength,zlength);
+					mul(hg,180);
+					div(hg,Math.pi);
+					if(hg LT 0,
+						add(hg,360));
+					
+					calc(distance,sqrt(pow(xlength,2)+pow(zlength,2)));
+					sub(height,get(y),v.ty);
+					
+					Math.atan2(vg,height,distance);
+					
+					mul(vg,180);
+					div(vg,Math.pi);
+					
+					<!-- Check if close to mouse click -->
+					calc(angle_hdiff, abs(hg - mouse_hlookat));
+					calc(angle_vdiff, abs(vg - mouse_vlookat));
+					
+					if(image.angle_tolerance === null,
+						set(angle_tolerance,30);
+						,
+						copy(angle_tolerance,image.angle_tolerance);
+					);
+					if(image.vangle_tolerance === null,
+						set(vangle_tolerance,30);
+						,
+						copy(vangle_tolerance,image.vangle_tolerance);
+					);
+					
+					if(angle_hdiff LE angle_tolerance AND angle_vdiff LE vangle_tolerance AND distance LE 600 AND distance GT 0,
+						
+						indexoftxt(is_allowed,get(image.allowed),get(hs.name));
+						if(is_allowed != -1,
+							if (winner !== null,
+								if(distance LE winnerdistance,
+									copy(winnerdistance,distance);
+									copy(winner,hs);
+								);
+								,
+								copy(winnerdistance,distance);
+								copy(winner,hs);
+							);
+						);
+					);
+				);
+				
+				
+				
+			);
+			if (winner !== null,
+				disable_kitchen_combo();
+				if(xml.scene != winner.linkedscene,
+					loadscene(get(winner.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+				);
+				tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), calc(winnerdistance*0.005), default);
+				,
+				<!-- If no winner attempt to move and fail -->
+				
+			);
+			delete(winner);
+			delete(winnerdistance);
+			
+			
+	</action>
+	
+	<!-- Just copy it. Don't fight with this.
+	<action name="getangles" scope="local" args="hangle, vangle, x, y, z">
+		copy(v, global.view);
+		
+		sub(xlength,get(x),v.tx);
+		sub(zlength,get(z),v.tz);
+		
+		Math.atan2(hg,xlength,zlength);
+		mul(hg,180);
+		div(hg,Math.pi);
+		if(hg LT 0,
+			add(hg,360));
+		
+		calc(distance,sqrt(pow(xlength,2)+pow(zlength,2)));
+		sub(height,get(y),v.ty);
+		
+		Math.atan2(vg,height,distance);
+		
+		mul(vg,180);
+		div(vg,Math.pi);
+	</action>
+	-->
+	<style name="depthmapsettings" background="none" />
+	<display depthmaprendermode="depthmap" /> <!-- Or depth -->
+
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+	</action>
+	
+	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
+	
+	<scene name="scene_1_entrada2" title="Entrada" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/1_entrada2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_1">
+			<cube url="panos/1_entrada2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth1.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_1">
+			<cube url="panos/1_entrada2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth1.png" enabled ="true" scale="0.7" offset="0"/>
+		</image>
+		
+	</scene>
+
+	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="" style="kitchen_combo">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/2_cocina2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+			<cube url="panos/2_cocina2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth2.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+			<cube url="panos/2_cocina2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth2.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+	</scene>
+	
+	<include url="cambio_materiales.xml" />
+	
+	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" >
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/4_cuarto_tv2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2" >
+			<cube url="panos/4_cuarto_tv2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" style="scene_2"/>
+			<depthmap url="depthmaps/depth4.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
+			<cube url="panos/4_cuarto_tv2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth4.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="50%" y="50%" align="rightbottom" scale="0.09" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" 
+		onloaded="tween(layer[filter].x|layer[filter].y,1%|15%,3.0, default);"/>
+		
+	</scene>
+	
+	<scene name="scene_4_piso_claro" title="Piso Claro" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/01_piso_claro.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
+			<cube url="panos/01_piso_claro.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
+			<cube url="panos/01_piso_claro.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))"/>
+	</scene>
+	
+	<scene name="scene_4_piso_caramelo" title="Piso Caramelo" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/02_piso_caramelo.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/02_piso_caramelo.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
+			<cube url="panos/02_piso_caramelo.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
+			<cube url="panos/02_piso_caramelo.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
+		onclick="loadscene(scene_4_piso_cafe,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))"/>
+
+	</scene>
+
+	<scene name="scene_4_piso_cafe" title="Piso Café" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/03_piso_cafe.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/03_piso_cafe.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
+			<cube url="panos/03_piso_cafe.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" style="scene_4" />
+			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
+			<cube url="panos/03_piso_cafe.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
+		onclick="loadscene(scene_4_piso_claro,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))"/>
+	</scene>
+	
+	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/3_sala_comedor2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_3">
+			<cube url="panos/3_sala_comedor2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth3.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_3">
+			<cube url="panos/3_sala_comedor2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth3.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<hotspot name="etiqueta" style="golden_highlight" onclick="showetiqueta()">
+			<point ath="90.1" atv="29.39" />
+			<point ath="90.53" atv="33.23" />
+			<point ath="98.01" atv="31.99" />
+			<point ath="97.68" atv="28.51" />
+		</hotspot>
+		
+		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
+		onclick="tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false)" />
+		
+		<hotspot name="window_hitbox" style="golden_highlight" 
+		onclick="tween(layer[window_vista].alpha,1);set(layer[window_vista].enabled,true);">
+			<point ath="-167" atv="15.58" />
+			<point ath="-167.24" atv="-9.25" />
+			<point ath="-143.42" atv="-7.57" />
+			<point ath="-143.37" atv="12.9" />
+		</hotspot>
+
+	</scene>
+
+	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/5_estudio2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_5">
+			<cube url="panos/5_estudio2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth5.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_5">
+			<cube url="panos/5_estudio2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth5.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<hotspot name="etiqueta" style="golden_highlight" onclick="showetiqueta()">
+			<point ath="50.83" atv="-8.27" />
+			<point ath="58.43" atv="-8.8" />
+			<point ath="57.88" atv="-4.09" />
+			<point ath="50.35" atv="-3.78" />
+		</hotspot>
+		
+	</scene>
+	
+	<scene name="scene_pasillo1" title="Pasillo - Baño" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/12.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_11">
+			<cube url="panos/12.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth11.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_11">
+			<cube url="panos/12.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth11.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_6_ba__o_pasillo2" title="Baño " onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/6_ba__o_pasillo2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/6_ba__o_pasillo2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_6">
+			<cube url="panos/6_ba__o_pasillo2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth6.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_6">
+			<cube url="panos/6_ba__o_pasillo2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth6.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_pasillo2" title="Pasillo - Cuartos" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/22.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/22.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_12">
+			<cube url="panos/22.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280"/>
+			<depthmap url="depthmaps/depth12.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_12">
+			<cube url="panos/22.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth12.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_7_cuarto_secundario_22" title="Cuarto Secundario 2" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/7_cuarto_secundario_22.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/7_cuarto_secundario_22.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_7">
+			<cube url="panos/7_cuarto_secundario_22.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth7.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_7">
+			<cube url="panos/7_cuarto_secundario_22.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth7.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	<scene name="scene_8_cuarto_secundario_12" title="Cuarto Secundario 1" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/8_cuarto_secundario_12.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/8_cuarto_secundario_12.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_8">
+			<cube url="panos/8_cuarto_secundario_12.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth8.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_8">
+			<cube url="panos/8_cuarto_secundario_12.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth8.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+		
+		<hotspot name="closet" style="golden_highlight" linkedscene="scene_closet1">
+			<point ath="-5.96" atv="26.34"/>
+			<point ath="14.45" atv="25.98"/>
+			<point ath="15" atv="-27.01"/>
+			<point ath="31.83" atv="-24.25"/>
+			<point ath="32.26" atv="41.47"/>
+			<point ath="-5.86" atv="45.96"/>
+		</hotspot>
+		
+	</scene>
+	
+	<scene name="scene_closet1" title="Cuarto Secundario 1 - Closet" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/closet1.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/closet1.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_13">
+			<cube url="panos/closet1.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth13.png" enabled ="true" scale="0.7" offset="0"/> 
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_13">
+			<cube url="panos/closet1.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth13.png" enabled ="true" scale="0.7" offset="0"/> 
+		</image>
+		
+	</scene>
+	
+	
+	<scene name="scene_10_ba__o_habitacion_principal2" title="Habitación Principal" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/10_ba__o_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/10_ba__o_habitacion_principal2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_9">
+			<cube url="panos/10_ba__o_habitacion_principal2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth9.png" enabled ="true" scale="0.7" offset="0"/> 
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_9">
+			<cube url="panos/10_ba__o_habitacion_principal2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth9.png" enabled ="true" scale="0.7" offset="0"/> 
+		</image>
+
+	</scene>
+
+	<scene name="scene_9_habitacion_principal2" title="Baño - Habitación Principal" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/9_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/9_habitacion_principal2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_10">
+			<cube url="panos/9_habitacion_principal2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
+			<depthmap url="depthmaps/depth10.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_10">
+			<cube url="panos/9_habitacion_principal2.tiles/vr/pano_%t_%s.jpg" />
+			<depthmap url="depthmaps/depth10.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
+		</image>
+
+	</scene>
+	
+	
+	
+	
+
+
+</krpano>
