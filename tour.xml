@@ -77,7 +77,10 @@
 	       />
 		   
 	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="5%" align="rightbottom" scale="0.1" 
-	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);"/>
+	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="desktop"/>
+	
+	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="10%" align="rightbottom" scale="0.05" 
+	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="handheld"/>
 	
 	<layer name="InfoBox" enabled="false" type="container" keep="true" align="center" width="250" height="250" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" 
 	onclick="tween(layer[InfoBox].bgalpha,0);tween(layer[InfoBox_txt1].alpha,0);set(layer[InfoBox].enabled,false);"
@@ -194,7 +197,15 @@
 	</combobox>
 	
 	<combobox name="kitchen_combo2" design="vtour" align="lefttop" x="20%" y="2%" onchange="selectItemByName(0);" enabled="false" 
-	alpha="0">
+	alpha="0" devices="desktop">
+		<item name="item0" caption="ACABADO COCINA - MADERA" />
+		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
+		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
+		<item name="item3" caption="Oscura"        onclick="change_madera(oscura);" />
+	</combobox>
+	
+	<combobox name="kitchen_combo2" design="vtour" align="righttop" x="20%" y="2%" onchange="selectItemByName(0);" enabled="false" 
+	alpha="0" devices="handheld">
 		<item name="item0" caption="ACABADO COCINA - MADERA" />
 		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
 		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
@@ -488,7 +499,11 @@
 		
 		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="50%" y="50%" align="rightbottom" scale="0.09" 
 		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" 
-		onloaded="tween(layer[filter].x|layer[filter].y,1%|15%,3.0, default);"/>
+		onloaded="tween(layer[filter].x|layer[filter].y,1%|15%,3.0, default);" devices="desktop"/>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="50%" y="50%" align="rightbottom" scale="0.05" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" 
+		onloaded="tween(layer[filter].x|layer[filter].y,1%|20%,3.0, default);" devices="handheld"/>
 		
 	</scene>
 	
@@ -509,7 +524,10 @@
 		</image>
 		
 		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))"/>
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="desktop"/>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="20%" align="rightbottom" scale="0.05" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_4_piso_caramelo" title="Piso Caramelo" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/02_piso_caramelo.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -529,7 +547,10 @@
 		</image>
 		
 		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_cafe,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))"/>
+		onclick="loadscene(scene_4_piso_cafe,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="desktop"/>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="20%" align="rightbottom" scale="0.05" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="handheld"/>
 
 	</scene>
 
@@ -550,7 +571,10 @@
 		</image>
 		
 		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_claro,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))"/>
+		onclick="loadscene(scene_4_piso_claro,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="desktop"/>
+		
+		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="20%" align="rightbottom" scale="0.05" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="">
