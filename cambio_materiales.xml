@@ -111,7 +111,7 @@
 
 	</scene>
 	
-	<scene name="scene_4_madera_oscura_meson_gris" title="11_cocina_matriales_g" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/11_cocina_matriales_g.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_4_madera_oscura_meson_gris" title="Cocina Acabado G" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/11_cocina_matriales_g.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -129,7 +129,7 @@
 
 	</scene>
 
-	<scene name="scene_4_madera_oscura_meson_blanco" title="12_cocina_matriales_h" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12_cocina_matriales_h.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_4_madera_oscura_meson_blanco" title="Cocina Acabado H" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12_cocina_matriales_h.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -147,7 +147,7 @@
 
 	</scene>
 
-	<scene name="scene_4_madera_oscura_meson_negro" title="13_cocina_matriales_i" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/13_cocina_matriales_i.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_4_madera_oscura_meson_negro" title="Cocina Acabado I" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/13_cocina_matriales_i.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
