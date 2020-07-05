@@ -18,7 +18,12 @@
 			<cube url="panos/05_cocina_matriales_a.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" 
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(blanco)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(clara)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 
 	<scene name="scene_4_madera_neutra_meson_blanco" title="Cocina Acabado B" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/materialb.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -36,7 +41,11 @@
 			<cube url="panos/materialb.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(negro)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(clara)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 	<scene name="scene_4_madera_neutra_meson_negro" title="Cocina Acabado C" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/07_cocina_matriales_c.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -54,7 +63,12 @@
 			<cube url="panos/07_cocina_matriales_c.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" 
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(gris)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(clara)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 	<scene name="scene_4_madera_clara_meson_gris" title="Cocina Acabado D" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/materiallld.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -72,7 +86,12 @@
 			<cube url="panos/materiallld.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" 
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(blanco)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(oscura)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 	<scene name="scene_4_madera_clara_meson_blanco" title="Cocina Acabado E" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/09_cocina_matriales_e.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -90,7 +109,12 @@
 			<cube url="panos/09_cocina_matriales_e.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" 
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(negro)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(oscura)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 	<scene name="scene_4_madera_clara_meson_negro" title="Cocina Acabado F" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/materiallf.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -108,7 +132,12 @@
 			<cube url="panos/materiallf.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" 
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(gris)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(oscura)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 	<scene name="scene_4_madera_oscura_meson_gris" title="Cocina Acabado G" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/11_cocina_matriales_g.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -126,7 +155,12 @@
 			<cube url="panos/11_cocina_matriales_g.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" 
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(blanco)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(neutra)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 
 	<scene name="scene_4_madera_oscura_meson_blanco" title="Cocina Acabado H" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12_cocina_matriales_h.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -144,7 +178,12 @@
 			<cube url="panos/12_cocina_matriales_h.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2"
+		if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(negro)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(neutra)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 
 	<scene name="scene_4_madera_oscura_meson_negro" title="Cocina Acabado I" style="kitchen_combo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/13_cocina_matriales_i.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -162,7 +201,11 @@
 			<cube url="panos/13_cocina_matriales_i.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2_materials.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
-
+		
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2" if="webvr.isenabled OR device.mobilevr"/>
+		
+		<hotspot name="spot2" ath="-149.0" atv="18.36" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_meson(gris)" if="(webvr.isenabled OR device.mobilevr)"/>
+		<hotspot name="spot3" ath="-153.0" atv="55.45" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="change_madera(neutra)" if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 </krpano>
