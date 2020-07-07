@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
 	
 	<include url="skin/vtourskin.xml" />
@@ -471,7 +471,7 @@
 	
 	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
 	
-	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="enable_floor_ui();">
+	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -495,15 +495,44 @@
 		<hotspot name="spot3" style="visual_floorspot" tx="180" ty="150" tz="-250" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="89" atv="3" 
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="82" atv="5" 
 		scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
 		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" devices="desktop"/>
 		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="89" atv="3" 
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="82" atv="5" 
 		scale="0.08" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
 		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" devices="handheld"/>
+		
+		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-160.0" atv="40" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="switch_floor_ui(1);"  devices="desktop"/>
+		
+		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-160.0" atv="40" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="switch_floor_ui(1)"  devices="handheld"/>
+		
+		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
+		onclick="remove_images();" devices="desktop"/>
+		
+		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.1" url="vista_bogota.jpg"
+		onclick="remove_images();" devices="handheld"/>
+		
+		<hotspot name="window_hitbox" capture="false" borderalpha="0" fillalpha="0"
+		onover="set(hotspot[window_icon].url,%VIEWER%/icons/windowsighton.png)"
+		onout="set(hotspot[window_icon].url,%VIEWER%/icons/windowsightoff.png)"
+		onclick="tween(layer[window_vista].alpha,1);set(layer[window_vista].enabled,true);enable_dummy_remover();">
+			<point ath="155.82" atv="6.51" />
+			<point ath="155.84" atv="-7.47" />
+			<point ath="-178.54" atv="-8.14" />
+			<point ath="-178" atv="7.28" />
+		</hotspot>
+				
+		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.15" ath="169" atv="1.11" devices="desktop"/>
+		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="169" atv="1.11" devices="handheld"/>
 	</scene>
 
 	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -522,12 +551,12 @@
 			<depthmap url="depthmaps/depth2.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="124.0" atv="7" 
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="116.0" atv="11" 
 		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
 		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="desktop"/>
 		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="124.0" atv="7" 
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="116.0" atv="11" 
 		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
 		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="handheld"/>
@@ -537,11 +566,30 @@
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" ath="-145.959" atv="37.437" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_clara_meson_gris" onclick="floorspot_onclick" if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot3" ath="-147.959" atv="22.32" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="floorspot_onclick" if="(webvr.isenabled OR device.mobilevr)"/>
+		
+		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
+		onclick="remove_images();" devices="desktop"/>
+		
+		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.1" url="vista_bogota.jpg"
+		onclick="remove_images();" devices="handheld"/>
+		
+		<hotspot name="window_hitbox" capture="false" borderalpha="0" fillalpha="0"
+		onover="set(hotspot[window_icon].url,%VIEWER%/icons/windowsighton.png)"
+		onout="set(hotspot[window_icon].url,%VIEWER%/icons/windowsightoff.png)"
+		onclick="tween(layer[window_vista].alpha,1);set(layer[window_vista].enabled,true);enable_dummy_remover();">
+			<point ath="179.1" atv="5.75" />
+			<point ath="178.84" atv="-6.66" />
+			<point ath="-160.23" atv="-6.11" />
+			<point ath="-160.34" atv="5.49" />
+		</hotspot>
+				
+		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="180" atv="1.11" devices="desktop"/>
+		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.08" ath="180" atv="1.11" devices="handheld"/>
 	</scene>
 	
 	<include url="cambio_materiales.xml" />
 	
-	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="enable_floor_ui();">
+	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -563,6 +611,18 @@
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot3" url="filter_icon.png" scale="0.05" ath="28.386" atv="39.190" linkedscene="scene_4_piso_caramelo" onclick="floorspot_onclick" 
 		if="(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="55.65" atv="45" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="switch_floor_ui(1);"  devices="desktop"/>
+		
+		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="55.65" atv="45" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="switch_floor_ui(1)"  devices="handheld"/>
+		
+		
 	</scene>
 	
 	<scene name="scene_4_piso_claro" title="Piso Claro" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(1,on);enable_floor_ui();">
@@ -638,7 +698,7 @@
 	</scene>
 	
 	
-	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="enable_floor_ui();">
+	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -687,6 +747,16 @@
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot3" style="visual_floorspot" tx="400" ty="130" tz="-50" keep="false" visible="true" enabled="true" linkedscene="scene_5_estudio2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-90" atv="45" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="switch_floor_ui(1);"  devices="desktop"/>
+		
+		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-90" atv="45" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="switch_floor_ui(1)"  devices="handheld"/>
 	</scene>
 
 	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
