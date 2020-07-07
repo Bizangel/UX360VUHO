@@ -7,8 +7,8 @@
 	<layer name="material_ui_text_meson" keep="true" style="material_ui_text" align="center" x="-20%" y="+35%" html="MESON" alpha="0" devices="desktop"/>
 	<layer name="material_ui_text_madera" keep="true" style="material_ui_text" align="center" x="+20%" y="+35%" html="MADERA" alpha="0" devices="desktop"/>
 	
-	<layer name="material_ui_text_meson" keep="true" style="material_ui_text_small" align="center" x="-10%" y="+28%" html="MESON" alpha="0" devices="handheld"/>
-	<layer name="material_ui_text_madera" keep="true" style="material_ui_text_small" align="center" x="+10%" y="+28%" html="MADERA" alpha="0" devices="handheld"/>
+	<layer name="material_ui_text_meson" keep="true" style="material_ui_text_small" align="center" x="-10%" y="+30%" html="MESON" alpha="0" devices="handheld"/>
+	<layer name="material_ui_text_madera" keep="true" style="material_ui_text_small" align="center" x="+10%" y="+30%" html="MADERA" alpha="0" devices="handheld"/>
 	<action name="change_meson" scope="local" args="mesoncolor">
 		
 		copy(curr_name,xml.scene);
@@ -85,11 +85,11 @@
 	<layer name="mesonui3" type="image" url="%VIEWER%/icons/meson3off.png" keep="true" x="-5%" y="35%" align="centered" scale="0.09" 
 		onclick="change_meson(negro);" enabled="false" alpha="0" devices="desktop"/>
 		
-	<layer name="mesonui1" type="image" url="%VIEWER%/icons/meson1off.png" keep="true" x="2%" y="17%" align="rightbottom" scale="0.05" 
+	<layer name="mesonui1" type="image" url="%VIEWER%/icons/meson1off.png" keep="true" x="2%" y="17%" align="leftbottom" scale="0.05" 
 		onclick="change_meson(blanco);" enabled="false" alpha="0" devices="handheld"/>
-	<layer name="mesonui2" type="image" url="%VIEWER%/icons/meson2off.png" keep="true" x="10%" y="17%" align="rightbottom" scale="0.05" 
+	<layer name="mesonui2" type="image" url="%VIEWER%/icons/meson2off.png" keep="true" x="10%" y="17%" align="leftbottom" scale="0.05" 
 		onclick="change_meson(gris);" enabled="false" alpha="0" devices="handheld"/>
-	<layer name="mesonui3" type="image" url="%VIEWER%/icons/meson3off.png" keep="true" x="18%" y="17%" align="rightbottom" scale="0.05" 
+	<layer name="mesonui3" type="image" url="%VIEWER%/icons/meson3off.png" keep="true" x="18%" y="17%" align="leftbottom" scale="0.05" 
 		onclick="change_meson(negro);" enabled="false" alpha="0" devices="handheld"/>
 		
 	<layer name="maderaui1" type="image" url="%VIEWER%/icons/madera1off.png" keep="true" x="5%" y="35%" align="centered" scale="0.09" 
@@ -99,11 +99,11 @@
 	<layer name="maderaui3" type="image" url="%VIEWER%/icons/madera3off.png" keep="true" x="15%" y="35%" align="centered" scale="0.09" 
 		onclick="change_madera(oscura);" enabled="false" alpha="0" devices="desktop"/>
 		
-	<layer name="maderaui1" type="image" url="%VIEWER%/icons/madera1off.png" keep="true" x="2%" y="17%" align="leftbottom" scale="0.05" 
+	<layer name="maderaui1" type="image" url="%VIEWER%/icons/madera1off.png" keep="true" x="2%" y="17%" align="rightbottom" scale="0.05" 
 		onclick="change_madera(clara);" enabled="false" alpha="0" devices="handheld"/>
-	<layer name="maderaui2" type="image" url="%VIEWER%/icons/madera2off.png" keep="true" x="10%" y="17%" align="leftbottom" scale="0.05" 
+	<layer name="maderaui2" type="image" url="%VIEWER%/icons/madera2off.png" keep="true" x="10%" y="17%" align="rightbottom" scale="0.05" 
 		onclick="change_madera(neutra);" enabled="false" alpha="0" devices="handheld"/>
-	<layer name="maderaui3" type="image" url="%VIEWER%/icons/madera3off.png" keep="true" x="18%" y="17%" align="leftbottom" scale="0.05" 
+	<layer name="maderaui3" type="image" url="%VIEWER%/icons/madera3off.png" keep="true" x="18%" y="17%" align="rightbottom" scale="0.05" 
 		onclick="change_madera(oscura);" enabled="false" alpha="0" devices="handheld"/>
 	
 	<!-- SCENES -->
