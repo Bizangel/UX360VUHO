@@ -104,7 +104,9 @@
 	
 	
 	
-	<include url="plugins/combobox.xml" />
+	
+	<include url="plugins/material_selector.xml" />
+	
 	<action name="setInitialPosition" autorun="onstart" >
 
         for(set(i,0), i LT style.count, inc(i),
@@ -118,18 +120,38 @@
         
     </action>
 	
-	
-
-
-	
 	<include url="plugins/tour_edithelper.xml" if="0" />
 	<include url="plugins/depthmap_navigation.xml" if="0"/>
+	<include url="%VIEWER%/plugins/fps.xml" if="0" />
 	
 	<style name="golden_highlight" fillcolor="0x820505" bordercolor="0xe0d12b" fillalpha="0" borderalpha="0"
-		onover="borderalphatween1()"
-		onout="borderalphatween0()"
+		onloaded="setintervalflash();"
+		onover="borderalphatween1();clearintervalflash();"
+		onout="borderalphatween0();setintervalflash();"
 		onclick="skin_hotspotstyle_click();"
+		flashingout="false"
 		/>
+		
+	<action name="setintervalflash" scope="local">
+		setinterval(calc('flashid' + caller.name),1.1,
+			if(caller.flashingout == true,
+				tween(caller.borderalpha,0,1);
+				,
+				tween(caller.borderalpha,.6,1);
+			);
+			
+			if(caller.borderalpha GE .6, 
+				set(caller.flashingout,true);
+			);
+			
+			if(caller.borderalpha LE 0, 
+				set(caller.flashingout,false);
+			);
+		);
+	</action>
+	<action name="clearintervalflash" scope="local">
+		clearinterval(calc('flashid' + caller.name));
+	</action>
 	<action name="borderalphatween1" scope="local">
 		tween(hotspot[get(caller.name)].borderalpha,1);
 	</action>
@@ -138,20 +160,35 @@
 		tween(hotspot[get(caller.name)].borderalpha,0);
 	</action>
 	
+	<layer name="Dummy_Remover" enabled="false" type="container" keep="true" align="center" width="5000" height="5000" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" capture="false" handcursor="false"
+	onclick="remove_images();"/>
+	
+	<action name="remove_images" scope="local">
+		tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false);
+		tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);
+		set(layer[Dummy_Remover].enabled,false);
+	</action>
+	
+	<action name="enable_dummy_remover" scope="local">
+		set(layer[Dummy_Remover].enabled,true);
+	</action>
+	
+	
 	
 	<!-- Show Etiqueta -->
 	<action name="showetiqueta" scope="local">
 		
 		set(layer[etiqueta_notincluded].enabled,true);
 		tween(layer[etiqueta_notincluded].alpha,1);
+		enable_dummy_remover();
 	</action>
 	
 	<layer name="etiqueta_notincluded" keep="true" type="image" alpha="0" enabled="false" visible="true" align="center" scale="0.3" url="etiqueta.png"
-	onclick="tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);" devices="desktop">
+	onclick="remove_images();" devices="desktop">
 	</layer>
 	
 	<layer name="etiqueta_notincluded" keep="true" type="image" alpha="0" enabled="false" visible="true" align="center" scale="0.15" url="etiqueta.png"
-	onclick="tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);" devices="handheld">
+	onclick="remove_images();" devices="handheld">
 	
 	</layer>
 	<!-- TESTING NAVIGATOR MOVE CLICKDOWN -->
@@ -193,69 +230,7 @@
 	allowed="scene_12" angle_tolerance="20"/>
 	
 	
-	<combobox name="kitchen_combo1" design="vtour" align="lefttop" x="2%" y="2%" onchange="selectItemByName(0);" enabled="false" 
-	alpha="0">
-		<item name="item0" caption="ACABADO - MESON" />
-		<item name="item1" caption="Gris"       onclick="change_meson(gris);" />
-		<item name="item2" caption="Blanco"       onclick="change_meson(blanco);;" />
-		<item name="item3" caption="Negro"        onclick="change_meson(negro);" />
-	</combobox>
-	
-	<combobox name="kitchen_combo2" design="vtour" align="lefttop" x="11%" y="2%" onchange="selectItemByName(0);" enabled="false" 
-	alpha="0" devices="desktop">
-		<item name="item0" caption="ACABADO - MADERA" />
-		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
-		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
-		<item name="item3" caption="Oscura"        onclick="change_madera(oscura);" />
-	</combobox>
-	
-	<combobox name="kitchen_combo2" design="vtour" align="righttop" x="10%" y="2%" onchange="selectItemByName(0);" enabled="false" 
-	alpha="0" devices="handheld">
-		<item name="item0" caption="ACABADO - MADERA" />
-		<item name="item1" caption="Neutra"       onclick="change_madera(neutra);" />
-		<item name="item2" caption="Clara"       onclick="change_madera(clara);" />
-		<item name="item3" caption="Oscura"        onclick="change_madera(oscura);" />
-	</combobox>
-	
 	<!-- Enables kitchen combo, and breaks it everytime you got outside of kitchen -->
-	<style name="kitchen_combo" onstart="enable_kitchen_combo()"/>
-		
-	<action name="change_meson" scope="local" args="mesoncolor">
-		
-		copy(curr_name,xml.scene);
-		if(get(curr_name) == 'scene_2_cocina2',
-			loadscene(calc('scene_4_madera_neutra_meson_' + mesoncolor),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
-			,
-			indexoftxt(i,get(curr_name),'meson');
-			add(i,6);
-			loadscene(calc(slice(curr_name,0,i) + mesoncolor),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
-		);
-	</action>
-	
-	<action name="change_madera" scope="local" args="maderacolor">
-		copy(curr_name,xml.scene);
-		if(get(curr_name) == 'scene_2_cocina2',
-			loadscene(calc('scene_4_madera_' + maderacolor +  '_meson_gris'),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
-			,
-			indexoftxt(i,get(curr_name),'_meson');
-			loadscene(calc('scene_4_madera_' + maderacolor + slice(curr_name,i,curr_name.length)),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
-		);
-	</action>
-	
-	<action name="enable_kitchen_combo" scope="local">
-		set(layer[kitchen_combo1].enabled,true);
-		set(layer[kitchen_combo1].alpha,1);
-		set(layer[kitchen_combo2].enabled,true);
-		set(layer[kitchen_combo2].alpha,1);
-	</action>
-	
-	<action name="disable_kitchen_combo" scope="local">
-		set(layer[kitchen_combo1].enabled,false);
-		set(layer[kitchen_combo1].alpha,0);
-		set(layer[kitchen_combo2].enabled,false);
-		set(layer[kitchen_combo2].alpha,0);
-	</action>
-	
 	
 	<style name="depthmap_info" type="text" css="color:#FFFFFF;text-align:center;" bg="false" txtshadow="0 1 4 0x000000 1.0" enabled="false" />
 	
@@ -268,6 +243,15 @@
 		trace(" ",%1);
 	</action>
 	
+	<events onkeydown="debug_print();"/>
+	
+	<action name="debug_print">
+		if(keycode == 89,
+			print(path);
+			print(get(iconpath));
+		);
+	</action>
+	
 	<events webvr_onentervr="reload_current_scene();" webvr_onexitvr="reload_current_scene();" />
 	
 	<action name="reload_current_scene">
@@ -275,7 +259,8 @@
 		loadscene(get(curr_name),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 		
 		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		disable_kitchen_combo();
+		off_all_floor_ui();
+		disable_material_ui();
 	</action>
 	
 	<!-- Overload Tour Loading so it keeps coordinates and has nice animation 
@@ -285,7 +270,9 @@
 			set(hotspot[skin_webvr_prev_scene].visible, false);
 			set(hotspot[skin_webvr_next_scene].visible, false);
 		);
-		disable_kitchen_combo();
+		
+		off_all_floor_ui();
+		disable_material_ui();
 		
 		calc(layer[skin_thumbborder].parent, 'skin_thumb_' + scene[get(newscenenameorindex)].index);
 		layer[skin_thumbs].scrolltocenter(get(scene[get(newscenenameorindex)].thumbx), get(scene[get(newscenenameorindex)].thumby));
@@ -341,6 +328,16 @@
 		visible="true"
 		/>
 		
+	<action name="tour_loadscene" scope="local" args="scenename">
+		
+		off_all_floor_ui();
+		disable_material_ui();
+		if(xml.scene != scenename,
+			loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+		);
+		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+		
+	</action>
 	<action name="floorspot_onclick" scope="local">
 		
 		if(xml.scene != caller.linkedscene,
@@ -348,7 +345,9 @@
 		);
 		
 		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		disable_kitchen_combo();
+		
+		off_all_floor_ui();
+		disable_material_ui();
 	</action>
 	
 	<events onclick="check_navigation();"/>
@@ -425,11 +424,14 @@
 				
 			);
 			if (winner !== null,
-				disable_kitchen_combo();
+				
+				off_all_floor_ui();
+				disable_material_ui();
 				if(xml.scene != winner.linkedscene,
 					loadscene(get(winner.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 				);
 				tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), calc(winnerdistance*0.005), default);
+				
 				,
 				<!-- If no winner attempt to move and fail -->
 				
@@ -474,7 +476,7 @@
 	
 	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
 	
-	<scene name="scene_1_entrada2" title="Entrada" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="enable_floor_ui();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -498,9 +500,13 @@
 		<hotspot name="spot3" style="visual_floorspot" tx="180" ty="150" tz="-250" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="89" atv="3" 
+		scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" />
 	</scene>
 
-	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="" style="kitchen_combo">
+	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -516,6 +522,11 @@
 			<depthmap url="depthmaps/depth2.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="124.0" atv="7" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  />
+		
 		<hotspot name="spot1" style="visual_floorspot" tx="10" ty="150" tz="0" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" ath="-145.959" atv="37.437" url="filter_icon.png" scale="0.05" linkedscene="scene_4_madera_clara_meson_gris" onclick="floorspot_onclick" if="(webvr.isenabled OR device.mobilevr)"/>
@@ -524,7 +535,7 @@
 	
 	<include url="cambio_materiales.xml" />
 	
-	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" >
+	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="enable_floor_ui();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -540,14 +551,6 @@
 			<depthmap url="depthmaps/depth4.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="50%" y="50%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" 
-		onloaded="tween(layer[filter].x|layer[filter].y,1%|15%,3.0, default);" devices="desktop"/>
-		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="50%" y="50%" align="rightbottom" scale="0.05" 
-		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" 
-		onloaded="tween(layer[filter].x|layer[filter].y,1%|20%,3.0, default);" devices="handheld"/>
-		
 		<hotspot name="spot1" style="visual_floorspot" tx="-10" ty="150" tz="-40" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" style="visual_floorspot" tx="130" ty="130" tz="-200" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
@@ -556,7 +559,7 @@
 		if="(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
-	<scene name="scene_4_piso_claro" title="Piso Claro" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_4_piso_claro" title="Piso Claro" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(1,on);enable_floor_ui();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -572,12 +575,6 @@
 			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="desktop"/>
-		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="20%" align="rightbottom" scale="0.05" 
-		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="handheld"/>
-		
 		<hotspot name="spot1" style="visual_floorspot" tx="-48" ty="120" tz="-18" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" style="visual_floorspot" tx="92" ty="110" tz="-160" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
@@ -586,7 +583,7 @@
 		if="webvr.isenabled OR device.mobilevr"/>
 	</scene>
 	
-	<scene name="scene_4_piso_caramelo" title="Piso Caramelo" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/02_piso_caramelo.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_4_piso_caramelo" title="Piso Caramelo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/02_piso_caramelo.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(2,on);enable_floor_ui();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -602,12 +599,6 @@
 			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_cafe,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="desktop"/>
-		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="20%" align="rightbottom" scale="0.05" 
-		onclick="loadscene(scene_4_piso_cafe,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="handheld"/>
-		
 		<hotspot name="spot1" style="visual_floorspot" tx="-48" ty="120" tz="-18" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" style="visual_floorspot" tx="92" ty="110" tz="-160" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
@@ -616,7 +607,7 @@
 		if="webvr.isenabled OR device.mobilevr"/>
 	</scene>
 
-	<scene name="scene_4_piso_cafe" title="Piso Café" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/03_piso_cafe.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_4_piso_cafe" title="Piso Café" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/03_piso_cafe.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(3,on);enable_floor_ui();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -632,12 +623,6 @@
 			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="15%" align="rightbottom" scale="0.09" 
-		onclick="loadscene(scene_4_piso_claro,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="desktop"/>
-		
-		<layer name="filter" type="image" url="filter_icon.png" keep="false" x="1%" y="20%" align="rightbottom" scale="0.05" 
-		onclick="loadscene(scene_4_piso_claro,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" devices="handheld"/>
-		
 		<hotspot name="spot1" style="visual_floorspot" tx="-48" ty="120" tz="-18" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" style="visual_floorspot" tx="92" ty="110" tz="-160" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
@@ -646,7 +631,8 @@
 		if="webvr.isenabled OR device.mobilevr"/>
 	</scene>
 	
-	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="">
+	
+	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="enable_floor_ui();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -669,19 +655,25 @@
 			<point ath="97.68" atv="28.51" />
 		</hotspot>
 		
+		
+		
 		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
-		onclick="tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false)" devices="desktop"/>
+		onclick="remove_images();" devices="desktop"/>
 		
 		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.1" url="vista_bogota.jpg"
-		onclick="tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false)" devices="handheld"/>
+		onclick="remove_images();" devices="handheld"/>
 		
-		<hotspot name="window_hitbox" style="golden_highlight" 
-		onclick="tween(layer[window_vista].alpha,1);set(layer[window_vista].enabled,true);">
-			<point ath="-167" atv="15.58" />
-			<point ath="-167.24" atv="-9.25" />
-			<point ath="-143.42" atv="-7.57" />
-			<point ath="-143.37" atv="12.9" />
+		<hotspot name="window_hitbox" capture="false" borderalpha="0" fillalpha="0"
+		onover="set(hotspot[window_icon].url,%VIEWER%/icons/windowsighton.png)"
+		onout="set(hotspot[window_icon].url,%VIEWER%/icons/windowsightoff.png)"
+		onclick="tween(layer[window_vista].alpha,1);set(layer[window_vista].enabled,true);enable_dummy_remover();">
+			<point ath="177" atv="16.20" />
+			<point ath="177.41" atv="-17.72" />
+			<point ath="-134.51" atv="-12.98" />
+			<point ath="-134.65" atv="11.34" />
 		</hotspot>
+				
+		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.15" ath="-173.61" atv="1.43"/>
 		
 		<hotspot name="spot1" style="visual_floorspot" tx="20" ty="150" tz="-50" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>

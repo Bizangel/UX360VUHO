@@ -1,0 +1,65 @@
+<krpano>
+	<action name="floor_ui">
+		
+	</action>
+	
+	<!-- Visually sets the floor ui on and off 
+	param: val on/off -->
+	<action name="set_floor_ui" scope="local" args="nfloor, onoff">
+		calc(floorname_ui,'floor' + nfloor + 'ui');
+		copy(floorname,layer[get(floorname_ui)].url);
+		indexoftxt(i,get(floorname),'floor');
+		add(i,6);
+		calc(floorurlbase,slice(floorname,0,i));
+		calc(layer[get(floorname_ui)].url,floorurlbase+onoff+'.png');
+	</action>
+	
+	<action name="switch_floor_ui" scope="local" args="nfloor">
+		if(xml.scene == 'scene_4_cuarto_tv2' OR xml.scene == 'scene_3_sala_comedor2' OR xml.scene == 'scene_1_entrada2',
+			lookat(39.9,42.2);
+		);
+		
+		if(nfloor == 1,
+			set_floor_ui(1,on); set_floor_ui(2,off); set_floor_ui(3,off);
+			tour_loadscene(scene_4_piso_claro);
+		);
+		if(nfloor == 2,
+			set_floor_ui(2,on); set_floor_ui(1,off); set_floor_ui(3,off);
+			tour_loadscene(scene_4_piso_caramelo);
+		);
+		if(nfloor == 3,
+			set_floor_ui(3,on); set_floor_ui(1,off); set_floor_ui(2,off);
+			tour_loadscene(scene_4_piso_cafe);
+		);
+	</action>
+	
+	<action name="off_all_floor_ui" scope="local">
+		set_floor_ui(1,off); set_floor_ui(2,off); set_floor_ui(3,off);
+		set(layer[floor1ui].enabled,false); tween(layer[floor1ui].alpha,0);
+		set(layer[floor2ui].enabled,false); tween(layer[floor2ui].alpha,0);
+		set(layer[floor3ui].enabled,false); tween(layer[floor3ui].alpha,0);
+	</action>
+	
+	<action name="enable_floor_ui" scope="local">
+		set(layer[floor1ui].enabled,true); tween(layer[floor1ui].alpha,1);
+		set(layer[floor2ui].enabled,true); tween(layer[floor2ui].alpha,1);
+		set(layer[floor3ui].enabled,true); tween(layer[floor3ui].alpha,1);
+	</action>
+	
+	
+	
+	<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" keep="true" x="-5%" y="35%" align="centered" scale="0.09" 
+		onclick="switch_floor_ui(1);" enabled="false" alpha="0"/>
+	
+	<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" keep="true" x="0%" y="35%" align="centered" scale="0.09" 
+		onclick="switch_floor_ui(2);"  enabled="false" alpha="0"/>
+	
+	<layer name="floor3ui" type="image" url="%VIEWER%/icons/floor3off.png" keep="true" x="5%" y="35%" align="centered" scale="0.09" 
+		onclick="switch_floor_ui(3);" enabled="false" alpha="0"/>
+		
+	<!--
+	<layer name="floor3ui" type="image" url="%VIEWER%/icons/floor3off.png" keep="true" x="5%" y="35%" align="centered" scale="0.09" 
+		onclick="loadscene(scene_4_piso_caramelo,null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5))" />
+	-->	
+		
+</krpano>
