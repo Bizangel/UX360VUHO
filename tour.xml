@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
 	
 	
 	<include url="skin/vtourskin.xml" />
@@ -119,6 +119,10 @@
         );
         
     </action>
+	
+	
+
+
 	
 	<include url="plugins/tour_edithelper.xml" if="0" />
 	<include url="plugins/depthmap_navigation.xml" if="0"/>
@@ -241,15 +245,6 @@
 	<action name="print">
 		showlog();
 		trace(" ",%1);
-	</action>
-	
-	<events onkeydown="debug_print();"/>
-	
-	<action name="debug_print">
-		if(keycode == 89,
-			print(path);
-			print(get(iconpath));
-		);
 	</action>
 	
 	<events webvr_onentervr="reload_current_scene();" webvr_onexitvr="reload_current_scene();" />
@@ -503,7 +498,12 @@
 		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="89" atv="3" 
 		scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" />
+		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" devices="desktop"/>
+		
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="89" atv="3" 
+		scale="0.08" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" devices="handheld"/>
 	</scene>
 
 	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -525,7 +525,13 @@
 		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="124.0" atv="7" 
 		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  />
+		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="desktop"/>
+		
+		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="124.0" atv="7" 
+		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
+		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
+		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="handheld"/>
+		
 		
 		<hotspot name="spot1" style="visual_floorspot" tx="10" ty="150" tz="0" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
 		if="(webvr.isenabled OR device.mobilevr)"/>
