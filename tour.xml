@@ -233,6 +233,9 @@
 	<style name="scene_13" ox="942" oy="0" oz="-315" linkedscene="scene_closet1" autohotspot="true" 
 	allowed="scene_12" angle_tolerance="20"/>
 	
+	<style name="exterior" prealign="0|-90|0" ox="377" oy="0" oz="-567" linkedscene="" autohotspot="false" 
+	allowed="" angle_tolerance="20"/>
+	
 	
 	<!-- Enables kitchen combo, and breaks it everytime you got outside of kitchen -->
 	
@@ -757,8 +760,77 @@
 		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
 		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
 		onclick="switch_floor_ui(1)"  devices="handheld"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.3" ath="145" atv="1.8"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="desktop"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.1" ath="145" atv="1.8"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="handheld"/>
+	</scene>
+	
+	<!-- EXTERIOR VIEW -->
+	<scene name="exterior1" title="Exterior - 1" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_1.tiles/thumb.jpg" lat="" lng="" heading=""
+	onstart="lookat(-49.1,-9.3)">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/panoramica_exterior_1.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="exterior">
+			<cube url="panos/panoramica_exterior_1.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,1024,2112,4224" />
+		</image>
+
+		<image if="webvr.isenabled OR device.mobilevr" style="exterior">
+			<cube url="panos/panoramica_exterior_1.tiles/vr/pano_%s.jpg" />
+		</image>
+		
+		<layer name="returnToApt" scale="0.2" url="%VIEWER%/icons/exterioron.png" 
+		onclick="floorspot_onclick();" linkedscene="scene_3_sala_comedor2"
+		align="centered" x="0%" y="0%" onloaded="tween(layer[returnToApt].x,-45%,2);tween(layer[returnToApt].y,40%,2);" devices="desktop"/>
+		
+		<layer name="returnToApt" scale="0.08" url="%VIEWER%/icons/exterioron.png" 
+		onclick="floorspot_onclick();" linkedscene="scene_3_sala_comedor2"
+		align="centered" x="0%" y="0%" onloaded="tween(layer[returnToApt].x,-45%,2);tween(layer[returnToApt].y,40%,2);" devices="handheld"/>
+		
+		<layer name="cycle" type="image" scale="0.06" url="%VIEWER%/icons/cycle.png" align="rightbottom" x="2%" y="15%" linkedscene="exterior2"
+		onclick="floorspot_onclick();set(layer[returnToApt].x,-45%);set(layer[returnToApt].y,40%);"/>
 	</scene>
 
+	<scene name="exterior2" title="Exterior - 2" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_2.tiles/thumb.jpg" lat="" lng="" heading=""
+	onstart="lookat(-5,-33)">
+
+		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/panoramica_exterior_2.tiles/preview.jpg" />
+
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="exterior">
+			<cube url="panos/panoramica_exterior_2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,1024,2112,4224" />
+		</image>
+
+		<image if="webvr.isenabled OR device.mobilevr" style="exterior">
+			<cube url="panos/panoramica_exterior_2.tiles/vr/pano_%s.jpg" />
+		</image>
+		
+		<layer name="returnToApt" scale="0.2" url="%VIEWER%/icons/exterioron.png" 
+		onclick="floorspot_onclick();" linkedscene="scene_3_sala_comedor2"
+		align="centered" x="0%" y="0%" onloaded="tween(layer[returnToApt].x,-45%,2);tween(layer[returnToApt].y,40%,2);" devices="desktop"/>
+		
+		<layer name="returnToApt" scale="0.08" url="%VIEWER%/icons/exterioron.png" 
+		onclick="floorspot_onclick();" linkedscene="scene_3_sala_comedor2"
+		align="centered" x="0%" y="0%" onloaded="tween(layer[returnToApt].x,-45%,2);tween(layer[returnToApt].y,40%,2);" devices="handheld"/>
+		
+		<layer name="cycle" type="image" scale="0.06" url="%VIEWER%/icons/cycle.png" align="rightbottom" x="2%" y="15%" linkedscene="exterior1"
+		onclick="floorspot_onclick();set(layer[returnToApt].x,-45%);set(layer[returnToApt].y,40%);"/>
+	</scene>
+	
 	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
@@ -786,6 +858,20 @@
 		if="(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="spot2" style="visual_floorspot" tx="650" ty="180" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo1"
 		if="(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.3" ath="170" atv="1.8"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="desktop"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.1" ath="170" atv="1.8"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_pasillo1" title="Pasillo - Baño" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12.tiles/thumb.jpg" lat="" lng="" heading="">
