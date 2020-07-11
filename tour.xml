@@ -164,13 +164,17 @@
 		tween(hotspot[get(caller.name)].borderalpha,0);
 	</action>
 	
-	<layer name="Dummy_Remover" enabled="false" type="container" keep="true" align="center" width="5000" height="5000" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" capture="false" handcursor="false"
+	<layer name="Dummy_Remover" enabled="false" type="container" keep="true" align="center" width="5000" height="5000" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" capture="true" handcursor="false"
 	onclick="remove_images();"/>
 	
 	<action name="remove_images" scope="local">
 		tween(layer[window_vista].alpha,0);set(layer[window_vista].enabled,false);
 		tween(layer[etiqueta_notincluded].alpha,0);set(layer[etiqueta_notincluded].enabled,false);
-		set(layer[Dummy_Remover].enabled,false);
+		
+		tween(layer[infoslide1].alpha,0);set(layer[infoslide1].enabled,false);
+		tween(layer[infoslide2].alpha,0);set(layer[infoslide2].enabled,false);
+		
+		set(layer[Dummy_Remover].enabled,false);	
 	</action>
 	
 	<action name="enable_dummy_remover" scope="local">
@@ -185,6 +189,29 @@
 		set(layer[etiqueta_notincluded].enabled,true);
 		tween(layer[etiqueta_notincluded].alpha,1);
 		enable_dummy_remover();
+	</action>
+	
+	<layer name="infoslide1" type="image" url="infoslide1.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
+	
+	<layer name="infoslide2" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
+	
+	<action name="infodisplay" scope="local" args="infoslidenumber">
+		calc(infovar,'infoslide' + infoslidenumber);
+		if(layer[get(infovar)].displayed === null,
+			
+			tween(layer[get(infovar)].alpha,1);
+			set(layer[get(infovar)].enabled,true);
+			set(layer[get(infovar)].displayed,true);
+			
+			enable_dummy_remover();
+		);
+		
+		
+		if(stagewidth LE 1024,
+			calc(fix_scale_value,stagewidth/1024);
+			roundval(fix_scale_value,2);
+			set(layer[get(infovar)].scale,get(fix_scale_value));
+		);
 	</action>
 	
 	<layer name="etiqueta_notincluded" keep="true" type="image" alpha="0" enabled="false" visible="true" align="center" scale="0.3" url="etiqueta.png"
@@ -474,7 +501,7 @@
 	
 	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
 	
-	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
+	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(1);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -701,7 +728,7 @@
 	</scene>
 	
 	
-	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
+	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(2);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -778,7 +805,7 @@
 	
 	<!-- EXTERIOR VIEW -->
 	<scene name="exterior1" title="Exterior - 1" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_1.tiles/thumb.jpg" lat="" lng="" heading=""
-	onstart="lookat(-49.1,-9.3)">
+	onstart="lookat(0.4,-14.6)">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -808,7 +835,7 @@
 	</scene>
 
 	<scene name="exterior2" title="Exterior - 2" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_2.tiles/thumb.jpg" lat="" lng="" heading=""
-	onstart="lookat(-5,-33)">
+	onstart="lookat(180,-30.3)">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
