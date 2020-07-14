@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
 	
 	<include url="skin/vtourskin.xml" />
@@ -124,10 +124,10 @@
 
 
 	
-	<include url="plugins/tour_edithelper.xml" if="1" />
-	<include url="plugins/hotspot_helper.xml" if="1" /> 
-	<include url="plugins/depthmap_navigation.xml" if="1"/>
-	<include url="%VIEWER%/plugins/fps.xml" if="1" />
+	<include url="plugins/tour_edithelper.xml" if="0" />
+	<include url="plugins/hotspot_helper.xml" if="0" /> 
+	<include url="plugins/depthmap_navigation.xml" if="0"/>
+	<include url="%VIEWER%/plugins/fps.xml" if="0" />
 	<include url="plugins/depthmap_helpertool.xml" if="0" /> 
 	
 	<style name="golden_highlight" fillcolor="0x820505" bordercolor="0xe0d12b" fillalpha="0" borderalpha="0"
