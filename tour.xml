@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
 	
 	
 	<include url="skin/vtourskin.xml" />
@@ -124,10 +124,10 @@
 
 
 	
-	<include url="plugins/tour_edithelper.xml" if="0" />
-	<include url="plugins/hotspot_helper.xml" if="0" /> 
-	<include url="plugins/depthmap_navigation.xml" if="0"/>
-	<include url="%VIEWER%/plugins/fps.xml" if="0" />
+	<include url="plugins/tour_edithelper.xml" if="1" />
+	<include url="plugins/hotspot_helper.xml" if="1" /> 
+	<include url="plugins/depthmap_navigation.xml" if="1"/>
+	<include url="%VIEWER%/plugins/fps.xml" if="1" />
 	<include url="plugins/depthmap_helpertool.xml" if="0" /> 
 	
 	<style name="golden_highlight" fillcolor="0x820505" bordercolor="0xe0d12b" fillalpha="0" borderalpha="0"
@@ -220,7 +220,15 @@
 		onclick="switch_infoslide(2);set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png);"
 		parent="infoslide1" 
 		align="righttop"
-		x="2%" y="2%" scale="0.08"/>
+		x="2%" y="2%" scale="0.08" devices="desktop"/>
+		
+		<layer name="Next_Button" type="image" url="%VIEWER%/icons/nextoff.png"
+		onover="set(layer[Next_Button].url,%VIEWER%/icons/nexton.png)"
+		onout="set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png)"
+		onclick="switch_infoslide(2);set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png);"
+		parent="infoslide1" 
+		align="righttop"
+		x="2%" y="2%" scale="0.15" devices="handheld"/>
 		
 	</layer>
 	
@@ -233,7 +241,7 @@
 		onclick="switch_infoslide(1);set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png);"
 		parent="infoslide2" 
 		align="righttop"
-		x="8%" y="2%" scale="0.08"/>
+		x="8%" y="2%" scale="0.08" devices="desktop"/>
 		
 		<layer name="Close_Button" type="image" url="%VIEWER%/icons/closeoff.png"
 		onover="set(layer[Close_Button].url,%VIEWER%/icons/closeon.png)"
@@ -241,7 +249,23 @@
 		onclick="remove_images();"
 		parent="infoslide2" 
 		align="righttop"
-		x="2%" y="2%" scale="0.08"/>
+		x="2%" y="2%" scale="0.08" devices="desktop"/>
+		
+		<layer name="Prev_Button" type="image" url="%VIEWER%/icons/prevoff.png"
+		onover="set(layer[Prev_Button].url,%VIEWER%/icons/prevon.png)"
+		onout="set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png)"
+		onclick="switch_infoslide(1);set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png);"
+		parent="infoslide2" 
+		align="righttop"
+		x="8%" y="2%" scale="0.15" devices="handheld"/>
+		
+		<layer name="Close_Button" type="image" url="%VIEWER%/icons/closeoff.png"
+		onover="set(layer[Close_Button].url,%VIEWER%/icons/closeon.png)"
+		onout="set(layer[Close_Button].url,%VIEWER%/icons/closeoff.png)"
+		onclick="remove_images();"
+		parent="infoslide2" 
+		align="righttop"
+		x="2%" y="2%" scale="0.15" devices="handheld"/>
 		<!--
 		<layer name="infoslide2" parent="infoslide1" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
 		-->
@@ -270,7 +294,8 @@
 		if(stagewidth LE 1024,
 			calc(fix_scale_value,stagewidth/1024);
 			roundval(fix_scale_value,2);
-			set(layer[get(infovar)].scale,get(fix_scale_value));
+			set(layer[infoslide2].scale,get(fix_scale_value));
+			set(layer[infoslide1].scale,get(fix_scale_value));
 		);
 	</action>
 	
