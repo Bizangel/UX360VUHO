@@ -257,7 +257,7 @@
 		onclick="switch_infoslide(1);set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png);"
 		parent="infoslide2" 
 		align="righttop"
-		x="11%" y="2%" scale="0.15" devices="handheld"/>
+		x="14%" y="2%" scale="0.15" devices="handheld"/>
 		
 		<layer name="Close_Button" type="image" url="%VIEWER%/icons/closeoff.png"
 		onover="set(layer[Close_Button].url,%VIEWER%/icons/closeon.png)"
