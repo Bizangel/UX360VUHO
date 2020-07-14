@@ -1,0 +1,79 @@
+<krpano>
+	
+	<style name="vartracker" type="text" css="color:#FFFFFF;text-align:center;" bg="false" txtshadow="0 1 4 0x000000 1.0" enabled="false" 
+	var="rx" hotspotname="Edificio_Logo"/>
+	
+	
+	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" width="50" height="50"/>
+	
+	
+	
+	<layer name="InfoDisplay" keep="true" style="vartracker" html="RX" onloaded="" align="lefttop" x="5%" y="2%"/>
+	<layer name="InfoDisplay2" keep="true" style="vartracker" html="RY" onloaded="" align="lefttop" x="5%" y="10%"/>
+	<layer name="InfoDisplay3" keep="true" style="vartracker" html="RZ" onloaded="" align="lefttop" x="5%" y="15%"/>
+	
+	<layer name="var_inc" keep="true" style="button" html="+" align="lefttop" x="1%" y="2%" onclick="increase_var1();"/>
+	<layer name="var_inc2" keep="true" style="button" html="+" align="lefttop" x="1%" y="10%" onclick="increase_var2();"/>
+	<layer name="var_inc3" keep="true" style="button" html="+" align="lefttop" x="1%" y="15%" onclick="increase_var3();"/>
+	
+	<layer name="var_dec" keep="true" style="button" html="-" align="lefttop" x="8%" y="2%" onclick="decrease_var1();"/>
+	<layer name="var_dec2" keep="true" style="button" html="-" align="lefttop" x="8%" y="10%" onclick="decrease_var2();"/>
+	<layer name="var_dec3" keep="true" style="button" html="-" align="lefttop" x="8%" y="15%" onclick="decrease_var3();"/>
+	
+	<action name="increase_var1" scope="local">
+		add(hotspot[Edificio_Logo].rx,2);
+		updatescreen();
+	</action>
+	
+	<action name="increase_var2" scope="local">
+		add(hotspot[Edificio_Logo].ry,2);
+		updatescreen();
+	</action>
+	
+	<action name="increase_var3" scope="local">
+		add(hotspot[Edificio_Logo].rz,2);
+		updatescreen();
+	</action>
+	
+	<action name="decrease_var1" scope="local">
+		sub(hotspot[Edificio_Logo].rx,2);
+		updatescreen();
+	</action>
+	
+	<action name="decrease_var2" scope="local">
+		sub(hotspot[Edificio_Logo].ry,2);
+		updatescreen();
+	</action>
+	
+	<action name="decrease_var3" scope="local">
+		sub(hotspot[Edificio_Logo].rz,2);
+		updatescreen();
+	</action>
+	
+	<action name="my_debug_info" scope="local" autorun="onstart">
+		<!-- add a textfield that shows the current viewing position -->
+		addlayer(auto, l);
+		set(l, keep=true, type=text, align=leftbottom, x=5, y=5, css='font-family:monospace;');
+		copy(v, global.view);
+		renderloop(
+			calc(l.html,
+				'rx='+roundval(hotspot[Edificio_Logo].rx,1)+'[br]'+
+				'ry='+roundval(hotspot[Edificio_Logo].ry,1)+'[br]'+
+				'rz='+roundval(hotspot[Edificio_Logo].rz,1)+'[br]'+
+				'');
+		);
+
+		<!-- add buttons for adding info and text spots 
+		addlayer(auto, addinfospot);
+		set(addinfospot, keep=true, type=text, align=righttop, x=5 ,y=120, html='add infospot', css='font-family:monospace;', onclick='addinfospot()');
+
+		addlayer(auto, addinfotext);
+		set(addinfotext, keep=true, type=text, align=righttop, x=5 ,y=145, html='add infotext', css='font-family:monospace;', onclick='addinfotext()');
+		
+		addlayer(auto, removespots);
+		set(removespots, keep=true, type=text, align=righttop, x=5 ,y=170, html='remove all', css='font-family:monospace;', onclick='removeallspots()');
+		-->
+	</action>
+	
+	
+</krpano>

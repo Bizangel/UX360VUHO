@@ -125,8 +125,10 @@
 
 	
 	<include url="plugins/tour_edithelper.xml" if="0" />
+	<include url="plugins/hotspot_helper.xml" if="0" /> 
 	<include url="plugins/depthmap_navigation.xml" if="0"/>
 	<include url="%VIEWER%/plugins/fps.xml" if="0" />
+	<include url="plugins/depthmap_helpertool.xml" if="0" /> 
 	
 	<style name="golden_highlight" fillcolor="0x820505" bordercolor="0xe0d12b" fillalpha="0" borderalpha="0"
 		onloaded="setintervalflash();"
@@ -191,9 +193,67 @@
 		enable_dummy_remover();
 	</action>
 	
-	<layer name="infoslide1" type="image" url="infoslide1.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
+	<action name="switch_infoslide" scope="local" args="infoslide_n">		
+		if(infoslide_n == 1,
+			set(layer[infoslide2].enabled,false);set(layer[infoslide2].alpha,0);
+			
+			set(layer[infoslide1].enabled,true); tween(layer[infoslide1].alpha,1);
+		);
+		
+		if(infoslide_n == 2,
+			set(layer[infoslide1].enabled,false);tween(layer[infoslide1].alpha,0);
+			
+			set(layer[infoslide2].enabled,true); tween(layer[infoslide2].alpha,1);
+		);
+		
+		
+		
+		
+	</action>
 	
-	<layer name="infoslide2" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
+	<layer name="infoslide1" type="image" url="infoslide1.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
+	maskchildren="true" scalechildren="true">
+	
+		<layer name="Next_Button" type="image" url="%VIEWER%/icons/nextoff.png"
+		onover="set(layer[Next_Button].url,%VIEWER%/icons/nexton.png)"
+		onout="set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png)"
+		onclick="switch_infoslide(2);set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png);"
+		parent="infoslide1" 
+		align="righttop"
+		x="2%" y="2%" scale="0.08"/>
+		
+	</layer>
+	
+	<layer name="infoslide2" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
+	maskchildren="true" scalechildren="true">
+	
+		<layer name="Prev_Button" type="image" url="%VIEWER%/icons/prevoff.png"
+		onover="set(layer[Prev_Button].url,%VIEWER%/icons/prevon.png)"
+		onout="set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png)"
+		onclick="switch_infoslide(1);set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png);"
+		parent="infoslide2" 
+		align="righttop"
+		x="8%" y="2%" scale="0.08"/>
+		
+		<layer name="Close_Button" type="image" url="%VIEWER%/icons/closeoff.png"
+		onover="set(layer[Close_Button].url,%VIEWER%/icons/closeon.png)"
+		onout="set(layer[Close_Button].url,%VIEWER%/icons/closeoff.png)"
+		onclick="remove_images();"
+		parent="infoslide2" 
+		align="righttop"
+		x="2%" y="2%" scale="0.08"/>
+		<!--
+		<layer name="infoslide2" parent="infoslide1" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
+		-->
+	</layer>
+	
+	<!--
+	<layer name="Prev_Button" type="image" url="%VIEWER%/icons/prevoff"
+		onover="set(layer[Prev_Button].url,%VIEWER%/icons/prevon)"
+		onout="set(layer[Prev_Button].url,%VIEWER%/icons/prevoff)"
+		onclick="switch_infoslide(1);"/>
+	-->
+	
 	
 	<action name="infodisplay" scope="local" args="infoslidenumber">
 		calc(infovar,'infoslide' + infoslidenumber);
@@ -203,7 +263,7 @@
 			set(layer[get(infovar)].enabled,true);
 			set(layer[get(infovar)].displayed,true);
 			
-			enable_dummy_remover();
+			
 		);
 		
 		
@@ -224,10 +284,6 @@
 	</layer>
 	<!-- TESTING NAVIGATOR MOVE CLICKDOWN -->
 	
-	
-	<!-- 
-	<include url="plugins/depthmap_helpertool.xml" /> 
-	-->
 	
 	<!-- Styles for Depthmap Locations -->
 	
@@ -268,9 +324,11 @@
 	
 	<style name="depthmap_info" type="text" css="color:#FFFFFF;text-align:center;" bg="false" txtshadow="0 1 4 0x000000 1.0" enabled="false" />
 	
+	<!-- Info Text
 	<layer name="depthmap_walkinfo" keep="true" style="depthmap_info" align="center" y="+25%" html="Arrastra para mover la vista y haz click para moverte alrededor" devices="desktop" />
 	
 	<layer name="depthmap_walkinfo" keep="true" style="depthmap_info" align="center" y="+25%" html="Arrastra para mover la vista y toca para moverte" devices="handheld" />
+	-->
 	
 	<action name="print">
 		showlog();
@@ -758,7 +816,7 @@
 	</scene>
 	
 	
-	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(2);">
+	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -881,14 +939,28 @@
 		<layer name="cycle" type="image" scale="0.06" url="%VIEWER%/icons/cycle.png" align="rightbottom" x="2%" y="20%" linkedscene="exterior2"
 		onclick="floorspot_onclick();set(layer[returnToApt].x,-40%);set(layer[returnToApt].y,30%);" devices="handheld"/>
 		-->
-		<hotspot name="spot1" style="skin_hotspotstyle" ath="-8.013" atv="-1.880" scale="1.2" onhover="" onover="" onout="" linkedscene="exterior2" />
+		<hotspot name="spot1" style="skin_hotspotstyle" url="%VIEWER%/icons/peatonoff.png" ath="-8.013" atv="-20" scale="0.3" onhover="" linkedscene="exterior2" 
+		onover="set(hotspot[spot1].url,%VIEWER%/icons/peatonon.png);"
+		onout="set(hotspot[spot1].url,%VIEWER%/icons/peatonoff.png);"/>
 		
-		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2">
-			<point ath="-4.26" atv="-14.88" />
-			<point ath="2.56" atv="-13.57" />
-			<point ath="2.50" atv="-11.18" />
-			<point ath="-4.26" atv="-12.26" />
+		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" borderwidth="5" capture="false">
+			<point ath="-3.82" atv="2.65" />
+			<point ath="-11.32" atv="2.12" />
+			<point ath="-11.42" atv="-19.62" />
+			<point ath="-7.08" atv="-22" />
+			<point ath="-7.06" atv="-24.28" />
+			<point ath="-2.88" atv="-23.35" />
+			<point ath="-0.45" atv="-24.50" />
+			<point ath="6.87" atv="-22.26" />
+			<point ath="6.90" atv="-20.24" />
+			<point ath="9.29" atv="-19.48" />
+			<point ath="9.46" atv="1.92" />
 		</hotspot>
+		
+		<!-- Aralia Logo -->
+		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.3" distorted="true" ath="35" atv="-50" rx="-44" ry="-29" rz="5"
+		enabled="false"/>
+		
 	</scene>
 
 	<scene name="exterior2" title="Exterior - 2" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_2.tiles/thumb.jpg" lat="" lng="" heading=""
@@ -921,7 +993,16 @@
 		<layer name="cycle" type="image" scale="0.06" url="%VIEWER%/icons/cycle.png" align="rightbottom" x="2%" y="20%" linkedscene="exterior1"
 		onclick="floorspot_onclick();set(layer[returnToApt].x,-40%);set(layer[returnToApt].y,30%);" devices="handheld"/>
 		-->
-		<hotspot name="spot1" style="skin_hotspotstyle" ath="-107.698" atv="4.658"  onhover="" onover="" onout="" scale="1.2" linkedscene="exterior1" />
+		<hotspot name="spot1" style="skin_hotspotstyle" url="%VIEWER%/icons/peatonoff.png" ath="-107" atv="-10" scale="0.3" onhover="" linkedscene="exterior1" 
+		onover="set(hotspot[spot1].url,%VIEWER%/icons/peatonon.png);"
+		onout="set(hotspot[spot1].url,%VIEWER%/icons/peatonoff.png);"/>
+		
+		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" borderwidth="5">
+			<point ath="159.76" atv="-42.93" />
+			<point ath="159.66" atv="-47.9" />
+			<point ath="-157.72" atv="-45.3" />
+			<point ath="-157.77" atv="-40.52" />
+		</hotspot>
 	</scene>
 	
 	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
