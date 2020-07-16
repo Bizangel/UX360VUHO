@@ -124,11 +124,14 @@
 
 
 	
-	<include url="plugins/tour_edithelper.xml" if="0" />
-	<include url="plugins/hotspot_helper.xml" if="0" /> 
-	<include url="plugins/depthmap_navigation.xml" if="0"/>
+	<include url="%VIEWER%/toolbox/toolbox.xml" if="0" />
 	<include url="%VIEWER%/plugins/fps.xml" if="0" />
+	
+	
+	<include url="plugins/depthmap_navigation.xml" if="0"/>
 	<include url="plugins/depthmap_helpertool.xml" if="0" /> 
+	
+	<include url="map/map.xml" />
 	
 	<style name="golden_highlight" fillcolor="0x820505" bordercolor="0xe0d12b" fillalpha="0" borderalpha="0"
 		onloaded="setintervalflash();"
@@ -363,12 +366,13 @@
 	<events webvr_onentervr="reload_current_scene();" webvr_onexitvr="reload_current_scene();" />
 	
 	<action name="reload_current_scene">
+		off_all_floor_ui();
+		disable_material_ui();
 		copy(curr_name,xml.scene);
 		loadscene(get(curr_name),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 		
 		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		off_all_floor_ui();
-		disable_material_ui();
+		
 	</action>
 	
 	<!-- Overload Tour Loading so it keeps coordinates and has nice animation 
@@ -437,14 +441,12 @@
 		/>
 		
 	<action name="tour_loadscene" scope="local" args="scenename">
-		
-		off_all_floor_ui();
-		disable_material_ui();
 		if(xml.scene != scenename,
+			off_all_floor_ui();
+			disable_material_ui();
 			loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 		);
-		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		
 	</action>
 	<action name="floorspot_onclick" scope="local">
 		
@@ -584,7 +586,7 @@
 	
 	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
 	
-	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(1);">
+	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(1);setactiverect(1);">
 
 		<view hlookat="131.104" vlookat="3.230" fovtype="MFOV" fov="124.090" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -657,7 +659,7 @@
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="169" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 
-	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(2);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -721,7 +723,7 @@
 	
 	<include url="cambio_materiales.xml" />
 	
-	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
+	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -758,7 +760,7 @@
 		onclick="tour_loadscene(scene_4_piso_caramelo);"  if="webvr.isenabled OR device.mobilevr"/>
 	</scene>
 	
-	<scene name="scene_4_piso_claro" title="Piso Claro" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(1,on);enable_floor_ui();">
+	<scene name="scene_4_piso_claro" title="Piso Claro" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(1,on);enable_floor_ui();setactiverect(3);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -841,7 +843,7 @@
 	</scene>
 	
 	
-	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="">
+	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(4);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -932,7 +934,7 @@
 	
 	<!-- EXTERIOR VIEW -->
 	<scene name="exterior1" title="Exterior - 1" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_1.tiles/thumb.jpg" lat="" lng="" heading=""
-	onstart="lookat(-2.3,-7.1);">
+	onstart="lookat(-2.3,-7.1);disablemap();">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1016,9 +1018,11 @@
 		<layer name="cycle" type="image" scale="0.06" url="%VIEWER%/icons/cycle.png" align="rightbottom" x="2%" y="20%" linkedscene="exterior1"
 		onclick="floorspot_onclick();set(layer[returnToApt].x,-40%);set(layer[returnToApt].y,30%);" devices="handheld"/>
 		-->
-		<hotspot name="spot1" style="skin_hotspotstyle" url="%VIEWER%/icons/peatonoff.png" ath="-107" atv="-10" scale="0.3" onhover="" linkedscene="exterior1" 
-		onover="set(hotspot[spot1].url,%VIEWER%/icons/peatonon.png);"
-		onout="set(hotspot[spot1].url,%VIEWER%/icons/peatonoff.png);"/>
+		<hotspot name="spot1_peaton" style="skin_hotspotstyle" url="%VIEWER%/icons/peatonoff.png" ath="-135" atv="-12" scale="0.15" onhover="" linkedscene="exterior1" 
+		distorted="true"
+		rx="-6" ry="30" rz="-4"
+		onover="set(hotspot[spot1_peaton].url,%VIEWER%/icons/peatonon.png);"
+		onout="set(hotspot[spot1_peaton].url,%VIEWER%/icons/peatonoff.png);"/>
 		
 		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" borderwidth="5">
 			<point ath="159.76" atv="-42.93" />
@@ -1028,7 +1032,7 @@
 		</hotspot>
 	</scene>
 	
-	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="setactiverect(5);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1074,7 +1078,7 @@
 		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
-	<scene name="scene_pasillo1" title="Pasillo - Baño" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_pasillo1" title="Pasillo - Baño" onstart="setactiverect(6);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1101,7 +1105,7 @@
 		/>
 	</scene>
 	
-	<scene name="scene_6_ba__o_pasillo2" title="Baño " onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/6_ba__o_pasillo2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_6_ba__o_pasillo2" title="Baño " onstart="setactiverect(7);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/6_ba__o_pasillo2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1121,7 +1125,7 @@
 		/>
 	</scene>
 	
-	<scene name="scene_pasillo2" title="Pasillo - Cuartos" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/22.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_pasillo2" title="Pasillo - Cuartos" onstart="setactiverect(6);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/22.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1147,7 +1151,7 @@
 		/>
 	</scene>
 	
-	<scene name="scene_7_cuarto_secundario_22" title="Cuarto Secundario 2" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/7_cuarto_secundario_22.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_7_cuarto_secundario_22" title="Cuarto Secundario 2" onstart="setactiverect(8);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/7_cuarto_secundario_22.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1166,7 +1170,7 @@
 		<hotspot name="spot1" style="visual_floorspot" tx="750" ty="170" tz="-73" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2"/>
 	</scene>
 	
-	<scene name="scene_8_cuarto_secundario_12" title="Cuarto Secundario 1" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/8_cuarto_secundario_12.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_8_cuarto_secundario_12" title="Cuarto Secundario 1" onstart="setactiverect(9);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/8_cuarto_secundario_12.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1195,7 +1199,7 @@
 		
 	</scene>
 	
-	<scene name="scene_closet1" title="Cuarto Secundario 1 - Closet" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/closet1.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_closet1" title="Cuarto Secundario 1 - Closet" onstart="setactiverect(9);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/closet1.tiles/thumb.jpg" lat="" lng="" heading="">
 		
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1225,7 +1229,7 @@
 	</scene>
 	
 	
-	<scene name="scene_10_ba__o_habitacion_principal2" title="Habitación Principal" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/10_ba__o_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_10_ba__o_habitacion_principal2" title="Habitación Principal" onstart="setactiverect(10);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/10_ba__o_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1245,7 +1249,7 @@
 		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_9_habitacion_principal2" />
 	</scene>
 
-	<scene name="scene_9_habitacion_principal2" title="Baño - Habitación Principal" onstart="" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/9_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_9_habitacion_principal2" title="Baño - Habitación Principal" onstart="setactiverect(11);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/9_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
