@@ -212,7 +212,7 @@
 	</action>
 	
 	<layer name="infoslide1" type="image" url="infoslide1.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
-	maskchildren="true" scalechildren="true">
+	maskchildren="true" scalechildren="true" handcursor="false">
 	
 		<layer name="Next_Button" type="image" url="%VIEWER%/icons/nextoff.png"
 		onover="set(layer[Next_Button].url,%VIEWER%/icons/nexton.png)"
@@ -220,7 +220,7 @@
 		onclick="switch_infoslide(2);set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png);"
 		parent="infoslide1" 
 		align="righttop"
-		x="2%" y="2%" scale="0.08" devices="desktop"/>
+		x="5%" y="5%" scale="0.08" devices="desktop"/>
 		
 		<layer name="Next_Button" type="image" url="%VIEWER%/icons/nextoff.png"
 		onover="set(layer[Next_Button].url,%VIEWER%/icons/nexton.png)"
@@ -228,12 +228,12 @@
 		onclick="switch_infoslide(2);set(layer[Next_Button].url,%VIEWER%/icons/nextoff.png);"
 		parent="infoslide1" 
 		align="righttop"
-		x="2%" y="2%" scale="0.15" devices="handheld"/>
+		x="5%" y="5%" scale="0.15" devices="handheld"/>
 		
 	</layer>
 	
 	<layer name="infoslide2" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
-	maskchildren="true" scalechildren="true">
+	maskchildren="true" scalechildren="true" handcursor="false">
 	
 		<layer name="Prev_Button" type="image" url="%VIEWER%/icons/prevoff.png"
 		onover="set(layer[Prev_Button].url,%VIEWER%/icons/prevon.png)"
@@ -241,7 +241,7 @@
 		onclick="switch_infoslide(1);set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png);"
 		parent="infoslide2" 
 		align="righttop"
-		x="8%" y="2%" scale="0.08" devices="desktop"/>
+		x="10%" y="5%" scale="0.08" devices="desktop"/>
 		
 		<layer name="Close_Button" type="image" url="%VIEWER%/icons/closeoff.png"
 		onover="set(layer[Close_Button].url,%VIEWER%/icons/closeon.png)"
@@ -249,7 +249,7 @@
 		onclick="remove_images();"
 		parent="infoslide2" 
 		align="righttop"
-		x="2%" y="2%" scale="0.08" devices="desktop"/>
+		x="5%" y="5%" scale="0.08" devices="desktop"/>
 		
 		<layer name="Prev_Button" type="image" url="%VIEWER%/icons/prevoff.png"
 		onover="set(layer[Prev_Button].url,%VIEWER%/icons/prevon.png)"
@@ -257,7 +257,7 @@
 		onclick="switch_infoslide(1);set(layer[Prev_Button].url,%VIEWER%/icons/prevoff.png);"
 		parent="infoslide2" 
 		align="righttop"
-		x="14%" y="2%" scale="0.15" devices="handheld"/>
+		x="15%" y="5%" scale="0.15" devices="handheld"/>
 		
 		<layer name="Close_Button" type="image" url="%VIEWER%/icons/closeoff.png"
 		onover="set(layer[Close_Button].url,%VIEWER%/icons/closeon.png)"
@@ -265,7 +265,7 @@
 		onclick="remove_images();"
 		parent="infoslide2" 
 		align="righttop"
-		x="2%" y="2%" scale="0.15" devices="handheld"/>
+		x="5%" y="5%" scale="0.15" devices="handheld"/>
 		<!--
 		<layer name="infoslide2" parent="infoslide1" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" onclick="remove_images();"/>
 		-->
@@ -932,10 +932,7 @@
 	
 	<!-- EXTERIOR VIEW -->
 	<scene name="exterior1" title="Exterior - 1" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/panoramica_exterior_1.tiles/thumb.jpg" lat="" lng="" heading=""
-	onstart="lookat(0.4,-14.6);set(global.view.fov,60);
-	delayedcall(3,
-		tween(global.view.fov,124.1,2);
-	);">
+	onstart="lookat(-2.3,-7.1);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -964,11 +961,12 @@
 		<layer name="cycle" type="image" scale="0.06" url="%VIEWER%/icons/cycle.png" align="rightbottom" x="2%" y="20%" linkedscene="exterior2"
 		onclick="floorspot_onclick();set(layer[returnToApt].x,-40%);set(layer[returnToApt].y,30%);" devices="handheld"/>
 		-->
+		<!-- OLD PEATON
 		<hotspot name="spot1" style="skin_hotspotstyle" url="%VIEWER%/icons/peatonoff.png" ath="-8.013" atv="-20" scale="0.3" onhover="" linkedscene="exterior2" 
 		onover="set(hotspot[spot1].url,%VIEWER%/icons/peatonon.png);"
 		onout="set(hotspot[spot1].url,%VIEWER%/icons/peatonoff.png);"/>
-		
-		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" borderwidth="5" capture="false">
+		-->
+		<hotspot name="returnToApt" style="golden_highlight" linkedscene="exterior2" borderwidth="5" capture="false">
 			<point ath="-3.82" atv="2.65" />
 			<point ath="-11.32" atv="2.12" />
 			<point ath="-11.42" atv="-19.62" />
@@ -983,7 +981,7 @@
 		</hotspot>
 		
 		<!-- Aralia Logo -->
-		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.3" distorted="true" ath="35" atv="-50" rx="-44" ry="-29" rz="5"
+		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.15" distorted="true" ath="30" atv="-40" rx="-20" ry="-25" rz="11"
 		enabled="false"/>
 		
 	</scene>
