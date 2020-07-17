@@ -67,7 +67,9 @@
 		tween(layer[get(rectname)].alpha,1);
 		setactiveurl(get(nrect));
 		
-		enablemap();
+		if(device.handheld == false,
+			enablemap();
+		)
 	</action>
 	
 	<layer name="base_map" type="image" url="%ROOT%/map/base_noimage.png" scale="0.3" align="leftbottom" x="2%" y="10%" keep="true" handcursor="false" 
