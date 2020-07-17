@@ -112,7 +112,6 @@
 			set(layer[base_map].align,lefttop);
 			set(layer[base_map].x,0);
 			set(layer[base_map].y,10%);
-			tween(layer[base_map].alpha,0);
 			disablemap();
 		);
 	</action>
@@ -122,12 +121,10 @@
 	
 	<action name="toggle_map" scope="local">
 		if(layer[base_map].alpha == 1,
-			tween(layer[base_map].alpha,0);
 			disablemap();
 		);
 		
 		if(layer[base_map].alpha == 0,
-			tween(layer[base_map].alpha,1);
 			enablemap();
 		);
 	</action>
