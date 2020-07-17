@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
 	
 	
 	<include url="skin/vtourskin.xml" />
@@ -79,7 +79,7 @@
 	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="5%" align="rightbottom" scale="0.1" 
 	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="desktop"/>
 	
-	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="12%" align="rightbottom" scale="0.05" 
+	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="20%" align="rightbottom" scale="0.05" 
 	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="handheld"/>
 	
 	<layer name="InfoBox" enabled="false" type="container" keep="true" align="center" width="250" height="250" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" 
@@ -124,8 +124,8 @@
 
 
 	
-	<include url="%VIEWER%/toolbox/toolbox.xml" if="0" />
-	<include url="%VIEWER%/plugins/fps.xml" if="0" />
+	<include url="%VIEWER%/toolbox/toolbox.xml" if="1" />
+	<include url="%VIEWER%/plugins/fps.xml" if="1" />
 	
 	
 	<include url="plugins/depthmap_navigation.xml" if="0"/>
@@ -983,8 +983,8 @@
 		</hotspot>
 		
 		<!-- Aralia Logo -->
-		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.15" distorted="true" ath="30" atv="-40" rx="-20" ry="-25" rz="11"
-		enabled="false"/>
+		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.16" distorted="true" ath="30.7" atv="-45.36" rx="-20" ry="-25" rz="11"
+		enabled="true"/>
 		
 	</scene>
 

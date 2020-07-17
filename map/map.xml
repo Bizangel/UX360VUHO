@@ -116,7 +116,7 @@
 		);
 	</action>
 	
-	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.05" align="leftbottom" x="2%" y="15%" onclick="toggle_map();"
+	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.08" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
 	devices="handheld"/>
 	
 	<action name="toggle_map" scope="local">
