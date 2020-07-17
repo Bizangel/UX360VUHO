@@ -107,10 +107,12 @@
 			set(layer[base_map].x,0);
 			set(layer[base_map].y,0);
 			disablemap();
+			print("This is getting read trying to fix map you know")
 		);
 	</action>
 	
-	<layer name="Map_Toggle" type="image" devices="handheld" keep="true" url="%VIEWER%/icons/mobilemap.png" scale="0.05" align="leftbottom" x="2%" y="15%" onclick="toggle_map();"/>
+	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/mobilemap.png" scale="0.05" align="leftbottom" x="2%" y="15%" onclick="toggle_map();"
+	devices="handheld"/>
 	
 	<action name="toggle_map" scope="local">
 		if(layer[base_map].alpha == 1,
