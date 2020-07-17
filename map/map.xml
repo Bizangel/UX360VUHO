@@ -102,10 +102,12 @@
 		if(device.handheld == true,
 			calc(fix_scale_value,stagewidth/1115);
 			roundval(fix_scale_value,2);
-			set(layer[base_map].scale,get(fix_scale_value));
+			set(layer[base_map].scale,get(fix_scale_value))
+			set(layer[base_map].align,lefttop);
 			set(layer[base_map].x,0);
 			set(layer[base_map].y,0);
-			disablemap();
+			set(layer[base_map].enabled,false);
+			set(layer[base_map].alpha,0);
 		);
 	</action>
 	
