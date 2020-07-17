@@ -107,7 +107,7 @@
 			set(layer[base_map].x,0);
 			set(layer[base_map].y,0);
 			disablemap();
-			print("This is getting read trying to fix map you know")
+			print("This is getting read trying to fix map you know");
 		);
 	</action>
 	
