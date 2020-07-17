@@ -6,10 +6,6 @@
 	
 	<action name="rectonclick" scope="local">
 		tour_loadscene(get(caller.linkedscene));
-		if(device.handheld == true,
-			tween(layer[base_map].alpha,0);
-			disablemap();
-		);
 	</action>
 	<action name="highlight_rect" scope="local">
 		if(caller.active == false,
@@ -102,30 +98,85 @@
 	<action name="enablemap" scope="local">
 		tween(layer[base_map].alpha,1);
 		set(layer[base_map].enabled,true);
+		
+		if(device.handheld == true
+			enable_dummy_remover();
+		);
 	</action>
 	
 	<action name="FixMapDevice" autorun="onstart">
 		if(device.handheld == true,
 			calc(fix_scale_value,stagewidth/1115);
+			mul(fix_scale_value,0.9);
 			roundval(fix_scale_value,2);
 			set(layer[base_map].scale,get(fix_scale_value));
-			set(layer[base_map].align,lefttop);
+			set(layer[base_map].align,center);
 			set(layer[base_map].x,0);
-			set(layer[base_map].y,10%);
+			set(layer[base_map].y,-10%);
+			
+			
+			set(layer[infopopup].scale,get(fix_scale_value));
 			disablemap();
 		);
 	</action>
 	
-	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.08" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
+	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.1" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
 	devices="handheld"/>
 	
 	<action name="toggle_map" scope="local">
 		if(layer[base_map].alpha == 1,
 			disablemap();
+			if(device.handheld == true,
+				disable_dummy_remover();
+			);
 		);
 		
 		if(layer[base_map].alpha == 0,
 			enablemap();
 		);
+	</action>
+	
+	<events name="orientation" keep="true" onresize="Orientation();"  />
+	
+	<action name="Orientation">
+	if(device.handheld == true,
+		if(stagewidth LT stageheight,
+			
+				
+				<!-- PORTRAIT -->
+				set(layer[InfoButton].y,20%);
+				set(layer[Map_Toggle].y,20%);
+				
+				set(layer[floor1ui].y,30%);
+				set(layer[floor2ui].y,30%);
+				set(layer[floor3ui].y,30%);
+				
+				set(layer[mesonui1].y,17%);
+				set(layer[mesonui2].y,17%);
+				set(layer[mesonui3].y,17%);
+				
+				set(layer[maderaui1].y,17%);
+				set(layer[maderaui2].y,17%);
+				set(layer[maderaui3].y,17%);
+				,
+				
+				<!-- LANDSCAPE -->
+				set(layer[InfoButton].y,30%);
+				set(layer[Map_Toggle].y,30%);
+				
+				set(layer[floor1ui].y,20%);
+				set(layer[floor2ui].y,20%);
+				set(layer[floor3ui].y,20%);
+				
+				set(layer[mesonui1].y,30%);
+				set(layer[mesonui2].y,30%);
+				set(layer[mesonui3].y,30%);
+				
+				set(layer[maderaui1].y,30%);
+				set(layer[maderaui2].y,30%);
+				set(layer[maderaui3].y,30%);
+			
+		);
+	);
 	</action>
 </krpano>

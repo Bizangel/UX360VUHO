@@ -57,13 +57,13 @@
 	<layer name="floor3ui" type="image" url="%VIEWER%/icons/floor3off.png" keep="true" x="5%" y="35%" align="centered" scale="0.09" 
 		onclick="switch_floor_ui(3);" enabled="false" alpha="0" devices="desktop"/>
 	
-	<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" keep="true" x="-10%" y="35%" align="centered" scale="0.05" 
+	<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" keep="true" x="-10%" y="30%" align="centered" scale="0.05" 
 		onclick="switch_floor_ui(1);" enabled="false" alpha="0" devices="handheld"/>
 	
-	<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" keep="true" x="0%" y="35%" align="centered" scale="0.05" 
+	<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" keep="true" x="0%" y="30%" align="centered" scale="0.05" 
 		onclick="switch_floor_ui(2);"  enabled="false" alpha="0" devices="handheld"/>
 	
-	<layer name="floor3ui" type="image" url="%VIEWER%/icons/floor3off.png" keep="true" x="10%" y="35%" align="centered" scale="0.05" 
+	<layer name="floor3ui" type="image" url="%VIEWER%/icons/floor3off.png" keep="true" x="10%" y="30%" align="centered" scale="0.05" 
 		onclick="switch_floor_ui(3);" enabled="false" alpha="0" devices="handheld"/>
 	<!--
 	<layer name="floor3ui" type="image" url="%VIEWER%/icons/floor3off.png" keep="true" x="5%" y="35%" align="centered" scale="0.09" 

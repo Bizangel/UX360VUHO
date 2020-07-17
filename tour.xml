@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
 	
 	
 	<include url="skin/vtourskin.xml" />
@@ -76,11 +76,19 @@
 	       enabled="false"
 	       />
 		   
-	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="5%" align="rightbottom" scale="0.1" 
-	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="desktop"/>
+	<!-- DEPRECATED INFOBOX 
+	<layer name="InfoButton" type="image" url="%ROOT%/icons/infooff.png" keep="true" x="2%" y="5%" align="rightbottom" scale="0.16" 
+	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="desktop"
+	onover="set(layer[InfoButton].url,%ROOT%/icons/infoon.png);"
+	onout="set(layer[InfoButton].url,%ROOT%/icons/infooff.png);"/>
+	-->
+	<layer name="InfoButton" type="image" url="%ROOT%/icons/infooff.png" keep="true" x="2%" y="5%" align="rightbottom" scale="0.16" 
+	onclick="ShowInfoPopup();" devices="desktop"
+	onover="set(layer[InfoButton].url,%ROOT%/icons/infoon.png);"
+	onout="set(layer[InfoButton].url,%ROOT%/icons/infooff.png);"/>
 	
-	<layer name="InfoButton" type="image" url="infoicon.png" keep="true" x="2%" y="20%" align="rightbottom" scale="0.05" 
-	onclick="tween(layer[InfoBox].bgalpha,0.5);tween(layer[InfoBox_txt1].alpha,1);set(layer[InfoBox].enabled,true);" devices="handheld"/>
+	<layer name="InfoButton" type="image" url="%ROOT%/icons/infoon.png" keep="true" x="2%" y="20%" align="rightbottom" scale="0.0825" 
+	onclick="ShowInfoPopup();" devices="handheld"/>
 	
 	<layer name="InfoBox" enabled="false" type="container" keep="true" align="center" width="250" height="250" bgcolor="0x000000" bgalpha="0" bgcapture="true" maskchildren="true" 
 	onclick="tween(layer[InfoBox].bgalpha,0);tween(layer[InfoBox_txt1].alpha,0);set(layer[InfoBox].enabled,false);"
@@ -124,8 +132,8 @@
 
 
 	
-	<include url="%VIEWER%/toolbox/toolbox.xml" if="0" />
-	<include url="%VIEWER%/plugins/fps.xml" if="0" />
+	<include url="%VIEWER%/toolbox/toolbox.xml" if="1" />
+	<include url="%VIEWER%/plugins/fps.xml" if="1" />
 	
 	
 	<include url="plugins/depthmap_navigation.xml" if="0"/>
@@ -179,11 +187,22 @@
 		tween(layer[infoslide1].alpha,0);set(layer[infoslide1].enabled,false);
 		tween(layer[infoslide2].alpha,0);set(layer[infoslide2].enabled,false);
 		
+		tween(layer[infopopup].alpha,0);set(layer[infopopup].enabled,false);
+		
+		if(device.handheld == true,
+			disablemap(); 
+		);
+		
+		
 		set(layer[Dummy_Remover].enabled,false);	
 	</action>
 	
 	<action name="enable_dummy_remover" scope="local">
 		set(layer[Dummy_Remover].enabled,true);
+	</action>
+	
+	<action name="disable_dummy_remover" scope="local">
+		set(layer[Dummy_Remover].enabled,false);
 	</action>
 	
 	
@@ -194,6 +213,29 @@
 		set(layer[etiqueta_notincluded].enabled,true);
 		tween(layer[etiqueta_notincluded].alpha,1);
 		enable_dummy_remover();
+	</action>
+	
+	<layer name="infopopup" type="image" url="Infopopup.png" align="center" keep="true" alpha="0" enabled="false"
+	onclick="" scalechildren="true" capture="true" handcursor="false">
+		<layer name="Close_Button2" type="image" url="%VIEWER%/icons/closeoff.png"
+		onover="set(layer[Close_Button2].url,%VIEWER%/icons/closeon.png)"
+		onout="set(layer[Close_Button2].url,%VIEWER%/icons/closeoff.png)"
+		onclick="remove_images();"
+		parent="infopopup" 
+		align="righttop"
+		x="5%" y="5%" scale="0.08" devices="desktop"/>
+		
+		<layer name="Close_Button2" type="image" url="%VIEWER%/icons/closeoff.png"
+		onover="set(layer[Close_Button2].url,%VIEWER%/icons/closeon.png)"
+		onout="set(layer[Close_Button2].url,%VIEWER%/icons/closeoff.png)"
+		onclick="remove_images();"
+		parent="infopopup" 
+		align="righttop"
+		x="5%" y="5%" scale="0.15" devices="handheld"/>
+	</layer>
+	<action name="ShowInfoPopup" scope="local">
+		set(layer[infopopup].enabled,true);
+		tween(layer[infopopup].alpha,1);
 	</action>
 	
 	<action name="switch_infoslide" scope="local" args="infoslide_n">		
@@ -1024,7 +1066,7 @@
 		onover="set(hotspot[spot1_peaton].url,%VIEWER%/icons/peatonon.png);"
 		onout="set(hotspot[spot1_peaton].url,%VIEWER%/icons/peatonoff.png);"/>
 		
-		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" borderwidth="5">
+		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" onclick="skin_hotspotstyle_click();lookat(-39.06,7.89);" borderwidth="5">
 			<point ath="159.76" atv="-42.93" />
 			<point ath="159.66" atv="-47.9" />
 			<point ath="-157.72" atv="-45.3" />
