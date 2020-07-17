@@ -108,6 +108,7 @@
 			set(layer[base_map].y,0);
 			set(layer[base_map].enabled,false);
 			set(layer[base_map].alpha,0);
+			updatescreen();
 		);
 	</action>
 	
