@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
 	
 	<include url="skin/vtourskin.xml" />

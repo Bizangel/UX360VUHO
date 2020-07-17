@@ -6,6 +6,10 @@
 	
 	<action name="rectonclick" scope="local">
 		tour_loadscene(get(caller.linkedscene));
+		if(device.handheld == true,
+			tween(layer[base_map].alpha,0);
+			disablemap();
+		);
 	</action>
 	<action name="highlight_rect" scope="local">
 		if(caller.active == false,
@@ -105,9 +109,9 @@
 			set(layer[base_map].scale,get(fix_scale_value));
 			set(layer[base_map].align,lefttop);
 			set(layer[base_map].x,0);
-			set(layer[base_map].y,0);
+			set(layer[base_map].y,10%);
+			tween(layer[base_map].alpha,0);
 			disablemap();
-			print("This is getting read trying to fix map you know");
 		);
 	</action>
 	
