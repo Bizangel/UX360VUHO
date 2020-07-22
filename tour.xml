@@ -128,7 +128,7 @@
 
 
 	
-	<include url="%VIEWER%/toolbox/toolbox.xml" if="0" />
+	
 	<include url="%VIEWER%/plugins/fps.xml" if="0" />
 	<events onkeydown="debugaction();" if="0"/>
 	<action name="debugaction" if="0" >
