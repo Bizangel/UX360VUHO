@@ -46,6 +46,7 @@
 		for(set(i,1), i LT 12, inc(i),
 			calc(rectname, 'rect' + i);
 			set(layer[get(rectname)].active,false);
+			set(layer[get(rectname)].alpha,0);
 			
 			indexoftxt(isOn,get(layer[get(rectname)].url),recton);
 			if(isOn != -1,
@@ -72,17 +73,17 @@
 	scalechildren="true" maskchildren="true"
 	onover="set(layer[base_map].url,%ROOT%/map/base.png);"
 	onout="set(layer[base_map].url,%ROOT%/map/base_noimage.png);">
-		<layer name="rect1" type="image" url="%ROOT%/map/01 acceso/rectoff.png" x="804" y="467" alpha="0" style="maprect" linkedscene="scene_1_entrada2"/>
-		<layer name="rect2" type="image" url="%ROOT%/map/02 cocina/rectoff.png" x="649" y="469" alpha="0" style="maprect" linkedscene="scene_2_cocina2"/>
-		<layer name="rect3" type="image" url="%ROOT%/map/03 estar de tv/rectoff.png" x="885" y="245" alpha="0" style="maprect" linkedscene="scene_4_cuarto_tv2"/>
-		<layer name="rect4" type="image" url="%ROOT%/map/04 sala-comedor/rectoff.png" x="564" y="245" alpha="0" style="maprect" linkedscene="scene_3_sala_comedor2"/>
-		<layer name="rect5" type="image" url="%ROOT%/map/05_estudio/rectoff.png" x="526" y="459" alpha="0" style="maprect" linkedscene="scene_5_estudio2"/>
-		<layer name="rect6" type="image" url="%ROOT%/map/06_pasillo/rectoff.png" x="322" y="458" alpha="0" style="maprect" linkedscene="scene_pasillo2"/>
-		<layer name="rect7" type="image" url="%ROOT%/map/07_bano social/rectoff.png" x="349" y="528" alpha="0" style="maprect" linkedscene="scene_6_ba__o_pasillo2"/>
-		<layer name="rect8" type="image" url="%ROOT%/map/08_habitacion 01/rectoff.png" x="390" y="243" alpha="0" style="maprect" linkedscene="scene_7_cuarto_secundario_22"/>
-		<layer name="rect9" type="image" url="%ROOT%/map/09_habitacion 02/rectoff.png" x="214" y="245" alpha="0" style="maprect" linkedscene="scene_8_cuarto_secundario_12"/>
-		<layer name="rect10" type="image" url="%ROOT%/map/10_habitacion principal/rectoff.png" x="134" y="460" alpha="0" style="maprect" linkedscene="scene_10_ba__o_habitacion_principal2"/>
-		<layer name="rect11" type="image" url="%ROOT%/map/11_bano hab principal/rectoff.png" x="324" y="627" alpha="0" style="maprect" linkedscene="scene_9_habitacion_principal2"/>
+		<layer name="rect1" type="image" url="%ROOT%/map/01 acceso/rectoff.png" x="804" y="467" alpha="0" style="maprect" linkedscene="scene_1"/>
+		<layer name="rect2" type="image" url="%ROOT%/map/02 cocina/rectoff.png" x="649" y="469" alpha="0" style="maprect" linkedscene="scene_2"/>
+		<layer name="rect3" type="image" url="%ROOT%/map/03 estar de tv/rectoff.png" x="885" y="245" alpha="0" style="maprect" linkedscene="scene_4"/>
+		<layer name="rect4" type="image" url="%ROOT%/map/04 sala-comedor/rectoff.png" x="564" y="245" alpha="0" style="maprect" linkedscene="scene_3"/>
+		<layer name="rect5" type="image" url="%ROOT%/map/05_estudio/rectoff.png" x="526" y="459" alpha="0" style="maprect" linkedscene="scene_5"/>
+		<layer name="rect6" type="image" url="%ROOT%/map/06_pasillo/rectoff.png" x="322" y="458" alpha="0" style="maprect" linkedscene="scene_12"/>
+		<layer name="rect7" type="image" url="%ROOT%/map/07_bano social/rectoff.png" x="349" y="528" alpha="0" style="maprect" linkedscene="scene_6"/>
+		<layer name="rect8" type="image" url="%ROOT%/map/08_habitacion 01/rectoff.png" x="390" y="243" alpha="0" style="maprect" linkedscene="scene_7"/>
+		<layer name="rect9" type="image" url="%ROOT%/map/09_habitacion 02/rectoff.png" x="214" y="245" alpha="0" style="maprect" linkedscene="scene_8"/>
+		<layer name="rect10" type="image" url="%ROOT%/map/10_habitacion principal/rectoff.png" x="134" y="460" alpha="0" style="maprect" linkedscene="scene_9"/>
+		<layer name="rect11" type="image" url="%ROOT%/map/11_bano hab principal/rectoff.png" x="324" y="627" alpha="0" style="maprect" linkedscene="scene_10"/>
 		
 		<layer name="thumbnail_rect" type="image" url="%ROOT%/map/01 acceso/image.png" x="1115" y="50" onclick="thumbnail_onclick();"/>
 	</layer>
@@ -117,6 +118,9 @@
 			
 			set(layer[infopopup].scale,get(fix_scale_value));
 			disablemap();
+			
+			<!-- startup view mobile -->
+			lookat(131.104,3.2,120);
 		);
 	</action>
 	
@@ -149,15 +153,9 @@
 				
 				set(layer[floor1ui].y,30%);
 				set(layer[floor2ui].y,30%);
-				set(layer[floor3ui].y,30%);
-				
-				set(layer[mesonui1].y,17%);
-				set(layer[mesonui2].y,17%);
-				set(layer[mesonui3].y,17%);
-				
-				set(layer[maderaui1].y,17%);
-				set(layer[maderaui2].y,17%);
-				set(layer[maderaui3].y,17%);
+					
+				set(layer[madera1ui].y,30%);
+				set(layer[madera2ui].y,30%);
 				,
 				
 				<!-- LANDSCAPE -->
@@ -166,16 +164,11 @@
 				
 				set(layer[floor1ui].y,20%);
 				set(layer[floor2ui].y,20%);
-				set(layer[floor3ui].y,20%);
 				
-				set(layer[mesonui1].y,30%);
-				set(layer[mesonui2].y,30%);
-				set(layer[mesonui3].y,30%);
+				set(layer[madera1ui].y,20%);
+				set(layer[madera2ui].y,20%);
 				
-				set(layer[maderaui1].y,30%);
-				set(layer[maderaui2].y,30%);
-				set(layer[maderaui3].y,30%);
-			
+				
 		);
 	);
 	</action>

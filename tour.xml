@@ -1,7 +1,8 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
 	
 	
-	<include url="skin/vtourskin.xml" />
+	<include url="skin/vtourskin.xml" if="1"/>
+	<include url="vuho_overlay.xml" />
 	
 	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
 	<skin_settings maps="false"
@@ -110,11 +111,6 @@
 	
 	
 	
-	
-	
-	
-	<include url="plugins/material_selector.xml" />
-	
 	<action name="setInitialPosition" autorun="onstart" >
 
         for(set(i,0), i LT style.count, inc(i),
@@ -132,8 +128,28 @@
 
 
 	
-	<include url="%VIEWER%/toolbox/toolbox.xml" if="0" />
-	<include url="%VIEWER%/plugins/fps.xml" if="0" />
+	<include url="%VIEWER%/toolbox/toolbox.xml" if="1" />
+	<include url="%VIEWER%/plugins/fps.xml" if="1" />
+	<events onkeydown="debugaction();" if="1"/>
+	<action name="debugaction" if="1" >
+		if(keycode == 89,
+			change_floor(claro);change_mueble(claro);
+			print(claro-claro);
+		);
+		if(keycode == 85,
+			change_floor(claro);change_mueble(oscuro);
+			print(claro-oscuro);
+		);
+		if(keycode == 72,
+			change_floor(oscuro);change_mueble(claro);
+			print(oscuro-claro);
+		);
+		if(keycode == 74,
+			change_floor(oscuro);change_mueble(oscuro);
+			print(oscuro-oscuro);
+		);
+		
+	</action>
 	
 	
 	<include url="plugins/depthmap_navigation.xml" if="0"/>
@@ -145,26 +161,33 @@
 		onloaded="setintervalflash();"
 		onover="borderalphatween1();clearintervalflash();"
 		onout="borderalphatween0();setintervalflash();"
-		onclick="skin_hotspotstyle_click();"
+		onclick="floorspot_onclick();"
 		flashingout="false"
 		/>
 		
 	<action name="setintervalflash" scope="local">
-		setinterval(calc('flashid' + caller.name),1.1,
-			if(caller.flashingout == true,
-				tween(caller.borderalpha,0,1);
+	calc(clearid,'flashid'+caller.name);
+			setinterval(clearid,1.1,
+				if (caller !== null,
+					
+					if(caller.flashingout == true,
+						tween(caller.borderalpha,0,1);
+						,
+						tween(caller.borderalpha,.6,1);
+					);
+					
+					if(caller.borderalpha GE .6, 
+						set(caller.flashingout,true);
+					);
+					
+					if(caller.borderalpha LE 0, 
+						set(caller.flashingout,false);
+					);
+				);
 				,
-				tween(caller.borderalpha,.6,1);
+				<!-- null caller -->
+				clearinterval(clearid);
 			);
-			
-			if(caller.borderalpha GE .6, 
-				set(caller.flashingout,true);
-			);
-			
-			if(caller.borderalpha LE 0, 
-				set(caller.flashingout,false);
-			);
-		);
 	</action>
 	<action name="clearintervalflash" scope="local">
 		clearinterval(calc('flashid' + caller.name));
@@ -357,33 +380,33 @@
 	
 	<!-- Styles for Depthmap Locations -->
 	
-	<style name="scene_1"  ox="0"    oy="0"   oz="0"   linkedscene="scene_1_entrada2" autohotspot="true" 
+	<style name="scene_1"  ox="0"    oy="0"   oz="0"   linkedscene="scene_1" autohotspot="true" 
 	allowed="scene_2|scene_3|scene_4"/>
-	<style name="scene_2"  ox="-199"    oy="0" oz="-278" linkedscene="scene_4_cuarto_tv2" autohotspot="true" 
-	allowed="scene_1|scene_3|scene_4" />
-	<style name="scene_3"  ox="221" oy="0"   oz="-277" linkedscene="scene_3_sala_comedor2" autohotspot="true" 
-	allowed="scene_1|scene_2|scene_4|scene_5"/>
-	<style name="scene_4"  ox="203" oy="0"   oz="118" linkedscene="scene_2_cocina2" autohotspot="true" 
+	<style name="scene_2"  ox="203" oy="0"   oz="118" linkedscene="scene_2" autohotspot="true" 
 	allowed="scene_1|scene_2|scene_3"/>
-	<style name="scene_5"  ox="418" oy="0"   oz="-55" linkedscene="scene_5_estudio2" autohotspot="true" 
+	<style name="scene_3"  ox="221" oy="0"   oz="-277" linkedscene="scene_3" autohotspot="true" 
+	allowed="scene_1|scene_2|scene_4|scene_5"/>
+	<style name="scene_4"  ox="-199"    oy="0" oz="-278" linkedscene="scene_4" autohotspot="true" 
+	allowed="scene_1|scene_3|scene_4" />
+	<style name="scene_5"  ox="418" oy="0"   oz="-55" linkedscene="scene_5" autohotspot="true" 
 	allowed="scene_11|scene_3"/>
-	<style name="scene_6" ox="657" oy="0" oz="99" linkedscene="scene_6_ba__o_pasillo2" autohotspot="true" 
+	<style name="scene_6" ox="657" oy="0" oz="99" linkedscene="scene_6" autohotspot="true" 
 	allowed="scene_11" vangle_tolerance="50" angle_tolerance="60"/>
-	<style name="scene_7" ox="658" oy="0" oz="-326" linkedscene="scene_7_cuarto_secundario_22" autohotspot="true" 
+	<style name="scene_7" ox="658" oy="0" oz="-326" linkedscene="scene_7" autohotspot="true" 
 	allowed="scene_12"/>
-	<style name="scene_8" ox="942" oy="0" oz="-315" linkedscene="scene_8_cuarto_secundario_12" autohotspot="true" 
+	<style name="scene_8" ox="942" oy="0" oz="-315" linkedscene="scene_8" autohotspot="true" 
 	allowed="scene_12"/>
-	<style name="scene_9" ox="1077" oy="0" oz="98" linkedscene="scene_10_ba__o_habitacion_principal2" autohotspot="true" 
+	<style name="scene_9" ox="1077" oy="0" oz="98" linkedscene="scene_9" autohotspot="true" 
 	allowed="scene_10|scene_12"/>
-	<style name="scene_10" ox="832" oy="0" oz="258" linkedscene="scene_9_habitacion_principal2" autohotspot="true" 
+	<style name="scene_10" ox="832" oy="0" oz="258" linkedscene="scene_10" autohotspot="true" 
 	allowed="scene_9"/>
 	
-	<style name="scene_11" ox="657" oy="0" oz="-50" linkedscene="scene_pasillo1" autohotspot="true" 
+	<style name="scene_11" ox="657" oy="0" oz="-50" linkedscene="scene_11" autohotspot="true" 
 	allowed="scene_6|scene_12|scene_5|scene_7" vangle_tolerance="50"/>
-	<style name="scene_12" ox="783" oy="0" oz="-32" linkedscene="scene_pasillo2" autohotspot="true" 
+	<style name="scene_12" ox="783" oy="0" oz="-32" linkedscene="scene_12" autohotspot="true" 
 	allowed="scene_11|scene_7|scene_8|scene_9" vangle_tolerance="50"/>
 	
-	<style name="scene_13" ox="942" oy="0" oz="-315" linkedscene="scene_closet1" autohotspot="true" 
+	<style name="scene_13" ox="942" oy="0" oz="-315" linkedscene="scene_13" autohotspot="true" 
 	allowed="scene_12" angle_tolerance="20"/>
 	
 	<style name="exterior" prealign="0|-90|0" ox="377" oy="0" oz="-567" linkedscene="" autohotspot="false" 
@@ -407,13 +430,29 @@
 	
 	<events webvr_onentervr="reload_current_scene();" webvr_onexitvr="reload_current_scene();" />
 	
-	<action name="reload_current_scene">
-		off_all_floor_ui();
-		disable_material_ui();
-		copy(curr_name,xml.scene);
-		loadscene(get(curr_name),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+	<action name="get_curr_scene_n" >
+	</action>
+	<action name="reload_current_scene"> 
+		copy(scenename,xml.scene);
+		indexoftxt(isOutside,get(scenename),'exterior');
+		if(isOutside != -1,
+			
+			loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+		);
+		<!-- Loads scene, conserving floor color and mueble color -->
 		
-		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+		indexoftxt(i,get(scenename),'_');
+		calc(i2,lastindexof(get(scenename),'_'));
+		
+		calc(scene_n,slice(scenename,i+1,i2));
+		
+		if(scene_n LT 5,
+			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color + '-' +layer[variableHolder].curr_mueble_color);
+			,
+			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color);
+		);
+		
+		loadscene(get(to_load),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 		
 	</action>
 	
@@ -425,13 +464,11 @@
 			set(hotspot[skin_webvr_next_scene].visible, false);
 		);
 		
-		off_all_floor_ui();
-		disable_material_ui();
-		
 		calc(layer[skin_thumbborder].parent, 'skin_thumb_' + scene[get(newscenenameorindex)].index);
 		layer[skin_thumbs].scrolltocenter(get(scene[get(newscenenameorindex)].thumbx), get(scene[get(newscenenameorindex)].thumby));
 		loadscene(get(scene[get(newscenenameorindex)].name), null, get(skin_settings.loadscene_flags), get(blendmode));
 		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+		
 		
 	</action>
 	
@@ -482,24 +519,46 @@
 		visible="true"
 		/>
 		
+	<!-- Invisible layer that holds global variables -->
+	<layer name="variableHolder" keep="true" curr_floor_color="claro" curr_mueble_color="claro" />
+	
 	<action name="tour_loadscene" scope="local" args="scenename">
-		if(xml.scene != scenename,
-			off_all_floor_ui();
-			disable_material_ui();
+		<!-- OUTSIDE EXCEPTIONS -->
+		indexoftxt(isOutside,get(scenename),'exterior');
+		if(isOutside != -1,
 			loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+			
 			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 		);
+		<!-- Loads scene, conserving floor color and mueble color -->
+		indexoftxt(i,get(scenename),'_');
+		
+		
+		calc(scene_n,slice(scenename,i+1,scenename.length));
+		
+		if(scene_n LT 5,
+			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color + '-' +layer[variableHolder].curr_mueble_color);
+			,
+			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color);
+		);
+		
+		if(xml.scene != scenename,
+			loadscene(get(to_load),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+			
+			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+			
+			<!--
+			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), calc(winnerdistance*0.005), default);
+			-->
+		);
+		
 	</action>
+	
 	<action name="floorspot_onclick" scope="local">
 		
 		if(xml.scene != caller.linkedscene,
-			loadscene(get(caller.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+			tour_loadscene(get(caller.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 		);
-		
-		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		
-		off_all_floor_ui();
-		disable_material_ui();
 	</action>
 	
 	<events onclick="check_navigation();"/>
@@ -577,13 +636,12 @@
 			);
 			if (winner !== null,
 				
-				off_all_floor_ui();
-				disable_material_ui();
 				if(xml.scene != winner.linkedscene,
-					loadscene(get(winner.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+					tour_loadscene(get(winner.linkedscene),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 				);
+				<!--
 				tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), calc(winnerdistance*0.005), default);
-				
+				-->
 				,
 				<!-- If no winner attempt to move and fail -->
 				
@@ -621,14 +679,17 @@
 
 	<!-- startup action - load the first scene -->
 	<action name="startup" autorun="onstart">
+		
 		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
-		loadscene(get(startscene), null, MERGE);
+		loadscene(get(startscene), null, get(skin_settings.loadscene_flags), get(blendmode));
 		if(startactions !== null, startactions() );
 	</action>
 	
 	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
 	
-	<scene name="scene_1_entrada2" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(1);setactiverect(1);">
+	
+	
+	<scene name="scene_1_claro-claro" title="Entrada" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/1_entrada2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="infodisplay(1);setactiverect(1);">
 
 		<view hlookat="131.104" vlookat="3.230" fovtype="MFOV" fov="124.090" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -645,41 +706,11 @@
 		</image>
 		
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2_cocina2"/>
-		<hotspot name="spot2" style="visual_floorspot" tx="-120" ty="150" tz="-260" keep="false" visible="true" enabled="true" linkedscene="scene_4_cuarto_tv2" 
+		<hotspot name="spot1" style="visual_floorspot" tx="180" ty="150" tz="124" keep="false" visible="true" enabled="true" linkedscene="scene_2"/>
+		<hotspot name="spot2" style="visual_floorspot" tx="-120" ty="150" tz="-260" keep="false" visible="true" enabled="true" linkedscene="scene_4" 
 		/>
-		<hotspot name="spot3" style="visual_floorspot" tx="180" ty="150" tz="-250" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
+		<hotspot name="spot3" style="visual_floorspot" tx="180" ty="150" tz="-250" keep="false" visible="true" enabled="true" linkedscene="scene_3"
 		/>
-		
-		<hotspot name="materialui_vr1" ath="82" atv="5" url="%VIEWER%/icons/switchmatoff.png" scale="0.15" linkedscene="scene_4_madera_clara_meson_gris" onclick="floorspot_onclick" 
-		if="(webvr.isenabled OR device.mobilevr)"
-		onover="set(hotspot[materialui_vr1].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[materialui_vr1].url,%VIEWER%/icons/switchmatoff.png);"
-		/>
-		<hotspot name="materialui_vr2" ath="67" atv="21" url="%VIEWER%/icons/switchmatoff.png" scale="0.15" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="floorspot_onclick" if="(webvr.isenabled OR device.mobilevr)"
-		onover="set(hotspot[materialui_vr2].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[materialui_vr2].url,%VIEWER%/icons/switchmatoff.png);"
-		/>
-		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="82" atv="5" 
-		scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
-		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="82" atv="5" 
-		scale="0.08" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-160.0" atv="40" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="switch_floor_ui(1);"  devices="desktop"/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-160.0" atv="40" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="switch_floor_ui(1)"  devices="handheld"/>
 		
 		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
 		onclick="remove_images();" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
@@ -701,46 +732,24 @@
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="169" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 
-	<scene name="scene_2_cocina2" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(2);">
+	<scene name="scene_2_claro-claro" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(2);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
 		<preview url="panos/2_cocina2.tiles/preview.jpg" />
 
-		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4">
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
 			<cube url="panos/2_cocina2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
 			<depthmap url="depthmaps/depth2.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 
-		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
 			<cube url="panos/2_cocina2.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth2.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="116.0" atv="11" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="desktop"
-		if="!(webvr.isenabled OR device.mobilevr)"/>
 		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="116.0" atv="11" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="handheld"
-		if="!(webvr.isenabled OR device.mobilevr)"/>
-		
-		
-		<hotspot name="spot1" style="visual_floorspot" tx="10" ty="150" tz="0" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
-		/>
-		
-		<hotspot name="spot2" ath="116.0" atv="11" url="%VIEWER%/icons/switchmatoff.png" scale="0.15" linkedscene="scene_4_madera_clara_meson_gris" onclick="floorspot_onclick" 
-		if="(webvr.isenabled OR device.mobilevr)"
-		onover="set(hotspot[spot2].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[spot2].url,%VIEWER%/icons/switchmatoff.png);"
-		/>
-		<hotspot name="spot3" ath="95.19" atv="60" url="%VIEWER%/icons/switchmatoff.png" scale="0.15" linkedscene="scene_4_madera_neutra_meson_blanco" onclick="floorspot_onclick" if="(webvr.isenabled OR device.mobilevr)"
-		onover="set(hotspot[spot3].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[spot3].url,%VIEWER%/icons/switchmatoff.png);"
+		<hotspot name="spot1" style="visual_floorspot" tx="10" ty="150" tz="0" keep="false" visible="true" enabled="true" linkedscene="scene_1"
 		/>
 		
 		<layer name="window_vista" type="image" align="center" keep="true" alpha="0" enabled="false" scale="0.2" url="vista_bogota.jpg"
@@ -763,129 +772,29 @@
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.08" ath="180" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
-	<include url="cambio_materiales.xml" />
-	
-	<scene name="scene_4_cuarto_tv2" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
+	<scene name="scene_4_claro-claro" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
 		<preview url="panos/4_cuarto_tv2.tiles/preview.jpg" />
 
-		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2" >
+		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_4" >
 			<cube url="panos/4_cuarto_tv2.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" style="scene_2"/>
 			<depthmap url="depthmaps/depth4.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 
-		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
+		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_4">
 			<cube url="panos/4_cuarto_tv2.tiles/vr/pano_%t_%s.jpg" />
 			<depthmap url="depthmaps/depth4.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="-10" ty="150" tz="-40" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
+		<hotspot name="spot1" style="visual_floorspot" tx="-10" ty="150" tz="-40" keep="false" visible="true" enabled="true" linkedscene="scene_1"
 		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="130" ty="130" tz="-200" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
+		<hotspot name="spot2" style="visual_floorspot" tx="130" ty="130" tz="-200" keep="false" visible="true" enabled="true" linkedscene="scene_3"
 		/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="55.65" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="switch_floor_ui(1);"  devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="55.65" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="switch_floor_ui(1)"  devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="55.65" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_piso_caramelo);"  if="webvr.isenabled OR device.mobilevr"/>
 	</scene>
 	
-	<scene name="scene_4_piso_claro" title="Piso Claro" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/01_piso_claro.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(1,on);enable_floor_ui();setactiverect(3);">
-
-		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
-
-		<preview url="panos/01_piso_claro.tiles/preview.jpg" />
-
-		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
-			<cube url="panos/01_piso_claro.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
-			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
-		</image>
-
-		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
-			<cube url="panos/01_piso_claro.tiles/vr/pano_%t_%s.jpg" />
-			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
-		</image>
-		
-		<hotspot name="spot1" style="visual_floorspot" tx="-48" ty="120" tz="-18" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
-		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="92" ty="110" tz="-160" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
-		/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="37.32" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_piso_caramelo);"  if="webvr.isenabled OR device.mobilevr"/>
-		
-	</scene>
-	
-	<scene name="scene_4_piso_caramelo" title="Piso Caramelo" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/02_piso_caramelo.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(2,on);enable_floor_ui();">
-
-		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
-
-		<preview url="panos/02_piso_caramelo.tiles/preview.jpg" />
-
-		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
-			<cube url="panos/02_piso_caramelo.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" />
-			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
-		</image>
-
-		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
-			<cube url="panos/02_piso_caramelo.tiles/vr/pano_%t_%s.jpg" />
-			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
-		</image>
-		
-		<hotspot name="spot1" style="visual_floorspot" tx="-48" ty="120" tz="-18" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
-		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="92" ty="110" tz="-160" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
-		/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="37.32" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_piso_cafe);"  if="webvr.isenabled OR device.mobilevr"/>
-	</scene>
-
-	<scene name="scene_4_piso_cafe" title="Piso Café" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/03_piso_cafe.tiles/thumb.jpg" lat="" lng="" heading="" onstart="set_floor_ui(3,on);enable_floor_ui();">
-
-		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
-
-		<preview url="panos/03_piso_cafe.tiles/preview.jpg" />
-
-		<image if="!(webvr.isenabled OR device.mobilevr)" style="scene_2">
-			<cube url="panos/03_piso_cafe.tiles/%s/l%l/%v/l%l_%s_%v_%h.jpg" multires="512,640,1280" style="scene_4" />
-			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
-		</image>
-
-		<image stereo="true" stereolabels="1|2" if="webvr.isenabled OR device.mobilevr" style="scene_2">
-			<cube url="panos/03_piso_cafe.tiles/vr/pano_%t_%s.jpg" />
-			<depthmap url="depthmaps/depth4_floor.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
-		</image>
-		
-		<hotspot name="spot1" style="visual_floorspot" tx="-48" ty="120" tz="-18" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
-		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="92" ty="110" tz="-160" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
-		/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="37.32" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_piso_claro);"  if="webvr.isenabled OR device.mobilevr"/>
-	</scene>
-	
-	
-	<scene name="scene_3_sala_comedor2" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(4);">
+	<scene name="scene_3_claro-claro" title="Sala - Comedor" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/3_sala_comedor2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(4);">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -930,22 +839,12 @@
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.15" ath="-173.61" atv="1.43" 
 		if="!(webvr.isenabled OR device.mobilevr)"/>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="20" ty="150" tz="-50" keep="false" visible="true" enabled="true" linkedscene="scene_1_entrada2"
+		<hotspot name="spot1" style="visual_floorspot" tx="20" ty="150" tz="-50" keep="false" visible="true" enabled="true" linkedscene="scene_1"
 		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="-67" ty="130" tz="-274" keep="false" visible="true" enabled="true" linkedscene="scene_4_cuarto_tv2"
+		<hotspot name="spot2" style="visual_floorspot" tx="-67" ty="130" tz="-274" keep="false" visible="true" enabled="true" linkedscene="scene_4"
 		/>
-		<hotspot name="spot3" style="visual_floorspot" tx="400" ty="130" tz="-50" keep="false" visible="true" enabled="true" linkedscene="scene_5_estudio2"
+		<hotspot name="spot3" style="visual_floorspot" tx="400" ty="130" tz="-50" keep="false" visible="true" enabled="true" linkedscene="scene_5"
 		/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-90" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.3" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="switch_floor_ui(1);"  devices="desktop"/>
-		
-		<hotspot name="start_floorui" url="%VIEWER%/icons/switchmatoff.png" ath="-90" atv="45" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_floorui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="switch_floor_ui(1)"  devices="handheld"/>
 		
 		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
 		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
@@ -960,18 +859,6 @@
 		scale="0.1" ath="145" atv="1.8"
 		linkedscene="exterior1"
 		onclick="floorspot_onclick();" devices="handheld"/>
-		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="39" atv="4.1" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.15" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="desktop"
-		if="!(webvr.isenabled OR device.mobilevr)"/>
-		
-		<hotspot name="start_materialui" url="%VIEWER%/icons/switchmatoff.png" ath="39" atv="4.10" 
-		linkedscene="scene_4_madera_neutra_meson_gris" scale="0.08" onover="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmaton.png);"
-		onout="set(hotspot[start_materialui].url,%VIEWER%/icons/switchmatoff.png);"
-		onclick="tour_loadscene(scene_4_madera_neutra_meson_gris);"  devices="handheld"
-		if="!(webvr.isenabled OR device.mobilevr)"/>
 	</scene>
 	
 	<!-- EXTERIOR VIEW -->
@@ -1066,7 +953,7 @@
 		onover="set(hotspot[spot1_peaton].url,%VIEWER%/icons/peatonon.png);"
 		onout="set(hotspot[spot1_peaton].url,%VIEWER%/icons/peatonoff.png);"/>
 		
-		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3_sala_comedor2" onclick="skin_hotspotstyle_click();lookat(-39.06,7.89);" borderwidth="5">
+		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_3" onclick="floorspot_onclick();lookat(-39.06,7.89);" borderwidth="5">
 			<point ath="159.76" atv="-42.93" />
 			<point ath="159.66" atv="-47.9" />
 			<point ath="-157.72" atv="-45.3" />
@@ -1074,7 +961,7 @@
 		</hotspot>
 	</scene>
 	
-	<scene name="scene_5_estudio2" title="Sala - Estudio" onstart="setactiverect(5);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_5_claro" title="Sala - Estudio" onstart="setactiverect(5);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/5_estudio2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1097,12 +984,12 @@
 			<point ath="50.35" atv="-3.78" />
 		</hotspot>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="145" ty="150" tz="-180" keep="false" visible="true" enabled="true" linkedscene="scene_3_sala_comedor2"
+		<hotspot name="spot1" style="visual_floorspot" tx="145" ty="150" tz="-180" keep="false" visible="true" enabled="true" linkedscene="scene_3"
 		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="650" ty="180" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo1"
+		<hotspot name="spot2" style="visual_floorspot" tx="650" ty="180" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_11"
 		/>
 		
-		<hotspot name="spot3" style="visual_floorspot" tx="750" ty="140" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2"
+		<hotspot name="spot3" style="visual_floorspot" tx="750" ty="140" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_12"
 		/>
 		
 		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
@@ -1120,7 +1007,7 @@
 		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
-	<scene name="scene_pasillo1" title="Pasillo - Baño" onstart="setactiverect(6);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_11_claro" title="Pasillo - Baño" onstart="setactiverect(6);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/12.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1136,18 +1023,18 @@
 			<depthmap url="depthmaps/depth11.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="480" ty="180" tz="-45" keep="false" visible="true" enabled="true" linkedscene="scene_5_estudio2"
+		<hotspot name="spot1" style="visual_floorspot" tx="480" ty="180" tz="-45" keep="false" visible="true" enabled="true" linkedscene="scene_5"
 		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="675" ty="200" tz="100" keep="false" visible="true" enabled="true" linkedscene="scene_6_ba__o_pasillo2"
+		<hotspot name="spot2" style="visual_floorspot" tx="675" ty="200" tz="100" keep="false" visible="true" enabled="true" linkedscene="scene_6"
 		/>
-		<hotspot name="spot3" style="visual_floorspot" tx="840" ty="180" tz="-44" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2"
+		<hotspot name="spot3" style="visual_floorspot" tx="840" ty="180" tz="-44" keep="false" visible="true" enabled="true" linkedscene="scene_12"
 		/>
 		
-		<hotspot name="spot4" style="visual_floorspot" tx="920" ty="140" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_10_ba__o_habitacion_principal2"
+		<hotspot name="spot4" style="visual_floorspot" tx="920" ty="140" tz="-51" keep="false" visible="true" enabled="true" linkedscene="scene_9"
 		/>
 	</scene>
 	
-	<scene name="scene_6_ba__o_pasillo2" title="Baño " onstart="setactiverect(7);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/6_ba__o_pasillo2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_6_claro" title="Baño " onstart="setactiverect(7);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/6_ba__o_pasillo2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1163,11 +1050,11 @@
 			<depthmap url="depthmaps/depth6.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="650" ty="240" tz="-45" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo1"
+		<hotspot name="spot1" style="visual_floorspot" tx="650" ty="240" tz="-45" keep="false" visible="true" enabled="true" linkedscene="scene_11"
 		/>
 	</scene>
 	
-	<scene name="scene_pasillo2" title="Pasillo - Cuartos" onstart="setactiverect(6);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/22.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_12_claro" title="Pasillo - Cuartos" onstart="setactiverect(6);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/22.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1183,17 +1070,17 @@
 			<depthmap url="depthmaps/depth12.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="640" ty="220" tz="-20" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo1"
+		<hotspot name="spot1" style="visual_floorspot" tx="640" ty="220" tz="-20" keep="false" visible="true" enabled="true" linkedscene="scene_11"
 		/>
-		<hotspot name="spot2" style="visual_floorspot" tx="700" ty="200" tz="-180" keep="false" visible="true" enabled="true" linkedscene="scene_7_cuarto_secundario_22" />
-		<hotspot name="spot3" style="visual_floorspot" tx="850" ty="200" tz="-180" keep="false" visible="true" enabled="true" linkedscene="scene_8_cuarto_secundario_12" />
-		<hotspot name="spot4" style="visual_floorspot" tx="980" ty="200" tz="-42" keep="false" visible="true" enabled="true" linkedscene="scene_10_ba__o_habitacion_principal2" />
+		<hotspot name="spot2" style="visual_floorspot" tx="700" ty="200" tz="-180" keep="false" visible="true" enabled="true" linkedscene="scene_7" />
+		<hotspot name="spot3" style="visual_floorspot" tx="850" ty="200" tz="-180" keep="false" visible="true" enabled="true" linkedscene="scene_8" />
+		<hotspot name="spot4" style="visual_floorspot" tx="980" ty="200" tz="-42" keep="false" visible="true" enabled="true" linkedscene="scene_9" />
 		
-		<hotspot name="spot5" style="visual_floorspot" tx="480" ty="160" tz="-20" keep="false" visible="true" enabled="true" linkedscene="scene_5_estudio2"
+		<hotspot name="spot5" style="visual_floorspot" tx="480" ty="160" tz="-20" keep="false" visible="true" enabled="true" linkedscene="scene_5"
 		/>
 	</scene>
 	
-	<scene name="scene_7_cuarto_secundario_22" title="Cuarto Secundario 2" onstart="setactiverect(8);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/7_cuarto_secundario_22.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_7_claro" title="Cuarto Secundario 2" onstart="setactiverect(8);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/7_cuarto_secundario_22.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1209,10 +1096,10 @@
 			<depthmap url="depthmaps/depth7.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="750" ty="170" tz="-73" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2"/>
+		<hotspot name="spot1" style="visual_floorspot" tx="750" ty="170" tz="-73" keep="false" visible="true" enabled="true" linkedscene="scene_12"/>
 	</scene>
 	
-	<scene name="scene_8_cuarto_secundario_12" title="Cuarto Secundario 1" onstart="setactiverect(9);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/8_cuarto_secundario_12.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_8_claro" title="Cuarto Secundario 1" onstart="setactiverect(9);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/8_cuarto_secundario_12.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1228,7 +1115,7 @@
 			<depthmap url="depthmaps/depth8.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="closet" style="golden_highlight" linkedscene="scene_closet1">
+		<hotspot name="closet" style="golden_highlight" linkedscene="scene_13">
 			<point ath="-5.96" atv="26.34"/>
 			<point ath="14.45" atv="25.98"/>
 			<point ath="15" atv="-27.01"/>
@@ -1237,11 +1124,11 @@
 			<point ath="-5.86" atv="45.96"/>
 		</hotspot>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-41" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2" />
+		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-41" keep="false" visible="true" enabled="true" linkedscene="scene_12" />
 		
 	</scene>
 	
-	<scene name="scene_closet1" title="Cuarto Secundario 1 - Closet" onstart="setactiverect(9);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/closet1.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_13_claro" title="Cuarto Secundario 1 - Closet" onstart="setactiverect(9);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/closet1.tiles/thumb.jpg" lat="" lng="" heading="">
 		
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1257,7 +1144,7 @@
 			<depthmap url="depthmaps/depth13.png" enabled ="true" scale="0.7" offset="0"/> 
 		</image>
 		
-		<hotspot name="closet" borderalpha="0" fillalpha="0" enabled="true" onclick="tour_loadscene(scene_8_cuarto_secundario_12)" >
+		<hotspot name="closet" borderalpha="0" fillalpha="0" enabled="true" onclick="tour_loadscene(scene_8)" >
 			<point ath="-5.96" atv="26.34"/>
 			<point ath="14.45" atv="25.98"/>
 			<point ath="15" atv="-27.01"/>
@@ -1266,12 +1153,12 @@
 			<point ath="-5.86" atv="45.96"/>
 		</hotspot>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-41" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2" />
+		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-41" keep="false" visible="true" enabled="true" linkedscene="scene_12" />
 		
 	</scene>
 	
 	
-	<scene name="scene_10_ba__o_habitacion_principal2" title="Habitación Principal" onstart="setactiverect(10);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/10_ba__o_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_9_claro" title="Habitación Principal" onstart="setactiverect(10);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/10_ba__o_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1287,11 +1174,11 @@
 			<depthmap url="depthmaps/depth9.png" enabled ="true" scale="0.7" offset="0"/> 
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-71" keep="false" visible="true" enabled="true" linkedscene="scene_pasillo2" />
-		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_9_habitacion_principal2" />
+		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-71" keep="false" visible="true" enabled="true" linkedscene="scene_12" />
+		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_9" />
 	</scene>
 
-	<scene name="scene_9_habitacion_principal2" title="Baño - Habitación Principal" onstart="setactiverect(11);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/9_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
+	<scene name="scene_10_claro" title="Baño - Habitación Principal" onstart="setactiverect(11);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/9_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
 
 		<view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
 
@@ -1307,12 +1194,10 @@
 			<depthmap url="depthmaps/depth10.png" enabled ="true" scale="0.7" offset="0" style="depthmapsettings" />
 		</image>
 		
-		<hotspot name="spot1" style="visual_floorspot" tx="950.2" ty="220" tz="235" keep="false" visible="true" enabled="true" linkedscene="scene_10_ba__o_habitacion_principal2" />
+		<hotspot name="spot1" style="visual_floorspot" tx="950.2" ty="220" tz="235" keep="false" visible="true" enabled="true" linkedscene="scene_9" />
 	</scene>
 	
-	
-	
-	
+	<include url="cambio_materiales.xml" />
 
 
 </krpano>
