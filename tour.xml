@@ -804,7 +804,7 @@
 		onover="set(hotspot[spot2_peaton].url,%VIEWER%/icons/peatonon.png);"
 		onout="set(hotspot[spot2_peaton].url,%VIEWER%/icons/peatonoff.png);"/>
 		
-		<!-- Aralia Logo -->
+		
 		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.16" distorted="true" ath="30.7" atv="-45.36" rx="-20" ry="-25" rz="11"
 		enabled="true"/>
 		
