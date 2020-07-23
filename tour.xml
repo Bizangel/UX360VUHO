@@ -1,5 +1,6 @@
 ﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
+
 	<include url="vuho_overlay.xml" if="1"/>
 	
 	<style name="text"
@@ -331,19 +332,6 @@
 	
 	<!-- Overload Tour Loading so it keeps coordinates and has nice animation 
 	ALSO UPDATED FLAG SO IT BLENDS AND KEEPS VIEW-->
-	<action name="skin_loadscene" scope="local" args="newscenenameorindex, blendmode">
-		if(webvr.isenabled AND scene.count GT 1,
-			set(hotspot[skin_webvr_prev_scene].visible, false);
-			set(hotspot[skin_webvr_next_scene].visible, false);
-		);
-		
-		calc(layer[skin_thumbborder].parent, 'skin_thumb_' + scene[get(newscenenameorindex)].index);
-		layer[skin_thumbs].scrolltocenter(get(scene[get(newscenenameorindex)].thumbx), get(scene[get(newscenenameorindex)].thumby));
-		loadscene(get(scene[get(newscenenameorindex)].name), null, get(skin_settings.loadscene_flags), get(blendmode));
-		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		
-		
-	</action>
 	
 	<action name="generate_floorspots" autorun="onstart" scope="local">
 		set(floorheight, 160.0);
@@ -398,32 +386,39 @@
 	<action name="tour_loadscene" scope="local" args="scenename">
 		<!-- OUTSIDE EXCEPTIONS -->
 		indexoftxt(isOutside,get(scenename),'exterior');
-		if(isOutside != -1,
+		indexoftxt(isKitchen,get(scenename),'meson');
+		
+		disable_material_ui();
+		if(isOutside != -1 OR isKitchen != -1,
 			loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 			
 			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-		);
-		<!-- Loads scene, conserving floor color and mueble color -->
-		indexoftxt(i,get(scenename),'_');
-		
-		
-		calc(scene_n,slice(scenename,i+1,scenename.length));
-		
-		if(scene_n LT 5,
-			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color + '-' +layer[variableHolder].curr_mueble_color);
+			
+			
 			,
-			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color);
+			<!-- Loads scene, conserving floor color and mueble color -->
+			indexoftxt(i,get(scenename),'_');
+			
+			
+			calc(scene_n,slice(scenename,i+1,scenename.length));
+			
+			if(scene_n LT 5,
+				calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color + '-' +layer[variableHolder].curr_mueble_color);
+				,
+				calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color);
+			);
+			
+			if(xml.scene != scenename,
+				loadscene(get(to_load),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+				
+				tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+				
+				<!--
+				tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), calc(winnerdistance*0.005), default);
+				-->
+			);
 		);
 		
-		if(xml.scene != scenename,
-			loadscene(get(to_load),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
-			
-			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
-			
-			<!--
-			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), calc(winnerdistance*0.005), default);
-			-->
-		);
 		
 	</action>
 	
@@ -584,6 +579,21 @@
 				
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.15" ath="169" atv="1.11" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="169" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="start_material" type="image" url="icons/switchmatoff.png" ath="83.08" atv="5.29" scale="0.2"
+		onover="set(hotspot[start_material].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(hotspot[start_material].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="enable_material_ui();tour_loadscene(scene_4_madera_neutra_meson_gris);"
+		devices="desktop"
+		/>
+		
+		<hotspot name="start_material" type="image" url="icons/switchmatoff.png" ath="83.08" atv="5.29" scale="0.08"
+		onover="set(hotspot[start_material].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(hotspot[start_material].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="enable_material_ui();tour_loadscene(scene_4_madera_neutra_meson_gris);"
+		devices="handheld"
+		/>
+		
 	</scene>
 
 	<scene name="scene_2_claro-claro" title="Cocina" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/2_cocina2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(2);">
@@ -638,6 +648,20 @@
 		scale="0.08" ath="156.34" atv="2.5"
 		linkedscene="exterior1"
 		onclick="floorspot_onclick();" devices="handheld"/>
+		
+		<hotspot name="start_material" type="image" url="icons/switchmatoff.png" ath="115.673" atv="12.26" scale="0.28"
+		onover="set(hotspot[start_material].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(hotspot[start_material].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="enable_material_ui();tour_loadscene(scene_4_madera_neutra_meson_gris);"
+		devices="desktop"
+		/>
+		
+		<hotspot name="start_material" type="image" url="icons/switchmatoff.png" ath="115.673" atv="12.26" scale="0.12"
+		onover="set(hotspot[start_material].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(hotspot[start_material].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="enable_material_ui();tour_loadscene(scene_4_madera_neutra_meson_gris);"
+		devices="handheld"
+		/>
 	</scene>
 	
 	<scene name="scene_4_claro-claro" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
@@ -727,6 +751,20 @@
 		scale="0.1" ath="145" atv="1.8"
 		linkedscene="exterior1"
 		onclick="floorspot_onclick();" devices="handheld"/>
+		
+		<hotspot name="start_material" type="image" url="icons/switchmatoff.png" ath="38.53" atv="3.5" scale="0.175"
+		onover="set(hotspot[start_material].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(hotspot[start_material].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="enable_material_ui();tour_loadscene(scene_4_madera_neutra_meson_gris);"
+		devices="desktop"
+		/>
+		
+		<hotspot name="start_material" type="image" url="icons/switchmatoff.png" ath="38.53" atv="3.5" scale="0.08"
+		onover="set(hotspot[start_material].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(hotspot[start_material].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="enable_material_ui();tour_loadscene(scene_4_madera_neutra_meson_gris);"
+		devices="handheld"
+		/>
 	</scene>
 	
 	<!-- EXTERIOR VIEW -->
@@ -1039,6 +1077,7 @@
 	</scene>
 	
 	<include url="cambio_materiales.xml" />
+	<include url="materiales_cocina.xml" />
 
 
 </krpano>

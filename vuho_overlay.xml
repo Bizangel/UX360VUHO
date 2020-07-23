@@ -263,6 +263,16 @@
 		</layer>
 	</layer>
 	
+	<action name="hide_material_button" scope="local">
+		set(layer[material_icon].visible,false);
+		extend_overlay_disable_universal();
+	</action>
+	
+	<action name="show_material_button" scope="local">
+		set(layer[material_icon].visible,true);
+	</action>
+	
+	
 	<action name="extend_overlay_animation_enable" scope="local">
 		<!-- Base size is 384x384 -->
 		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
@@ -296,6 +306,14 @@
 					set(layer[extend_menu].crop,'0|0|1652|384');
 				);
 			);
+		);
+	</action>
+	
+	<action name="extend_overlay_disable_universal">
+		if(device.handheld == true,
+			extend_overlay_animation_disable_mobile();
+			,
+			extend_overlay_animation_disable();
 		);
 	</action>
 	
