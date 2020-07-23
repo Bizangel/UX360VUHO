@@ -1,8 +1,435 @@
 <krpano>
 	
-	<!-- Temporary UI -->
-	<!-- Visually sets the floor ui on and off 
-	param: val on/off -->
+	<!--
+	CROP IMAGE RECT
+	layer[name].crop = 'rect.x|rect.y|rect.w|rect.h'
+	-->
+	
+	<include url="%VIEWER%/plugins/webvr.xml" devices="html5" />
+	
+	<!-- overwrite some settings from the webvr.xml for functionality -->
+	<plugin name="webvr" keep="true" devices="html5.and.webgl"
+	        onavailable="set(layer[entervr_icon].url,%ROOT%/icons/vron.png);"/>
+			
+	<action name="overlay_animation_enable" scope="local">
+		<!-- Base size is 384x384 -->
+		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
+		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
+		if( layer[OverlayMenu].url == '%ROOT%/icons/menuoff.png',
+			set(layer[overlay_close_hitbox].width,18%);
+			
+			set(layer[OverlayMenu].handcursor,false);
+			set(layer[OverlayMenu].url,%ROOT%/icons/menuon.png);
+			
+			set(layer[OverlayMenu].crop,'1676|0|384|384');
+			
+			setinterval('vuho_overlay_id',0,
+				copy(cropval,layer[OverlayMenu].crop);
+				
+				
+				indexoftxt(i,get(cropval),'|');
+				calc(copy_x,slice(get(cropval),0,i));
+				
+				<!-- Adjust Speed -->
+				dec(copy_x,200);
+				
+				calc(copy_width,2060-copy_x);
+				
+				set(layer[OverlayMenu].crop,calc(copy_x + '|0|' + copy_width + '|384'));
+				
+				<!-- End check -->
+				if(copy_x LE 0,
+					clearinterval('vuho_overlay_id');
+					set(layer[OverlayMenu].crop,'0|0|2060|384');
+					enable_overlay_icons();
+				);
+			);
+		);
+	</action>
+	
+	<action name="overlay_animation_disable" scope="local">
+		<!-- Base size is 384x384 -->
+		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png',
+			set(layer[overlay_close_hitbox].width,100%);
+			
+			set(layer[OverlayMenu].handcursor,true);
+			set(layer[OverlayMenu].crop,'0|0|2060|384');
+			
+			setinterval('vuho_overlay_id',0,
+				copy(cropval,layer[OverlayMenu].crop);
+				
+				
+				indexoftxt(i,get(cropval),'|');
+				calc(copy_x,slice(get(cropval),0,i));
+				
+				<!-- Adjust Speed -->
+				inc(copy_x,200);
+				
+				calc(copy_width,2060-copy_x);
+				
+				set(layer[OverlayMenu].crop,calc(copy_x + '|0|' + copy_width + '|384'));
+				
+				<!-- End check -->
+				if(copy_x GT 1676,
+					clearinterval('vuho_overlay_id');
+					set(layer[OverlayMenu].url,%ROOT%/icons/menuoff.png);
+					set(layer[OverlayMenu].crop,'0|0|384|384');
+					disable_overlay_icons();
+				);
+			);
+			
+		);
+		<!--
+		print(layer[OverLayMenu].width);
+		-->
+	</action>
+	
+	<action name="enable_overlay_icons" scope="local">
+		tween(layer[fullscreen_icon].alpha,1,.1); set(layer[fullscreen_icon].enabled,true);
+		tween(layer[entervr_icon].alpha,1,.1); set(layer[entervr_icon].enabled,true);
+		tween(layer[material_icon].alpha,1,.1); set(layer[material_icon].enabled,true);
+		tween(layer[information_icon].alpha,1,.1); set(layer[information_icon].enabled,true);
+	</action>
+	
+	<action name="disable_overlay_icons" scope="local">
+		tween(layer[fullscreen_icon].alpha,0,.1); set(layer[fullscreen_icon].enabled,false);
+		tween(layer[entervr_icon].alpha,0,.1); set(layer[entervr_icon].enabled,false);
+		tween(layer[material_icon].alpha,0,.1); set(layer[material_icon].enabled,false);
+		tween(layer[information_icon].alpha,0,.1); set(layer[information_icon].enabled,false);
+		
+		if(device.handheld == true,
+			extend_overlay_animation_disable_mobile();
+			,
+			extend_overlay_animation_disable();
+		);
+	</action>
+	
+	<action name="toggle_fullscreen_icon" scope="local">
+		if( layer[fullscreen_icon].active == true,
+			set(layer[fullscreen_icon].url,%ROOT%/icons/fullscreen_off.png);
+			set(layer[fullscreen_icon].active,false);
+			,
+			set(layer[fullscreen_icon].url,%ROOT%/icons/fullscreen_on.png);
+			set(layer[fullscreen_icon].active,true);
+		);
+	</action>
+
+	<action name="toggle_fullscreen_icon_hover_out" scope="local">
+		if( layer[fullscreen_icon].active == true,
+			set(layer[fullscreen_icon].url,%ROOT%/icons/fullscreen_on.png);
+			,
+			set(layer[fullscreen_icon].url,%ROOT%/icons/fullscreen_off.png);
+		);
+	</action>
+	
+	<action name="toggle_fullscreen_icon_hover_in" scope="local">
+		if( layer[fullscreen_icon].active == true,
+			set(layer[fullscreen_icon].url,%ROOT%/icons/fullscreen_off.png);
+			,
+			set(layer[fullscreen_icon].url,%ROOT%/icons/fullscreen_on.png);
+			
+		);
+	</action>
+	
+	<action name="toggle_overlay" scope="local">
+		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png',
+			overlay_animation_disable();
+			,
+			overlay_animation_enable();
+		);
+	</action>
+	
+	<action name="overlay_mobile_exceptions" scope="local" autorun="onstart">
+		if(device.handheld == true,
+			set(layer[OverlayMenu].scale,0.15);
+			set(layer[information_icon].url,%ROOT%/icons/infoon.png);set(layer[information_icon].scale,0.77);
+			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
+			overlay_animation_enable();
+		);
+	</action>
+	<!-- Overlay -->
+	<layer name="OverlayMenu" keep="true" type="image" url="%ROOT%/icons/menuoff.png" handcursor="true" align="rightbottom" scale="0.3" x="5%" y="5%" scalechildren="true"
+	onclick=""
+	maskchildren="false">
+		<layer name="overlay_close_hitbox" type="container" onclick="toggle_overlay();" align="righttop" x="0%" y="0%" width="100%" height="100%" bgcolor="0x000000" bgalpha="0" bgcapture="true"/>
+		
+		<layer name="fullscreen_icon" type="image" url="%ROOT%/icons/fullscreen_off.png" align="righttop" x="21%" y="20%" alpha="0" enabled="false" onclick="switch(fullscreen);toggle_fullscreen_icon();" active="false"
+		onover="toggle_fullscreen_icon_hover_in();"
+		onout="toggle_fullscreen_icon_hover_out();"/>
+		
+		<layer name="entervr_icon" type="image" url="%ROOT%/icons/vroff.png" align="righttop" x="40%" y="19%" alpha="0" enabled="false" onclick="webvr.enterVR();"
+		onover="set(layer[entervr_icon].url,%ROOT%/icons/vron.png);"
+		onout="set(layer[entervr_icon].url,%ROOT%/icons/vroff.png)"/>
+		
+		<layer name="information_icon" type="image" url="%ROOT%/icons/infooff.png" align="righttop" x="60%" y ="18%" alpha="0" enabled="false" scale="1"
+		onover="set(layer[information_icon].url,%ROOT%/icons/infoon.png);set(layer[information_icon].scale,0.77);"
+		onout="set(layer[information_icon].url,%ROOT%/icons/infooff.png);set(layer[information_icon].scale,1);"
+		onclick="force_infodisplay(1);"/>
+		
+		<layer name="material_icon" type="image" url="%ROOT%/icons/switchmatoff.png" align="righttop" x="80%" y="18%" alpha="0" scale="0.7" enabled="false"
+		onover="set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(layer[material_icon].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="toggle_extended_overlay();" devices="desktop"/>
+		
+		<layer name="extend_menu" type="image" url="%ROOT%/icons/extendmenu.png" align="righttop" x="91%" y="0" alpha="1" crop="1652|0|0|384" maskchildren="true"
+		handcursor="false" devices="desktop">
+			
+			
+			<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" x="35%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_floor_ui(1);" enabled="true" alpha="1" devices="desktop"/>
+	
+			<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" x="15%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_floor_ui(2);"  enabled="true" alpha="1" devices="desktop"/>
+			
+			<layer name="madera1ui" type="image" url="%VIEWER%/icons/madera1off.png" x="+78%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_madera_ui(1);" enabled="true" alpha="1" devices="desktop"/>
+	
+			<layer name="madera2ui" type="image" url="%VIEWER%/icons/madera2off.png" x="+57%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_madera_ui(2);"  enabled="true" alpha="1" devices="desktop"/>
+			
+			
+			
+		</layer>
+		
+		<!-- Mobile Version -->
+		<layer name="material_icon" type="image" url="%ROOT%/icons/switchmatoff.png" align="righttop" x="80%" y="18%" alpha="0" scale="0.7" enabled="false"
+		onover="set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);"
+		onout="set(layer[material_icon].url,%ROOT%/icons/switchmatoff.png);"
+		onclick="toggle_extended_overlay_mobile();" devices="handheld"/>
+		
+		<layer name="extend_menu" type="image" url="%ROOT%/icons/extendmenu_mobile.png" align="righttop" x="0%" y="-500" alpha="1"  maskchildren="true"
+		crop="0|657|2058|0"
+		handcursor="false" devices="handheld">
+			
+			
+			<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" x="30%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_floor_ui(1);" enabled="true" alpha="1" devices="handheld"/>
+	
+			<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" x="15%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_floor_ui(2);"  enabled="true" alpha="1" devices="handheld"/>
+			
+			<layer name="madera1ui" type="image" url="%VIEWER%/icons/madera1off.png" x="+75%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_madera_ui(1);" enabled="true" alpha="1" devices="handheld"/>
+	
+			<layer name="madera2ui" type="image" url="%VIEWER%/icons/madera2off.png" x="+55%" y="25%" align="righttop" scale="0.32" 
+			onclick="switch_madera_ui(2);"  enabled="true" alpha="1" devices="handheld"/>
+			
+			
+			
+		</layer>
+	</layer>
+	
+	<action name="extend_overlay_animation_enable" scope="local">
+		<!-- Base size is 384x384 -->
+		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
+		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_x,slice(get(cropval),0,i));
+		
+		<!-- if 0 thn means fully extended, if 1652 retracted -->
+		if( copy_x == 1652,	
+			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
+			
+			
+			setinterval('extend_overlay_id',0,
+				copy(cropval,layer[extend_menu].crop);
+				
+				
+				indexoftxt(i,get(cropval),'|');
+				calc(copy_x,slice(get(cropval),0,i));
+				
+				<!-- Adjust Speed -->
+				dec(copy_x,200);
+				
+				calc(copy_width,1652-copy_x);
+				
+				set(layer[extend_menu].crop,calc(copy_x + '|0|' + copy_width + '|384'));
+				
+				<!-- End check -->
+				if(copy_x LE 0,
+					clearinterval('extend_overlay_id');
+					set(layer[extend_menu].crop,'0|0|1652|384');
+				);
+			);
+		);
+	</action>
+	
+	<action name="extend_overlay_animation_disable" scope="local">
+		<!-- Base size is 384x384 -->
+		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
+		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_x,slice(get(cropval),0,i));
+		
+		<!-- if 0 thn means fully extended, if 1652 retracted -->
+		if( copy_x == 0,	
+			set(layer[material_icon].url,%ROOT%/icons/switchmatoff.png);
+			
+			setinterval('extend_overlay_id',0,
+				copy(cropval,layer[extend_menu].crop);
+				
+				
+				indexoftxt(i,get(cropval),'|');
+				calc(copy_x,slice(get(cropval),0,i));
+				
+				<!-- Adjust Speed -->
+				inc(copy_x,200);
+				
+				calc(copy_width,1652-copy_x);
+				
+				set(layer[extend_menu].crop,calc(copy_x + '|0|' + copy_width + '|384'));
+				
+				<!-- End check -->
+				if(copy_x GE 1652,
+					clearinterval('extend_overlay_id');
+					set(layer[extend_menu].crop,'1652|0|0|384');
+				);
+			);
+		);
+	</action>
+	
+	<action name="toggle_extended_overlay" scope="local">
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_x,slice(get(cropval),0,i));
+		
+		<!-- if 0 thn means fully extended, if 1652 retracted -->
+		if( copy_x == 1652,	
+			extend_overlay_animation_enable();
+			,
+			extend_overlay_animation_disable();
+		);
+	</action>
+	
+	<action name="extend_overlay_animation_enable_mobile" scope="local">
+		<!-- Base size is 384x384 -->
+		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
+		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
+		
+		
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(cropval,slice(get(cropval),i+1,cropval.length));
+		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_y,slice(get(cropval),0,i));
+		
+		<!-- y needs to move between 0% and -500 -->
+		if( copy_y == 657,	
+			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
+			
+			
+			setinterval('extend_overlay_id',0,
+				copy(cropval,layer[extend_menu].crop);		
+				indexoftxt(i,get(cropval),'|');
+				calc(cropval,slice(get(cropval),i+1,cropval.length));
+				
+				indexoftxt(i,get(cropval),'|');
+				calc(copy_y,slice(get(cropval),0,i));
+				
+				
+				dec(copy_y,100);
+				
+				
+				calc(copy_height,657-copy_y);
+				set(layer[extend_menu].y,calc(copy_y-500));
+				
+				set(layer[extend_menu].crop,calc('0|' + copy_y + '|2058|' + copy_height));
+				
+				
+				if(copy_y LE 0,
+					clearinterval('extend_overlay_id');
+					set(layer[extend_menu].crop,'0|0|2058|657');
+					set(layer[extend_menu].y,-500);
+				);
+			);
+		);
+		
+	</action>
+	
+	<action name="extend_overlay_animation_disable_mobile" scope="local">
+		<!-- Base size is 384x384 -->
+		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
+		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
+		
+		
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(cropval,slice(get(cropval),i+1,cropval.length));
+		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_y,slice(get(cropval),0,i));
+		
+		if( copy_y == 0,	
+			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
+			
+			
+			setinterval('extend_overlay_id',0,
+				copy(cropval,layer[extend_menu].crop);		
+				indexoftxt(i,get(cropval),'|');
+				calc(cropval,slice(get(cropval),i+1,cropval.length));
+				
+				indexoftxt(i,get(cropval),'|');
+				calc(copy_y,slice(get(cropval),0,i));
+				
+				
+				inc(copy_y,100);
+				
+				
+				calc(copy_height,657-copy_y);
+				set(layer[extend_menu].y,calc(copy_y-500));
+				
+				set(layer[extend_menu].crop,calc('0|' + copy_y + '|2058|' + copy_height));
+				
+				
+				if(copy_y GE 657,
+					clearinterval('extend_overlay_id');
+					set(layer[extend_menu].crop,'0|657|2058|0');
+					set(layer[extend_menu].y,0);
+				);
+			);
+		);
+		
+	</action>
+	
+	
+	<action name="toggle_extended_overlay_mobile" scope="local">
+		<!-- Base size is 384x384 -->
+		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
+		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
+		
+		
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(cropval,slice(get(cropval),i+1,cropval.length));
+		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_y,slice(get(cropval),0,i));
+		
+		
+		if( copy_y == 657,
+			extend_overlay_animation_enable_mobile();
+			,
+			extend_overlay_animation_disable_mobile();
+		);
+	</action>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- Floor UI -->
 	<action name="set_floor_ui" scope="local" args="nfloor, onoff">
 		calc(floorname_ui,'floor' + nfloor + 'ui');
 		copy(floorname,layer[get(floorname_ui)].url);
@@ -41,17 +468,7 @@
 	
 	
 	
-	<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" keep="true" x="-15%" y="35%" align="centered" scale="0.09" 
-		onclick="switch_floor_ui(1);" enabled="true" alpha="1" devices="desktop"/>
-	
-	<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" keep="true" x="-10%" y="35%" align="centered" scale="0.09" 
-		onclick="switch_floor_ui(2);"  enabled="true" alpha="1" devices="desktop"/>
-	
-	<layer name="floor1ui" type="image" url="%VIEWER%/icons/floor1off.png" keep="true" x="-20%" y="30%" align="centered" scale="0.05" 
-		onclick="switch_floor_ui(1);" enabled="true" alpha="1" devices="handheld"/>
-	
-	<layer name="floor2ui" type="image" url="%VIEWER%/icons/floor2off.png" keep="true" x="-10%" y="30%" align="centered" scale="0.05" 
-		onclick="switch_floor_ui(2);"  enabled="true" alpha="1" devices="handheld"/>
+
 		
 		
 	<!-- same but madera UI version use mader to not think about indexes -->
@@ -89,17 +506,9 @@
 	
 	
 	
-	<layer name="madera1ui" type="image" url="%VIEWER%/icons/madera1off.png" keep="true" x="+10%" y="35%" align="centered" scale="0.09" 
-		onclick="switch_madera_ui(1);" enabled="true" alpha="1" devices="desktop"/>
 	
-	<layer name="madera2ui" type="image" url="%VIEWER%/icons/madera2off.png" keep="true" x="+15%" y="35%" align="centered" scale="0.09" 
-		onclick="switch_madera_ui(2);"  enabled="true" alpha="1" devices="desktop"/>
+		
 	
-	<layer name="madera1ui" type="image" url="%VIEWER%/icons/madera1off.png" keep="true" x="+10%" y="30%" align="centered" scale="0.05" 
-		onclick="switch_madera_ui(1);" enabled="true" alpha="1" devices="handheld"/>
-	
-	<layer name="madera2ui" type="image" url="%VIEWER%/icons/madera2off.png" keep="true" x="+20%" y="30%" align="centered" scale="0.05" 
-		onclick="switch_madera_ui(2);"  enabled="true" alpha="1" devices="handheld"/>
 	
 	
 </krpano>
