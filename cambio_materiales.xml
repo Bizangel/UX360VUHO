@@ -92,6 +92,20 @@
 				
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="180" atv="1.11" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.08" ath="180" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.2" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="desktop"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.08" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_4_claro-oscuro" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/claro-oscuro4.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
@@ -266,6 +280,20 @@
 				
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="180" atv="1.11" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.08" ath="180" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.2" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="desktop"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.08" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_4_oscuro-oscuro" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/oscuro-oscuro4.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
@@ -439,6 +467,20 @@
 				
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="180" atv="1.11" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.08" ath="180" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.2" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="desktop"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.08" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_4_oscuro-claro" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/oscuro-claro4.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
@@ -744,7 +786,7 @@
 		</image>
 		
 		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-71" keep="false" visible="true" enabled="true" linkedscene="scene_12" />
-		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_9" />
+		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_10" />
 	</scene>
 	
 	<scene name="scene_10_oscuro" title="Baño - Habitación Principal" onstart="setactiverect(11);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/oscuro10.tiles/thumb.jpg" lat="" lng="" heading="">

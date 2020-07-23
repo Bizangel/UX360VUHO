@@ -119,12 +119,12 @@
 			set(layer[infopopup].scale,get(fix_scale_value));
 			disablemap();
 			
-			<!-- startup view mobile -->
-			lookat(131.104,3.2,120);
+			
+			
 		);
 	</action>
 	
-	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.1" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
+	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.2" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
 	devices="handheld"/>
 	
 	<action name="toggle_map" scope="local">
@@ -149,24 +149,49 @@
 				
 				<!-- PORTRAIT -->
 				set(layer[InfoButton].y,20%);
-				set(layer[Map_Toggle].y,20%);
+				set(layer[Map_Toggle].y,25%);
 				
 				set(layer[floor1ui].y,30%);
 				set(layer[floor2ui].y,30%);
 					
 				set(layer[madera1ui].y,30%);
 				set(layer[madera2ui].y,30%);
+				
+				if(stagewidth LE 1024,
+					calc(fix_scale_value,stagewidth/1024);
+					roundval(fix_scale_value,2);
+					set(layer[infoslide3].scale,get(fix_scale_value));
+					set(layer[infoslide2].scale,get(fix_scale_value));
+					set(layer[infoslide1].scale,get(fix_scale_value));
+					,
+					set(layer[infoslide1].scale,1);
+					set(layer[infoslide2].scale,1);
+					set(layer[infoslide3].scale,1);
+				);
 				,
 				
 				<!-- LANDSCAPE -->
-				set(layer[InfoButton].y,30%);
-				set(layer[Map_Toggle].y,30%);
+				<!-- width and height IS updated. -->
+				if(stageheight LE 642,
+					calc(fix_scale_value,stageheight/642);
+					roundval(fix_scale_value,2);
+					set(layer[infoslide3].scale,get(fix_scale_value));
+					set(layer[infoslide2].scale,get(fix_scale_value));
+					set(layer[infoslide1].scale,get(fix_scale_value));
+					,
+					set(layer[infoslide1].scale,1);
+					set(layer[infoslide2].scale,1);
+					set(layer[infoslide3].scale,1);
+				);
 				
-				set(layer[floor1ui].y,20%);
-				set(layer[floor2ui].y,20%);
-				
-				set(layer[madera1ui].y,20%);
-				set(layer[madera2ui].y,20%);
+					set(layer[InfoButton].y,30%);
+					set(layer[Map_Toggle].y,5%);
+					
+					set(layer[floor1ui].y,20%);
+					set(layer[floor2ui].y,20%);
+					
+					set(layer[madera1ui].y,20%);
+					set(layer[madera2ui].y,20%);
 				
 				
 		);

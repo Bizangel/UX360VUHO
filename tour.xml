@@ -1,6 +1,5 @@
 ﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
-	<include url="skin/vtourskin.xml" if="0" />
 	<include url="vuho_overlay.xml" if="1"/>
 	
 	<style name="text"
@@ -532,10 +531,12 @@
 	<!-- startup action - load the first scene -->
 	<action name="startup" autorun="onstart">
 		
-		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[exterior1].name); );
 		loadscene(get(startscene), null, get(skin_settings.loadscene_flags), get(blendmode));
+		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
+		
 		if(startactions !== null, startactions() );
-		lookat(131.104,3.2,120);
+		
 	</action>
 	
 	<style name="button" type="text" css="text-align:center;" padding="4 0" mergedalpha="false" bgborder="0 0xFFFFFF 1" bgroundedge="1" bgshadow="0 1 4 0x000000 1.0" ondown="set(bgcolor, 0xDDDDDD);" onup="set(bgcolor, 0xFFFFFF);" />
@@ -623,6 +624,20 @@
 				
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.1" ath="180" atv="1.11" devices="desktop" if="!(webvr.isenabled OR device.mobilevr)"/>
 		<hotspot name="window_icon" type="image" url="icons/windowsightoff.png" enabled="false" scale="0.08" ath="180" atv="1.11" devices="handheld" if="!(webvr.isenabled OR device.mobilevr)"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.2" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="desktop"/>
+		
+		<hotspot name="external_view" url="%VIEWER%/icons/exterioroff.png" 
+		onover="set(hotspot[external_view].url,%VIEWER%/icons/exterioron.png);"
+		onout="set(hotspot[external_view].url,%VIEWER%/icons/exterioroff.png);"
+		scale="0.08" ath="156.34" atv="2.5"
+		linkedscene="exterior1"
+		onclick="floorspot_onclick();" devices="handheld"/>
 	</scene>
 	
 	<scene name="scene_4_claro-claro" title="Sala - Cuarto TV" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/4_cuarto_tv2.tiles/thumb.jpg" lat="" lng="" heading="" onstart="setactiverect(3);">
@@ -730,7 +745,7 @@
 			<cube url="panos/panoramica_exterior_1.tiles/vr/pano_%s.jpg" />
 		</image>
 		
-		<hotspot name="returnToApt" style="golden_highlight" linkedscene="exterior2" borderwidth="5" capture="false">
+		<hotspot name="returnToApt" style="golden_highlight" linkedscene="scene_1" borderwidth="5" capture="false" onclick="floorspot_onclick();lookat(128.67,1.45);">
 			<point ath="-3.82" atv="2.65" />
 			<point ath="-11.32" atv="2.12" />
 			<point ath="-11.42" atv="-19.62" />
@@ -743,6 +758,13 @@
 			<point ath="9.29" atv="-19.48" />
 			<point ath="9.46" atv="1.92" />
 		</hotspot>
+		
+		<hotspot name="spot2_peaton" url="%VIEWER%/icons/peatonoff.png" ath="-9.86" atv="-9.005" scale="0.19" onhover="" linkedscene="exterior2" 
+		distorted="true"
+		rx="-3.5" ry="-10.5" rz="0.5"
+		onclick="floorspot_onclick();"
+		onover="set(hotspot[spot2_peaton].url,%VIEWER%/icons/peatonon.png);"
+		onout="set(hotspot[spot2_peaton].url,%VIEWER%/icons/peatonoff.png);"/>
 		
 		<!-- Aralia Logo -->
 		<hotspot name="Edificio_Logo" url="%VIEWER%/icons/logo_edificio_on.png" scale="0.16" distorted="true" ath="30.7" atv="-45.36" rx="-20" ry="-25" rz="11"
@@ -994,7 +1016,7 @@
 		</image>
 		
 		<hotspot name="spot1" style="visual_floorspot" tx="860" ty="160" tz="-71" keep="false" visible="true" enabled="true" linkedscene="scene_12" />
-		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_9" />
+		<hotspot name="spot2" style="visual_floorspot" tx="860" ty="170" tz="270" keep="false" visible="true" enabled="true" linkedscene="scene_10" />
 	</scene>
 
 	<scene name="scene_10_claro" title="Baño - Habitación Principal" onstart="setactiverect(11);" havevrimage.mobilevr="false" havevrimage.no-mobilevr="true" thumburl="panos/9_habitacion_principal2.tiles/thumb.jpg" lat="" lng="" heading="">
