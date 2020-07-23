@@ -47,6 +47,7 @@
 		if( layer[OverlayMenu].url == '%ROOT%/icons/menuoff.png',
 			set(layer[overlay_close_hitbox].width,18%);
 			
+			
 			set(layer[OverlayMenu].handcursor,false);
 			set(layer[OverlayMenu].url,%ROOT%/icons/menuon.png);
 			
@@ -71,6 +72,7 @@
 					clearinterval('vuho_overlay_id');
 					set(layer[OverlayMenu].crop,'0|0|2060|384');
 					enable_overlay_icons();
+					tween(layer[overlay_tooltip].alpha,0);
 				);
 			);
 		);
@@ -80,6 +82,7 @@
 		<!-- Base size is 384x384 -->
 		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png',
 			set(layer[overlay_close_hitbox].width,100%);
+			
 			
 			set(layer[OverlayMenu].handcursor,true);
 			set(layer[OverlayMenu].crop,'0|0|2060|384');
@@ -104,6 +107,7 @@
 					set(layer[OverlayMenu].url,%ROOT%/icons/menuoff.png);
 					set(layer[OverlayMenu].crop,'0|0|384|384');
 					disable_overlay_icons();
+					tween(layer[overlay_tooltip].alpha,0);
 				);
 			);
 			
