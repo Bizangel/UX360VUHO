@@ -60,12 +60,13 @@
 	<!-- ACTUAL UI -->
 	
 	<action name="overlay_kitchen_mobile_exceptions" autorun="onstart">
+		
 		if(device.handheld == true,
 			set(layer[kitchen_window].scale,0.15);
 		);
 	</action>
 	<layer name="kitchen_window" keep="true" type="image" maskchildren="true" url="%ROOT%/icons/kitchen_menu.png" alpha="0" handcursor="false"
-	align="center" y="20%" scale="0.3" scalechildren="true">
+	align="bottomright" x="30%" y="5%" scale="0.3" scalechildren="true">
 		
 		<layer name="mesonui1" type="image" url="%VIEWER%/icons/meson1off.png" x="+40%" y="12%" align="centered" scale="0.3" 
 			onclick="change_meson(blanco);" enabled="true" alpha="1" />

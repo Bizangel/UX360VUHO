@@ -1,13 +1,33 @@
 <krpano>
+
+	<action name="update_floor_mueble" scope="local">
+		copy(scenename,xml.scene);
+		
+		indexoftxt(isOutside,get(scenename),'exterior');
+		indexoftxt(isKitchen,get(scenename),'meson');
+		
+		if(isOutside != -1 OR isKitchen != -1,
+			<!-- Do nothing, will update -->
+			,
+			indexoftxt(i,get(scenename),'_');
+			calc(helper,slice(get(scenename),i+1,scenename.length));
+			indexoftxt(i2,get(helper),'_');
+			
+			calc(scene_n,slice(get(helper),0,i2));
+			
+			tour_loadscene(calc('scene_' + scene_n));
+		);
+		
+	</action>
 	<!-- Possible colors: claro, oscuro -->
 	<action name="change_mueble" scope="local" args="color">
 		set(layer[variableHolder].curr_mueble_color,get(color));
-		reload_current_scene();
+		update_floor_mueble();
 	</action>
 	
 	<action name="change_floor" scope="local" args="color">
 		set(layer[variableHolder].curr_floor_color,get(color));
-		reload_current_scene();
+		update_floor_mueble();
 	</action>
 	
 	<!-- Claro-Oscuro panos -->
