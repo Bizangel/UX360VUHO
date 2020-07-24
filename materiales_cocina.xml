@@ -48,6 +48,14 @@
 		
 		tween(layer[kitchen_window].alpha,0);
 		set(layer[kitchen_window].enabled,false);
+		
+		set(layer[mesonui1].enabled,false);
+		set(layer[mesonui2].enabled,false);
+		set(layer[mesonui3].enabled,false);
+		
+		set(layer[maderaui1].enabled,false);
+		set(layer[maderaui2].enabled,false);
+		set(layer[maderaui3].enabled,false);
 	</action>
 	
 	<action name="enable_material_ui" scope="local">
@@ -55,6 +63,14 @@
 		
 		tween(layer[kitchen_window].alpha,1);
 		set(layer[kitchen_window].enabled,true);
+		
+		set(layer[mesonui1].enabled,true);
+		set(layer[mesonui2].enabled,true);
+		set(layer[mesonui3].enabled,true);
+		
+		set(layer[maderaui1].enabled,true);
+		set(layer[maderaui2].enabled,true);
+		set(layer[maderaui3].enabled,true);
 	</action>
 	
 	<!-- ACTUAL UI -->
@@ -69,18 +85,18 @@
 	align="bottomcenter" x="0%" y="5%" scale="0.3" scalechildren="true">
 		
 		<layer name="mesonui1" type="image" url="%VIEWER%/icons/meson1off.png" x="+40%" y="12%" align="centered" scale="0.3" 
-			onclick="change_meson(blanco);" enabled="true" alpha="1" />
+			onclick="change_meson(blanco);" enabled="false" alpha="1" />
 		<layer name="mesonui2" type="image" url="%VIEWER%/icons/meson2off.png" x="+25%" y="12%" align="centered" scale="0.3" 
-			onclick="change_meson(gris);" enabled="true" alpha="1" />
+			onclick="change_meson(gris);" enabled="false" alpha="1" />
 		<layer name="mesonui3" type="image" url="%VIEWER%/icons/meson3off.png" x="+10%" y="12%" align="centered" scale="0.3" 
-			onclick="change_meson(negro);" enabled="true" alpha="1" />
+			onclick="change_meson(negro);" enabled="false" alpha="1" />
 			
 		<layer name="maderaui1" type="image" url="%VIEWER%/icons/madera3off.png" x="-10%" y="12%" align="centered" scale="0.3" 
-			onclick="change_madera(clara);" enabled="true" alpha="1" />
+			onclick="change_madera(clara);" enabled="false" alpha="1" />
 		<layer name="maderaui2" type="image" url="%VIEWER%/icons/madera1off.png" x="-25%" y="12%" align="centered" scale="0.3" 
-			onclick="change_madera(neutra);" enabled="true" alpha="1" />
+			onclick="change_madera(neutra);" enabled="false" alpha="1" />
 		<layer name="maderaui3" type="image" url="%VIEWER%/icons/madera2off.png" x="-40%" y="12%" align="centered" scale="0.3" 
-			onclick="change_madera(oscura);" enabled="true" alpha="1" />
+			onclick="change_madera(oscura);" enabled="false" alpha="1" />
 			
 	</layer>
 	<!-- SCENES -->

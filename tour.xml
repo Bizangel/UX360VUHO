@@ -1,4 +1,4 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
 	<include url="vuho_overlay.xml" if="1"/>
 	
@@ -378,7 +378,7 @@
 			
 			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 			
-			if(isOutside != -1
+			if(isOutside != -1 AND device.handheld == true,
 				disable_map_button();
 			);
 			

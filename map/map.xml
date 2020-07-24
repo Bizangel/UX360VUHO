@@ -105,7 +105,10 @@
 		tween(layer[base_map].alpha,0);
 		set(layer[base_map].enabled,false);
 		
-		set(layer[Map_Toggle].url,%VIEWER%/icons/Mobilemapoff.png);
+		if(device.handheld == true,
+			set(layer[Map_Toggle].url,%VIEWER%/icons/Mobilemapoff.png);
+		);
+		
 	</action>
 	
 	<action name="enablemap" scope="local">
@@ -138,7 +141,7 @@
 	</action>
 	
 	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemapoff.png" scale="0.2" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
-	devices="handheld"/>
+	devices="handheld" alpha="0" enabled="false"/>
 	
 	<action name="toggle_map" scope="local">
 		if(layer[base_map].alpha == 1,
