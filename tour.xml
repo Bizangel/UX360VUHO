@@ -1,6 +1,5 @@
 ﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
-	
 	<include url="vuho_overlay.xml" if="1"/>
 	
 	<style name="text"
@@ -380,9 +379,15 @@
 			
 			tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 			
+			if(isOutside != -1
+				disable_map_button();
+			);
+			
 			
 			,
 			<!-- Loads scene, conserving floor color and mueble color -->
+			enable_map_button();
+			
 			indexoftxt(i,get(scenename),'_');
 			
 			
@@ -516,6 +521,7 @@
 		loadscene(get(startscene), null, get(skin_settings.loadscene_flags), get(blendmode));
 		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 		
+		disable_map_button();
 		if(startactions !== null, startactions() );
 		
 	</action>

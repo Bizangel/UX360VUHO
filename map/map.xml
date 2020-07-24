@@ -69,6 +69,16 @@
 		)
 	</action>
 	
+	<action name="disable_map_button" >
+		tween(layer[Map_Toggle].alpha,0);
+		set(layer[Map_Toggle].enabled,false);
+	</action>
+	
+	<action name="enable_map_button">
+		tween(layer[Map_Toggle].alpha,1);
+		set(layer[Map_Toggle].enabled,true);
+	</action>
+	
 	<layer name="base_map" type="image" url="%ROOT%/map/base_noimage.png" scale="0.3" align="leftbottom" x="2%" y="5%" keep="true" handcursor="false" 
 	scalechildren="true" maskchildren="true"
 	onover="set(layer[base_map].url,%ROOT%/map/base.png);"
@@ -94,6 +104,8 @@
 	<action name="disablemap" scope="local">
 		tween(layer[base_map].alpha,0);
 		set(layer[base_map].enabled,false);
+		
+		set(layer[Map_Toggle].url,%VIEWER%/icons/Mobilemapoff.png);
 	</action>
 	
 	<action name="enablemap" scope="local">
@@ -103,6 +115,7 @@
 		if(device.handheld == true
 			enable_dummy_remover();
 		);
+		set(layer[Map_Toggle].url,%VIEWER%/icons/Mobilemapon.png);
 	</action>
 	
 	<action name="FixMapDevice" autorun="onstart">
@@ -124,7 +137,7 @@
 		);
 	</action>
 	
-	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemap.png" scale="0.2" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
+	<layer name="Map_Toggle" type="image" keep="true" url="%VIEWER%/icons/Mobilemapoff.png" scale="0.2" align="leftbottom" x="4%" y="20%" onclick="toggle_map();"
 	devices="handheld"/>
 	
 	<action name="toggle_map" scope="local">
@@ -151,7 +164,7 @@
 				set(layer[InfoButton].y,20%);
 				set(layer[Map_Toggle].y,25%);
 				
-				set(layer[kitchen_window].y,30%);
+				set(layer[kitchen_window].y,15%);
 				
 				if(stagewidth LE 1024,
 					calc(fix_scale_value,stagewidth/1024);
@@ -183,7 +196,7 @@
 					set(layer[InfoButton].y,30%);
 					set(layer[Map_Toggle].y,5%);
 					
-					set(layer[kitchen_window].y,20%);				
+					set(layer[kitchen_window].y,5%);				
 				
 		);
 	);
