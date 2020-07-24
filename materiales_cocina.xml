@@ -82,7 +82,7 @@
 		);
 	</action>
 	<layer name="kitchen_window" keep="true" type="image" maskchildren="true" url="%ROOT%/icons/kitchen_menu.png" alpha="0" handcursor="false"
-	align="bottomcenter" x="0%" y="5%" scale="0.3" scalechildren="true">
+	align="bottomcenter" x="0%" y="5%" scale="0.3" scalechildren="true" enabled="false">
 		
 		<layer name="mesonui1" type="image" url="%VIEWER%/icons/meson1off.png" x="+40%" y="12%" align="centered" scale="0.3" 
 			onclick="change_meson(blanco);" enabled="false" alpha="1" />

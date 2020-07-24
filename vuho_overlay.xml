@@ -25,6 +25,8 @@
 	       />
 		   
 	<action name="do_tooltip" scope="local">
+		set(layer[OverLayMenu].maskchildren,false);
+		
 		copy(layer[overlay_tooltip].html, caller.tooltip);
 	    set(layer[overlay_tooltip].visible, true);
 	    tween(layer[overlay_tooltip].alpha, 1.0, 0.5);
@@ -32,6 +34,17 @@
 	
 	<action name="do_tooltip_out" scope="local">
 		tween(layer[overlay_tooltip].alpha, 0.0, 0.25, default, set(layer[overlay_tooltip].visible,false));
+		
+		
+		copy(cropval,layer[extend_menu].crop);		
+		indexoftxt(i,get(cropval),'|');
+		calc(copy_x,slice(get(cropval),0,i));
+		
+		<!-- if 0 thn means fully extended, if 1652 retracted -->
+		
+		if(copy_x == 1652,
+			set(layer[OverLayMenu].maskchildren,true);
+		);
 	</action>
 	
 	<include url="%VIEWER%/plugins/webvr.xml" devices="html5" />
