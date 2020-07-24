@@ -45,13 +45,24 @@
 		<!-- Extended Size is 2060, so X should start from 2060 - 384 = 1676 -->
 		<!-- CROP IS DONE ON BASE IMAGE THEN > RESIZED SO NO WORRIES FAM -->
 		if( layer[OverlayMenu].url == '%ROOT%/icons/menuoff.png',
-			set(layer[overlay_close_hitbox].width,18%);
 			
 			
 			set(layer[OverlayMenu].handcursor,false);
-			set(layer[OverlayMenu].url,%ROOT%/icons/menuon.png);
 			
-			set(layer[OverlayMenu].crop,'1676|0|384|384');
+			if(layer[material_icon].visible == true,
+				set(layer[OverlayMenu].url,%ROOT%/icons/menuon.png);
+				set(layer[OverlayMenu].imagewidth,2060);
+				set(layer[overlay_close_hitbox].width,18%);
+				,
+				set(layer[OverlayMenu].url,%ROOT%/icons/small_menuon.png);
+				set(layer[OverlayMenu].imagewidth,1329);
+				set(layer[overlay_close_hitbox].width,30%);
+			);
+			
+			copy(fullwidth,layer[OverlayMenu].imagewidth);
+			
+			
+			set(layer[OverlayMenu].crop,calc( (fullwidth-384)  +'|0|384|384'));
 			
 			setinterval('vuho_overlay_id',0,
 				copy(cropval,layer[OverlayMenu].crop);
@@ -63,14 +74,15 @@
 				<!-- Adjust Speed -->
 				dec(copy_x,200);
 				
-				calc(copy_width,2060-copy_x);
+				calc(copy_width,fullwidth-copy_x);
 				
 				set(layer[OverlayMenu].crop,calc(copy_x + '|0|' + copy_width + '|384'));
+				
 				
 				<!-- End check -->
 				if(copy_x LE 0,
 					clearinterval('vuho_overlay_id');
-					set(layer[OverlayMenu].crop,'0|0|2060|384');
+					set(layer[OverlayMenu].crop,calc('0|0|' + fullwidth + '|384'));
 					enable_overlay_icons();
 					tween(layer[overlay_tooltip].alpha,0);
 				);
@@ -80,12 +92,15 @@
 	
 	<action name="overlay_animation_disable" scope="local">
 		<!-- Base size is 384x384 -->
-		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png',
+		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png' OR layer[OverlayMenu].url == '%ROOT%/icons/small_menuon.png' ,
 			set(layer[overlay_close_hitbox].width,100%);
 			
 			
 			set(layer[OverlayMenu].handcursor,true);
-			set(layer[OverlayMenu].crop,'0|0|2060|384');
+			
+			copy(fullwidth,layer[OverlayMenu].imagewidth);
+			
+			set(layer[OverlayMenu].crop,calc('0|0|' + fullwidth +'|384'));
 			
 			setinterval('vuho_overlay_id',0,
 				copy(cropval,layer[OverlayMenu].crop);
@@ -97,7 +112,7 @@
 				<!-- Adjust Speed -->
 				inc(copy_x,200);
 				
-				calc(copy_width,2060-copy_x);
+				calc(copy_width,fullwidth-copy_x);
 				
 				set(layer[OverlayMenu].crop,calc(copy_x + '|0|' + copy_width + '|384'));
 				
@@ -165,7 +180,7 @@
 	</action>
 	
 	<action name="toggle_overlay" scope="local">
-		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png',
+		if( layer[OverlayMenu].url == '%ROOT%/icons/menuon.png' OR layer[OverlayMenu].url == '%ROOT%/icons/small_menuon.png',
 			overlay_animation_disable();
 			,
 			overlay_animation_enable();
@@ -175,7 +190,7 @@
 	<action name="overlay_mobile_exceptions" scope="local" autorun="onstart">
 		if(device.handheld == true,
 			set(layer[OverlayMenu].scale,0.15);
-			set(layer[information_icon].url,%ROOT%/icons/infoon.png);set(layer[information_icon].scale,0.77);
+			set(layer[information_icon].url,%ROOT%/icons/infoon.png);
 			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
 			overlay_animation_enable();
 		);
@@ -191,25 +206,25 @@
 	<!-- Overlay -->
 	<layer name="OverlayMenu" keep="true" type="image" url="%ROOT%/icons/menuoff.png" handcursor="true" align="rightbottom" scale="0.3" x="5%" y="5%" scalechildren="true"
 	onclick=""
-	maskchildren="false">
+	maskchildren="true">
 		<layer name="overlay_close_hitbox" type="container" onclick="toggle_overlay();" align="righttop" x="0%" y="0%" width="100%" height="100%" bgcolor="0x000000" bgalpha="0" bgcapture="true"/>
 		
-		<layer name="fullscreen_icon" type="image" url="%ROOT%/icons/fullscreen_off.png" align="righttop" x="21%" y="20%" alpha="0" enabled="false" onclick="switch(fullscreen);toggle_fullscreen_icon();" active="false" tooltip="Pantalla Completa"
+		<layer name="fullscreen_icon" type="image" url="%ROOT%/icons/fullscreen_off.png" align="righttop" x="450" y="70" alpha="0" enabled="false" onclick="switch(fullscreen);toggle_fullscreen_icon();" active="false" tooltip="Pantalla Completa"
 		onover="toggle_fullscreen_icon_hover_in();do_tooltip();"
 		onout="toggle_fullscreen_icon_hover_out();do_tooltip_out();"/>
 		
-		<layer name="entervr_icon" type="image" url="%ROOT%/icons/vroff.png" align="righttop" x="40%" y="19%" alpha="0" enabled="false" onclick="webvr.enterVR();"
+		<layer name="entervr_icon" type="image" url="%ROOT%/icons/vroff.png" align="righttop" x="850" y="70" alpha="0" enabled="false" onclick="webvr.enterVR();"
 		onover="set(layer[entervr_icon].url,%ROOT%/icons/vron.png);do_tooltip();"
 		onout="set(layer[entervr_icon].url,%ROOT%/icons/vroff.png);do_tooltip_out();"
 		tooltip="Realidad Virtual"/>
 		
-		<layer name="information_icon" type="image" url="%ROOT%/icons/infooff.png" align="righttop" x="60%" y ="18%" alpha="0" enabled="false" scale="1"
-		onover="set(layer[information_icon].url,%ROOT%/icons/infoon.png);set(layer[information_icon].scale,0.77);do_tooltip();"
-		onout="set(layer[information_icon].url,%ROOT%/icons/infooff.png);set(layer[information_icon].scale,1);do_tooltip_out();"
+		<layer name="information_icon" type="image" url="%ROOT%/icons/infooff.png" align="righttop" x="1275" y ="70" alpha="0" enabled="false" scale="0.75"
+		onover="set(layer[information_icon].url,%ROOT%/icons/infoon.png);do_tooltip();"
+		onout="set(layer[information_icon].url,%ROOT%/icons/infooff.png);do_tooltip_out();"
 		onclick="toggle_info();"
 		tooltip="Información"/>
 		
-		<layer name="material_icon" type="image" url="%ROOT%/icons/switchmatoff.png" align="righttop" x="80%" y="18%" alpha="0" scale="0.7" enabled="false"
+		<layer name="material_icon" type="image" url="%ROOT%/icons/switchmatoff.png" align="righttop" x="1650" y="70" alpha="0" scale="0.7" enabled="false"
 		onover="set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);do_tooltip();"
 		onout="set(layer[material_icon].url,%ROOT%/icons/switchmatoff.png);do_tooltip_out();"
 		onclick="toggle_extended_overlay();" devices="desktop"
@@ -236,7 +251,7 @@
 		</layer>
 		
 		<!-- Mobile Version -->
-		<layer name="material_icon" type="image" url="%ROOT%/icons/switchmatoff.png" align="righttop" x="80%" y="18%" alpha="0" scale="0.7" enabled="false"
+		<layer name="material_icon" type="image" url="%ROOT%/icons/switchmatoff.png" align="righttop" x="1650" y="70" alpha="0" scale="0.7" enabled="false"
 		onover="set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);"
 		onout="set(layer[material_icon].url,%ROOT%/icons/switchmatoff.png);"
 		onclick="toggle_extended_overlay_mobile();" devices="handheld"/>
@@ -265,11 +280,18 @@
 	
 	<action name="hide_material_button" scope="local">
 		set(layer[material_icon].visible,false);
-		extend_overlay_disable_universal();
+		set(layer[information_icon].visible,false);
+		overlay_animation_disable();
 	</action>
 	
 	<action name="show_material_button" scope="local">
 		set(layer[material_icon].visible,true);
+		set(layer[information_icon].visible,true);
+		
+		<!-- if smally then set real one, as we're showing the buttons back on -->
+		if(layer[OverlayMenu].url == '%ROOT%/icons/small_menuon.png', 
+			overlay_animation_disable();
+		);
 	</action>
 	
 	
@@ -283,6 +305,7 @@
 		
 		<!-- if 0 thn means fully extended, if 1652 retracted -->
 		if( copy_x == 1652,	
+			set(layer[OverlayMenu].maskchildren,false);
 			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
 			
 			
@@ -327,6 +350,11 @@
 		
 		<!-- if 0 thn means fully extended, if 1652 retracted -->
 		if( copy_x == 0,	
+			
+			delayedcall(0.15,
+				set(layer[OverlayMenu].maskchildren,true);
+			);
+			
 			set(layer[material_icon].url,%ROOT%/icons/switchmatoff.png);
 			
 			setinterval('extend_overlay_id',0,
@@ -358,6 +386,8 @@
 		calc(copy_x,slice(get(cropval),0,i));
 		
 		<!-- if 0 thn means fully extended, if 1652 retracted -->
+		
+		
 		if( copy_x == 1652,	
 			extend_overlay_animation_enable();
 			,
@@ -382,6 +412,7 @@
 		if( copy_y == 657,	
 			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
 			
+			set(layer[OverlayMenu].maskchildren,false);
 			
 			setinterval('extend_overlay_id',0,
 				copy(cropval,layer[extend_menu].crop);		
@@ -427,6 +458,9 @@
 		if( copy_y == 0,	
 			set(layer[material_icon].url,%ROOT%/icons/switchmaton.png);
 			
+			delayedcall(0.12,
+				set(layer[OverlayMenu].maskchildren,true);
+			);
 			
 			setinterval('extend_overlay_id',0,
 				copy(cropval,layer[extend_menu].crop);		

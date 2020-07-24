@@ -69,7 +69,7 @@
 		)
 	</action>
 	
-	<layer name="base_map" type="image" url="%ROOT%/map/base_noimage.png" scale="0.3" align="leftbottom" x="2%" y="10%" keep="true" handcursor="false" 
+	<layer name="base_map" type="image" url="%ROOT%/map/base_noimage.png" scale="0.3" align="leftbottom" x="2%" y="5%" keep="true" handcursor="false" 
 	scalechildren="true" maskchildren="true"
 	onover="set(layer[base_map].url,%ROOT%/map/base.png);"
 	onout="set(layer[base_map].url,%ROOT%/map/base_noimage.png);">
@@ -151,22 +151,7 @@
 				set(layer[InfoButton].y,20%);
 				set(layer[Map_Toggle].y,25%);
 				
-				set(layer[floor1ui].y,30%);
-				set(layer[floor2ui].y,30%);
-					
-				set(layer[madera1ui].y,30%);
-				set(layer[madera2ui].y,30%);
-				
-				set(layer[maderaui1].y,17%);
-				set(layer[maderaui2].y,17%);
-				set(layer[maderaui3].y,17%);
-				
-				set(layer[mesonui1].y,17%);
-				set(layer[mesonui2].y,17%);
-				set(layer[mesonui3].y,17%);
-				
-				set(layer[material_ui_text_meson].y,30%);
-				set(layer[material_ui_text_madera].y,30%);
+				set(layer[kitchen_window].y,30%);
 				
 				if(stagewidth LE 1024,
 					calc(fix_scale_value,stagewidth/1024);
@@ -198,24 +183,7 @@
 					set(layer[InfoButton].y,30%);
 					set(layer[Map_Toggle].y,5%);
 					
-					set(layer[floor1ui].y,20%);
-					set(layer[floor2ui].y,20%);
-					
-					set(layer[madera1ui].y,20%);
-					set(layer[madera2ui].y,20%);
-					
-					set(layer[maderaui1].y,30%);
-					set(layer[maderaui2].y,30%);
-					set(layer[maderaui3].y,30%);
-					
-					set(layer[mesonui1].y,30%);
-					set(layer[mesonui2].y,30%);
-					set(layer[mesonui3].y,30%);
-					
-					set(layer[material_ui_text_meson].y,15%);
-					set(layer[material_ui_text_madera].y,15%);
-					
-				
+					set(layer[kitchen_window].y,20%);				
 				
 		);
 	);

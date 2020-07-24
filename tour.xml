@@ -1,6 +1,5 @@
 ﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
-
 	<include url="vuho_overlay.xml" if="1"/>
 	
 	<style name="text"
@@ -15,6 +14,7 @@
 	<events onkeydown="debugaction();" if="0"/>
 	<action name="debugaction" if="0" >
 		if(keycode == 89,
+			print(get(layer[OverlayMenu].maskchildren));
 		);
 		if(keycode == 85,
 		);
@@ -308,25 +308,10 @@
 	
 	<action name="reload_current_scene"> 
 		copy(scenename,xml.scene);
-		indexoftxt(isOutside,get(scenename),'exterior');
-		if(isOutside != -1,
-			
-			loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
-		);
-		<!-- Loads scene, conserving floor color and mueble color -->
+		loadscene(get(scenename),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
+				
+		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 		
-		indexoftxt(i,get(scenename),'_');
-		calc(i2,lastindexof(get(scenename),'_'));
-		
-		calc(scene_n,slice(scenename,i+1,i2));
-		
-		if(scene_n LT 5,
-			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color + '-' +layer[variableHolder].curr_mueble_color);
-			,
-			calc(to_load,'scene_' + scene_n + '_' + layer[variableHolder].curr_floor_color);
-		);
-		
-		loadscene(get(to_load),null,MERGE|KEEPVIEW|KEEPMOVING,BLEND(0.5));
 		
 	</action>
 	
