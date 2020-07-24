@@ -1,5 +1,6 @@
 ﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
 	
+	
 	<include url="vuho_overlay.xml" if="1"/>
 	
 	<style name="text"
