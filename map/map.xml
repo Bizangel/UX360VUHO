@@ -112,10 +112,10 @@
 		tween(layer[base_map].alpha,1);
 		set(layer[base_map].enabled,true);
 		
-		if(device.handheld == true
-			enable_dummy_remover();
+		if(device.handheld == true,
+			set(layer[Map_Toggle].url,%VIEWER%/icons/Mobilemapon.png);
 		);
-		set(layer[Map_Toggle].url,%VIEWER%/icons/Mobilemapon.png);
+		
 	</action>
 	
 	<action name="FixMapDevice" autorun="onstart">

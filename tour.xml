@@ -1,5 +1,6 @@
-﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="false" logkey="false">
+﻿<krpano version="1.20.6" title="UX360 VUHÓ" showerrors="true" logkey="true">
 	
+	<include url="skin/vtourskin.xml" if="0" />
 	<include url="vuho_overlay.xml" if="1"/>
 	
 	<style name="text"
@@ -9,10 +10,10 @@
 	       enabled="false"
 	       />
 	
-	<include url="%VIEWER%/toolbox/toolbox.xml" if="0" />
-	<include url="%VIEWER%/plugins/fps.xml" if="0" />
-	<events onkeydown="debugaction();" if="0"/>
-	<action name="debugaction" if="0" >
+	<include url="%VIEWER%/toolbox/toolbox.xml" if="1" />
+	<include url="%VIEWER%/plugins/fps.xml" if="1" />
+	<events onkeydown="debugaction();" if="1"/>
+	<action name="debugaction" if="1" >
 		if(keycode == 89,
 			print(get(layer[OverlayMenu].maskchildren));
 		);
@@ -386,7 +387,11 @@
 			
 			,
 			<!-- Loads scene, conserving floor color and mueble color -->
-			enable_map_button();
+			
+			if(device.handheld == true,
+				enable_map_button();
+			);
+			
 			
 			indexoftxt(i,get(scenename),'_');
 			
