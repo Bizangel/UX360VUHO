@@ -129,7 +129,7 @@
 		);
 	</action>
 	
-	<layer name="infoslide1" type="image" url="infoslide1.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
+	<layer name="infoslide1" type="image" url="infoslide1.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" y="-10%"
 	maskchildren="true" scalechildren="true" handcursor="false">
 	
 		<layer name="Next_Button" type="image" url="%VIEWER%/icons/nextoff.png"
@@ -150,7 +150,7 @@
 		
 	</layer>
 	
-	<layer name="infoslide2" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
+	<layer name="infoslide2" type="image" url="infoslide2.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" y="-10%"
 	maskchildren="true" scalechildren="true" handcursor="false">
 	
 		<layer name="Prev_Button" type="image" url="%VIEWER%/icons/prevoff.png"
@@ -186,7 +186,7 @@
 		x="5%" y="5%" scale="0.15" devices="handheld"/>
 	</layer>
 	
-	<layer name="infoslide3" type="image" url="infoslide3.png" keep="true" align="centered" scale="1" alpha="0" enabled="false"
+	<layer name="infoslide3" type="image" url="infoslide3.png" keep="true" align="centered" scale="1" alpha="0" enabled="false" y="-10%"
 	maskchildren="true" scalechildren="true" handcursor="false">
 	
 		<layer name="Prev_Button2" type="image" url="%VIEWER%/icons/prevoff.png"
