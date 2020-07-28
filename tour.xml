@@ -525,6 +525,7 @@
 		tween(view.tx|view.ty|view.tz, calc(image.ox + '|' + image.oy + '|' + image.oz), 2.0, default);
 		
 		disable_map_button();
+		infodisplay(1);
 		if(startactions !== null, startactions() );
 		
 	</action>
