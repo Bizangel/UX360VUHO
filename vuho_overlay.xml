@@ -543,7 +543,7 @@
 		set(layer[webvr_warning].enabled,true);
 	</action>
 	
-	<layer name="webvr_warning" type="container" align="center" x="0" y="0" width="300" height="300" bgcolor="0x333333" bgalpha="0.7" bgcapture="true" keep="true" scalechildren="true" handcursor="false">
+	<layer name="webvr_warning" type="container" align="center" x="0" y="0" width="300" height="300" bgcolor="0x333333" bgalpha="0.7" bgcapture="true" keep="true" scalechildren="true" handcursor="false" alpha="0" enabled="false">
 		<layer name="webvr_warning_title" style="text" align="top" y="5" width="100%" css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:14px;" html="Confirmación" handcursor="false"/>
 		<layer name="textarea" type="container" align="lefttop" x="10" y="30" width="280" height="260" bgcolor="0xFFFFFF" bgalpha="1.0" maskchildren="true" handcursor="false">
 			<layer name="text" style="text" enabled="true" align="lefttop" x="0" y="0" width="100%" autoheight="true" css="text-align:left; color:#000000; font-family:Arial; font-size:26px;" html="data:VRWarning" handcursor="false"/>
